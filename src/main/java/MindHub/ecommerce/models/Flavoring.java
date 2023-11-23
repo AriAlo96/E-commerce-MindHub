@@ -1,4 +1,4 @@
-package models;
+package MindHub.ecommerce.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -7,37 +7,45 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Cream {
+public class Flavoring {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String name;
     private String description;
+    private Integer content;
     private Double price;
-    private Integer quantity;
     private Integer stock;
-    private Type type;
-    @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
-    private Set<PurchaseCream> purchaseCreams= new HashSet<>();
+    private Presentation presentation;
+    @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
+    private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
+    // IMAGEN
 
-    // img
 
 
-    public Cream() {
+    public Flavoring() {
     }
 
-    public Cream(String name, String description, Double price, Integer quantity, Integer stock, Type type) {
+    public Flavoring(String name, String description, Integer content, Double price, Integer stock, Presentation presentation) {
         this.name = name;
         this.description = description;
+        this.content = content;
         this.price = price;
-        this.quantity = quantity;
         this.stock = stock;
-        this.type = type;
+        this.presentation = presentation;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Presentation getPresentation() {
+        return presentation;
+    }
+
+    public void setPresentation(Presentation presentation) {
+        this.presentation = presentation;
     }
 
     public String getName() {
@@ -56,6 +64,14 @@ public class Cream {
         this.description = description;
     }
 
+    public Integer getContent() {
+        return content;
+    }
+
+    public void setContent(Integer content) {
+        this.content = content;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -64,27 +80,11 @@ public class Cream {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Integer getStock() {
         return stock;
     }
 
     public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 }

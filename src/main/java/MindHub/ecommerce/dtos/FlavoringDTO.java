@@ -1,7 +1,7 @@
-package dtos;
+package MindHub.ecommerce.dtos;
 
-import models.Flavoring;
-import models.Presentation;
+import MindHub.ecommerce.models.Flavoring;
+import MindHub.ecommerce.models.Presentation;
 
 public class FlavoringDTO {
     private Long id;

@@ -1,7 +1,7 @@
-package dtos;
+package MindHub.ecommerce.dtos;
 
-import models.Cream;
-import models.Type;
+import MindHub.ecommerce.models.Cream;
+import MindHub.ecommerce.models.Type;
 
 public class CreamDTO {
     private Long id;
