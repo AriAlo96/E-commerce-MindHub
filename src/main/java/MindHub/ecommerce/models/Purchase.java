@@ -3,6 +3,7 @@ package MindHub.ecommerce.models;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Purchase {
@@ -11,12 +12,12 @@ public class Purchase {
     private Long clientId;
     private Double totalPurchases;
     @OneToMany(mappedBy = "fraganceId", fetch = FetchType.EAGER)
-    private Set<PurchaseFragance> purchaseFragances;
+    private Set<PurchaseFragance> purchaseFragances = new HashSet<>();
 
     @OneToMany(mappedBy = "flavoringId", fetch = FetchType.EAGER)
-    private Set<PurchaseFlavoring> purchaseFlavorings;
+    private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
     @OneToMany(mappedBy = "creamId", fetch = FetchType.EAGER)
-    private Set<PurchaseCream> purchaseCreams;
+    private Set<PurchaseCream> purchaseCreams = new HashSet<>();
 
     public Purchase() {
     }
@@ -44,5 +45,29 @@ public class Purchase {
 
     public void setTotalPurchases(Double totalPurchases) {
         this.totalPurchases = totalPurchases;
+    }
+
+    public Set<PurchaseFragance> getPurchaseFragances() {
+        return purchaseFragances;
+    }
+
+    public void setPurchaseFragances(Set<PurchaseFragance> purchaseFragances) {
+        this.purchaseFragances = purchaseFragances;
+    }
+
+    public Set<PurchaseFlavoring> getPurchaseFlavorings() {
+        return purchaseFlavorings;
+    }
+
+    public void setPurchaseFlavorings(Set<PurchaseFlavoring> purchaseFlavorings) {
+        this.purchaseFlavorings = purchaseFlavorings;
+    }
+
+    public Set<PurchaseCream> getPurchaseCreams() {
+        return purchaseCreams;
+    }
+
+    public void setPurchaseCreams(Set<PurchaseCream> purchaseCreams) {
+        this.purchaseCreams = purchaseCreams;
     }
 }
