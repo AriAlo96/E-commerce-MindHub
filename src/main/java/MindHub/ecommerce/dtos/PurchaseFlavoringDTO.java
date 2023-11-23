@@ -1,6 +1,6 @@
-package dtos;
+package MindHub.ecommerce.dtos;
 
-import models.PurchaseFlavoring;
+import MindHub.ecommerce.models.PurchaseFlavoring;
 
 public class PurchaseFlavoringDTO {
     private Long id;

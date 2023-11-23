@@ -1,5 +1,6 @@
-package models;
+package MindHub.ecommerce.models;
 
+import MindHub.ecommerce.models.Flavoring;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package models;
+package MindHub.ecommerce.models;
 
 public enum Type {
     BODY,

@@ -1,7 +1,6 @@
-package dtos;
+package MindHub.ecommerce.dtos;
 
-import models.Cream;
-import models.PurchaseCream;
+import MindHub.ecommerce.models.PurchaseCream;
 
 public class PurchaseCreamDTO {
     private Long id;
