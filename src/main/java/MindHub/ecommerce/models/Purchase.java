@@ -7,6 +7,7 @@ public class Purchase {
     @ManyToOne
     private Long clientId;
     private Double totalPurchases;
+//    private
 
     public Purchase() {
     }
