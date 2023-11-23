@@ -4,21 +4,23 @@ import MindHub.ecommerce.models.Client;
 import MindHub.ecommerce.models.Purchase;
 
 import java.util.List;
+import java.util.Set;
 
 public class ClientDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private String address;
-    private List<Purchase> totalPurchases;
+    private Set<Purchase> totalPurchases;
 
     public ClientDTO(Client client) {
         id = client.getId();
         firstName = client.getFirstName();
         lastName = client.getLastName();
         email = client.getEmail();
+        address = client.getAddress();
+        totalPurchases = client.getTotalPurchases();
     }
 
     public Long getId() {
@@ -37,15 +39,11 @@ public class ClientDTO {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public List<Purchase> getTotalPurchases() {
+    public Set<Purchase> getTotalPurchases() {
         return totalPurchases;
     }
 }

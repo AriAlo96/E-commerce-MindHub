@@ -3,7 +3,9 @@ package MindHub.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Client {
@@ -17,7 +19,7 @@ public class Client {
     private String password;
     private String address;
     @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
-    private List<Purchase> totalPurchases;
+    private Set<Purchase> totalPurchases = new HashSet<>();
 
     public Client() {
     }
@@ -74,11 +76,11 @@ public class Client {
         this.address = address;
     }
 
-    public List<Purchase> getTotalPurchases() {
+    public Set<Purchase> getTotalPurchases() {
         return totalPurchases;
     }
 
-    public void setTotalPurchases(List<Purchase> totalPurchases) {
+    public void setTotalPurchases(Set<Purchase> totalPurchases) {
         this.totalPurchases = totalPurchases;
     }
 }
