@@ -38,4 +38,8 @@ public class PurchaseCreamDTO {
     public Long getCreamId() {
         return creamId;
     }
+
+    public Long getPurchaseId() {
+        return purchaseId;
+    }
 }

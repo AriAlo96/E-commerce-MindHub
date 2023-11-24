@@ -37,4 +37,8 @@ public class PurchaseFlavoringDTO {
     public Long getFlavoringId() {
         return flavoringId;
     }
+
+    public Long getPurchaseId() {
+        return purchaseId;
+    }
 }
