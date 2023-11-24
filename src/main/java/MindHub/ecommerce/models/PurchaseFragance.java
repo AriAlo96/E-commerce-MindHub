@@ -1,19 +1,27 @@
 package MindHub.ecommerce.models;
 
-import javax.persistence.Entity;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
-public class FragancePurchase {
+public class PurchaseFragance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
+    @ManyToOne
     private Long purchaseId;
+    @ManyToOne
     private Long fraganceId;
     private Integer amount;
     private Double subtotal;
 
-    public FragancePurchase() {
+
+    public PurchaseFragance() {
     }
 
-    public FragancePurchase(Long purchaseId, Long fraganceId, Integer amount, Double subtotal) {
+    public PurchaseFragance(Long purchaseId, Long fraganceId, Integer amount, Double subtotal) {
         this.purchaseId = purchaseId;
         this.fraganceId = fraganceId;
         this.amount = amount;
