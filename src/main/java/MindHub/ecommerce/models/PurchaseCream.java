@@ -15,7 +15,7 @@ public class PurchaseCream {
 
     private Integer quantity;
     private Double subtotal;
-    private BufferedImage image;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cream_id")
     private Cream cream;

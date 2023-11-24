@@ -15,8 +15,6 @@ public class PurchaseFlavoring {
     private Long id;
     private  Integer quantity;
     private  Double subtotal;
-    private BufferedImage image;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "flavoring_id")

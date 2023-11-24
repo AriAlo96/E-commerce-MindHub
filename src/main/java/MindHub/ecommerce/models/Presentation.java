@@ -5,4 +5,7 @@ public enum Presentation {
     FABRICS,
     DIFFUSERS,
 
+    CLASICPACKAGE,
+    TRIBUTE
+
 }

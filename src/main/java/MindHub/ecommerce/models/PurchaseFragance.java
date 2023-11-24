@@ -11,9 +11,9 @@ public class PurchaseFragance {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne
-    private Long purchaseId;
+    private Purchase purchase;
     @ManyToOne
-    private Long fraganceId;
+    private Fragance fragance;
     private Integer amount;
     private Double subtotal;
 
@@ -21,9 +21,9 @@ public class PurchaseFragance {
     public PurchaseFragance() {
     }
 
-    public PurchaseFragance(Long purchaseId, Long fraganceId, Integer amount, Double subtotal) {
-        this.purchaseId = purchaseId;
-        this.fraganceId = fraganceId;
+    public PurchaseFragance(Purchase purchase, Fragance fragance, Integer amount, Double subtotal) {
+        this.purchase = purchase;
+        this.fragance = fragance;
         this.amount = amount;
         this.subtotal = subtotal;
     }
@@ -32,20 +32,20 @@ public class PurchaseFragance {
         return id;
     }
 
-    public Long getPurchaseId() {
-        return purchaseId;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setPurchaseId(Long purchaseId) {
-        this.purchaseId = purchaseId;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
-    public Long getFraganceId() {
-        return fraganceId;
+    public Fragance getFragance() {
+        return fragance;
     }
 
-    public void setFraganceId(Long fraganceId) {
-        this.fraganceId = fraganceId;
+    public void setFragance(Fragance fragance) {
+        this.fragance = fragance;
     }
 
     public Integer getAmount() {

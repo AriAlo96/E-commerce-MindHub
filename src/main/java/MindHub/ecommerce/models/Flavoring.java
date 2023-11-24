@@ -19,7 +19,7 @@ public class Flavoring {
     private Double price;
     private Integer stock;
     private Presentation presentation;
-    private BufferedImage image;
+    private String image;
     @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
 
@@ -29,13 +29,16 @@ public class Flavoring {
     public Flavoring() {
     }
 
-    public Flavoring(String name, String description, Integer content, Double price, Integer stock, Presentation presentation) {
+    public Flavoring(String name, String description, Integer content, Double price, Integer stock,
+                     Presentation presentation, String image)
+    {
         this.name = name;
         this.description = description;
         this.content = content;
         this.price = price;
         this.stock = stock;
         this.presentation = presentation;
+        this.image = image;
     }
 
     public Long getId() {
@@ -88,5 +91,21 @@ public class Flavoring {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Set<PurchaseFlavoring> getPurchaseFlavorings() {
+        return purchaseFlavorings;
+    }
+
+    public void setPurchaseFlavorings(Set<PurchaseFlavoring> purchaseFlavorings) {
+        this.purchaseFlavorings = purchaseFlavorings;
     }
 }

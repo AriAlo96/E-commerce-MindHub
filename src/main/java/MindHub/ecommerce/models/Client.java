@@ -18,7 +18,7 @@ public class Client {
     private String email;
     private String password;
     private String address;
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Purchase> totalPurchases = new HashSet<>();
 
     public Client() {

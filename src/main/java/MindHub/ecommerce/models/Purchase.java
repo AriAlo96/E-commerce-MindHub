@@ -1,29 +1,31 @@
 package MindHub.ecommerce.models;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
+@Entity
 public class Purchase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne
-    private Long clientId;
+    private Client client;
     private Double totalPurchases;
-    @OneToMany(mappedBy = "fraganceId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     private Set<PurchaseFragance> purchaseFragances = new HashSet<>();
-
-    @OneToMany(mappedBy = "flavoringId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
-    @OneToMany(mappedBy = "creamId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams = new HashSet<>();
 
     public Purchase() {
     }
 
-    public Purchase(Long clientId, Double totalPurchases) {
-        this.clientId = clientId;
+    public Purchase(Client client, Double totalPurchases) {
+        this.client = client;
         this.totalPurchases = totalPurchases;
     }
 
@@ -31,12 +33,12 @@ public class Purchase {
         return id;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Double getTotalPurchases() {

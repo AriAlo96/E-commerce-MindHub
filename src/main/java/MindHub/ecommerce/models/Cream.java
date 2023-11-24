@@ -3,7 +3,6 @@ package MindHub.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +15,10 @@ public class Cream {
     private String name;
     private String description;
     private Double price;
-    private Integer quantity;
+    private Integer content;
     private Integer stock;
     private Type type;
-    private BufferedImage image;
+    private String image;
     @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams= new HashSet<>();
 
@@ -29,13 +28,16 @@ public class Cream {
     public Cream() {
     }
 
-    public Cream(String name, String description, Double price, Integer quantity, Integer stock, Type type) {
+    public Cream(String name, String description, Double price, Integer content, Integer stock, Type type,
+                 String image)
+    {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
+        this.content = content;
         this.stock = stock;
         this.type = type;
+        this.image = image;
     }
 
     public Long getId() {
@@ -66,12 +68,12 @@ public class Cream {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getContent() {
+        return content;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setContent(Integer content) {
+        this.content = content;
     }
 
     public Integer getStock() {
@@ -88,5 +90,21 @@ public class Cream {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Set<PurchaseCream> getPurchaseCreams() {
+        return purchaseCreams;
+    }
+
+    public void setPurchaseCreams(Set<PurchaseCream> purchaseCreams) {
+        this.purchaseCreams = purchaseCreams;
     }
 }

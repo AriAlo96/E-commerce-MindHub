@@ -2,9 +2,13 @@ package MindHub.ecommerce.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
-
+@Entity
 public class Fragance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -14,30 +18,29 @@ public class Fragance {
     private String description;
     private Gender gender;
     private OlfactoryFamily olfactoryFamily;
-    @Lob
-    private byte[] image;
+    private String image;
     private Double price;
     private Presentation presentation;
     private Integer content;
     private Integer stock;
-    @OneToMany(mappedBy = "purchaseId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "fragance", fetch = FetchType.EAGER)
     private Set<PurchaseFragance> purchesFragances;
 
     public Fragance() {
     }
 
-    public Fragance(String name, String description, Gender gender, OlfactoryFamily olfactoryFamily, byte[] image,
-                    Double price, Presentation presentation, Integer content, Integer stock)
+    public Fragance(String name, String description, Gender gender, OlfactoryFamily olfactoryFamily,
+                    String image, Double price, Presentation presentation, Integer content, Integer stock)
     {
         this.name = name;
         this.description = description;
         this.gender = gender;
         this.olfactoryFamily = olfactoryFamily;
-        this.image = image;
         this.price = price;
         this.presentation = presentation;
         this.content = content;
         this.stock = stock;
+
     }
 
     public String getName() {
@@ -72,11 +75,11 @@ public class Fragance {
         this.olfactoryFamily = olfactoryFamily;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

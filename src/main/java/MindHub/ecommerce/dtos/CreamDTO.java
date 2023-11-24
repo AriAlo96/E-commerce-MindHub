@@ -3,26 +3,25 @@ package MindHub.ecommerce.dtos;
 import MindHub.ecommerce.models.Cream;
 import MindHub.ecommerce.models.Type;
 
-import java.awt.image.BufferedImage;
-
 public class CreamDTO {
     private Long id;
     private String name;
     private String description;
     private Double price;
-    private Integer quantity;
+    private Integer content;
     private Integer stock;
     private Type type;
-    private BufferedImage image;
+    private String image;
 
     public CreamDTO(Cream cream){
         id = cream.getId();
         name = cream.getName();
         description = cream.getDescription();
         price = cream.getPrice();
-        quantity = cream.getQuantity();
+        content = cream.getContent();
         stock = cream.getStock();
         type = cream.getType();
+        image = cream.getImage();
     }
 
     public Long getId() {
@@ -41,8 +40,8 @@ public class CreamDTO {
         return price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getContent() {
+        return content;
     }
 
     public Integer getStock() {
@@ -53,4 +52,7 @@ public class CreamDTO {
         return type;
     }
 
+    public String getImage() {
+        return image;
+    }
 }
