@@ -18,7 +18,5 @@ public class Purchase {
         this.totalPurchases = totalPurchases;
     }
 
-    public Long getId() {
-        return id;
-    }
+
 }
