@@ -22,7 +22,7 @@ public class Flavoring {
     private BufferedImage image;
     @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
-    // IMAGEN
+
 
 
 

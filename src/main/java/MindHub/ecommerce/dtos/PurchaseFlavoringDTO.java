@@ -2,6 +2,8 @@ package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.PurchaseFlavoring;
 
+import java.awt.image.BufferedImage;
+
 public class PurchaseFlavoringDTO {
     private Long id;
     private  Integer quantity;
@@ -9,6 +11,7 @@ public class PurchaseFlavoringDTO {
     private Long flavoringId;
 
     private Long purchaseId;
+    private BufferedImage image;
 
 
     public PurchaseFlavoringDTO(PurchaseFlavoring purchaseFlavoring) {
@@ -33,5 +36,9 @@ public class PurchaseFlavoringDTO {
 
     public Long getFlavoringId() {
         return flavoringId;
+    }
+
+    public Long getPurchaseId() {
+        return purchaseId;
     }
 }

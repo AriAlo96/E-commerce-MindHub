@@ -52,4 +52,5 @@ public class CreamDTO {
     public Type getType() {
         return type;
     }
+
 }
