@@ -7,7 +7,8 @@ public class PurchaseFlavoringDTO {
     private  Integer quantity;
     private  Double subtotal;
     private Long flavoringId;
-    //private Long purchaseId;
+
+    private Long purchaseId;
 
 
     public PurchaseFlavoringDTO(PurchaseFlavoring purchaseFlavoring) {
@@ -15,6 +16,7 @@ public class PurchaseFlavoringDTO {
         quantity = purchaseFlavoring.getQuantity();
         subtotal= purchaseFlavoring.getSubtotal();
         flavoringId = purchaseFlavoring.getFlavoring().getId();
+        purchaseId = purchaseFlavoring.getPurchase().getId();
     }
 
     public Long getId() {

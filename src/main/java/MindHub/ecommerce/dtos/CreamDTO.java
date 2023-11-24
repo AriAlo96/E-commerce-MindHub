@@ -3,6 +3,8 @@ package MindHub.ecommerce.dtos;
 import MindHub.ecommerce.models.Cream;
 import MindHub.ecommerce.models.Type;
 
+import java.awt.image.BufferedImage;
+
 public class CreamDTO {
     private Long id;
     private String name;
@@ -11,6 +13,7 @@ public class CreamDTO {
     private Integer quantity;
     private Integer stock;
     private Type type;
+    private BufferedImage image;
 
     public CreamDTO(Cream cream){
         id = cream.getId();

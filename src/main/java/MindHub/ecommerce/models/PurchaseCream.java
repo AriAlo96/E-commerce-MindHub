@@ -4,6 +4,7 @@ import MindHub.ecommerce.models.Cream;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.awt.image.BufferedImage;
 
 @Entity
 public class PurchaseCream {
@@ -14,13 +15,14 @@ public class PurchaseCream {
 
     private Integer quantity;
     private Double subtotal;
+    private BufferedImage image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cream_id")
     private Cream cream;
 
-    //@ManyToOne(fetch = FetchType.EAGER)
-    //@JoinColumn(name = "purchase_id")
-    //private Purchase purchase;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
 
     public PurchaseCream() {
@@ -30,6 +32,7 @@ public class PurchaseCream {
         this.quantity = quantity;
         this.subtotal = subtotal;
         this.cream = cream;
+        this.purchase = purchase;
     }
 
     public Long getId() {
@@ -50,6 +53,14 @@ public class PurchaseCream {
 
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
     public Cream getCream() {
