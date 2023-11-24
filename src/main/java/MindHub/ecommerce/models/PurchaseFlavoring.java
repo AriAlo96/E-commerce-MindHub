@@ -24,7 +24,7 @@ public class PurchaseFlavoring {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id")
-     private Purchase purchase;
+    private Purchase purchase;
 
     public PurchaseFlavoring() {
     }
