@@ -3,6 +3,7 @@ package MindHub.ecommerce.models;
 import javax.persistence.ManyToOne;
 
 public class Purchase {
+
     private Long id;
     @ManyToOne
     private Long clientId;
@@ -17,4 +18,7 @@ public class Purchase {
         this.totalPurchases = totalPurchases;
     }
 
+    public Long getId() {
+        return id;
+    }
 }

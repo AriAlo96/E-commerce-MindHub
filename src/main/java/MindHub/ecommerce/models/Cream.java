@@ -3,6 +3,7 @@ package MindHub.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +19,11 @@ public class Cream {
     private Integer quantity;
     private Integer stock;
     private Type type;
+    private BufferedImage image;
     @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams= new HashSet<>();
 
-    // img
+
 
 
     public Cream() {

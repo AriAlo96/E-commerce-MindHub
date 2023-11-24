@@ -3,6 +3,8 @@ package MindHub.ecommerce.dtos;
 import MindHub.ecommerce.models.Flavoring;
 import MindHub.ecommerce.models.Presentation;
 
+import java.awt.image.BufferedImage;
+
 public class FlavoringDTO {
     private Long id;
     private String name;
@@ -11,6 +13,7 @@ public class FlavoringDTO {
     private Double price;
     private Integer stock;
     private Presentation presentation;
+    private BufferedImage image;
 
     public FlavoringDTO(Flavoring flavoring){
         id = flavoring.getId();

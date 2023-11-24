@@ -3,6 +3,7 @@ package MindHub.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Flavoring {
     private Double price;
     private Integer stock;
     private Presentation presentation;
+    private BufferedImage image;
     @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
     // IMAGEN
