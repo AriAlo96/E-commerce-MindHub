@@ -124,10 +124,6 @@ public class FraganceController {
         }
     }
 
-    @PatchMapping("fragances/update")
-    public ResponseEntity<Object> updateFragance(Authentication authentication, @RequestParam Long id) {
-        return new ResponseEntity<>("The fragrance has been modified correctly.", HttpStatus.CREATED);
-    }
 
     @PatchMapping("fragances/delete")
     public ResponseEntity<Object> deleteFragance(Authentication authentication, @RequestParam Long id) {

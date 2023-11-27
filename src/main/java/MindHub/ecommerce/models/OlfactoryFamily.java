@@ -1,8 +1,8 @@
 package MindHub.ecommerce.models;
 
 public enum OlfactoryFamily {
-    CITRUSI,
-    FLORAL,
+    CITRUS,
+    FLOWERY,
     FOUGÉRE,
     CHYPRE,
     WOODY,
