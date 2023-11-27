@@ -37,11 +37,16 @@ public class Fragance {
         this.description = description;
         this.gender = gender;
         this.olfactoryFamily = olfactoryFamily;
+        this.image = image;
         this.price = price;
         this.presentation = presentation;
         this.content = content;
         this.stock = stock;
         this.active = active;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

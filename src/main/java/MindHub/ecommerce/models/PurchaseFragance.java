@@ -14,17 +14,15 @@ public class PurchaseFragance {
     private Purchase purchase;
     @ManyToOne
     private Fragance fragance;
-    private Integer amount;
+    private Integer quantity;
     private Double subtotal;
 
 
     public PurchaseFragance() {
     }
 
-    public PurchaseFragance(Purchase purchase, Fragance fragance, Integer amount, Double subtotal) {
-        this.purchase = purchase;
-        this.fragance = fragance;
-        this.amount = amount;
+    public PurchaseFragance(Integer quantity, Double subtotal) {
+        this.quantity = quantity;
         this.subtotal = subtotal;
     }
 
@@ -48,12 +46,12 @@ public class PurchaseFragance {
         this.fragance = fragance;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Double getSubtotal() {

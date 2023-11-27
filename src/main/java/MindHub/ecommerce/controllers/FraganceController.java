@@ -11,11 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/velvet")
@@ -42,8 +42,11 @@ public class FraganceController {
                                                     @RequestParam OlfactoryFamily olfactoryFamily,
                                                     @RequestParam Double price, @RequestParam Presentation presentation,
                                                     @RequestParam Integer content, @RequestParam Integer stock,
-                                                    @RequestParam("file") MultipartFile image)
+                                                    @RequestParam String image)
     {
+        List<String> fragancesName = fraganceService.findAllFragances().stream().map(
+                fragance -> fragance.getName()).collect(Collectors.toList());
+
         if (name.isEmpty()) {
             return new ResponseEntity<>("The fragrance name is required.", HttpStatus.BAD_REQUEST);
         }
@@ -59,23 +62,71 @@ public class FraganceController {
         if (stock == null) {
             return new ResponseEntity<>("The fragrance stock is required.", HttpStatus.BAD_REQUEST);
         }
+        if (fragancesName.contains(name)) {
+            return new ResponseEntity<>("The fragrance name already use", HttpStatus.BAD_REQUEST);
+        }
         if (image.isEmpty()) {
             return new ResponseEntity<>("The fragrance image is required.", HttpStatus.BAD_REQUEST);
-        }
-        try {
-            byte[] imageBytes = image.getBytes();
-            Fragance newFragance = new Fragance(name, description, gender, olfactoryFamily, "", price, presentation,
+        } else {
+            Fragance newFragance = new Fragance(name, description, gender, olfactoryFamily, image, price, presentation,
                     content, stock, true);
             fraganceService.saveFragance(newFragance);
-            return new ResponseEntity<>("Fragancia cargada exitosamente", HttpStatus.OK);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Error al cargar la imagen de la fragancia.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Fragance create successfully", HttpStatus.OK);
+        }
+    }
+
+    @PatchMapping("/fragances/update")
+    public ResponseEntity<String> updateFragance(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String description,
+                                                 @RequestParam(required = false) Gender gender,
+                                                 @RequestParam(required = false) OlfactoryFamily olfactoryFamily,
+                                                 @RequestParam(required = false) Double price,
+                                                 @RequestParam(required = false) Presentation presentation,
+                                                 @RequestParam(required = false) Integer content,
+                                                 @RequestParam(required = false) Integer stock,
+                                                 @RequestParam(required = false) String image, @RequestParam Long id)
+    {
+        Fragance fragance = fraganceService.findFraganceById(id);
+        List<String> fragancesName = fraganceService.findAllFragances().stream().map(
+                fraganceName -> fraganceName.getName()).collect(Collectors.toList());
+        if (fragancesName.contains(name)) {
+            return new ResponseEntity<>("The fragrance name already use", HttpStatus.BAD_REQUEST);
+        } else {
+            if(name != null){
+                fragance.setName(name);
+            }
+            if(description != null){
+                fragance.setDescription(description);
+            }
+            if(gender != null){
+                fragance.setGender(gender);
+            }
+            if(olfactoryFamily != null){
+                fragance.setOlfactoryFamily(olfactoryFamily);
+            }
+            if(price != null){
+                fragance.setPrice(price);
+            }
+            if(presentation != null){
+                fragance.setPresentation(presentation);
+            }
+            if(content != null){
+                fragance.setContent(content);
+            }
+            if(stock != null){
+                fragance.setStock(stock);
+            }
+            if(image != null){
+                fragance.setImage(image);
+            }
+            fraganceService.saveFragance(fragance);
+            return new ResponseEntity<>("Fragance update successfully", HttpStatus.OK);
         }
     }
 
     @PatchMapping("fragances/update")
     public ResponseEntity<Object> updateFragance(Authentication authentication, @RequestParam Long id) {
-        return new ResponseEntity<>("The fragrance has been modified correctly.",HttpStatus.CREATED);
+        return new ResponseEntity<>("The fragrance has been modified correctly.", HttpStatus.CREATED);
     }
 
     @PatchMapping("fragances/delete")

@@ -90,4 +90,8 @@ public class Client {
     public void setTotalPurchases(Set<Purchase> totalPurchases) {
         this.totalPurchases = totalPurchases;
     }
+    public void addPurchase(Purchase purchase) {
+        purchase.setClient(this);
+        totalPurchases.add(purchase);
+    }
 }
