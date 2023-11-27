@@ -24,8 +24,7 @@ public class Purchase {
     public Purchase() {
     }
 
-    public Purchase(Client client, Double totalPurchases) {
-        this.client = client;
+    public Purchase(Double totalPurchases) {
         this.totalPurchases = totalPurchases;
     }
 
