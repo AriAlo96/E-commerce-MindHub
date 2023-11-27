@@ -33,7 +33,7 @@ public class FraganceController {
     @PostMapping("/newFragance")
     public ResponseEntity<String> newFragance(@RequestParam String name, @RequestParam String description,
                                               @RequestParam Gender gender,
-                                              @RequestParam OlfactoryFamily olfactoryFamily, @RequestParam Double price,
+                                                  @RequestParam OlfactoryFamily olfactoryFamily, @RequestParam Double price,
                                               @RequestParam Presentation presentation, @RequestParam Integer content,
                                               @RequestParam Integer stock, @RequestParam("file") MultipartFile image)
     {

@@ -22,9 +22,6 @@ public class Cream {
     @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams= new HashSet<>();
 
-
-
-
     public Cream() {
     }
 

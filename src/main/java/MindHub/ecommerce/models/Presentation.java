@@ -4,7 +4,6 @@ public enum Presentation {
     AMBIENT,
     FABRICS,
     DIFFUSERS,
-
     CLASICPACKAGE,
     TRIBUTE
 
