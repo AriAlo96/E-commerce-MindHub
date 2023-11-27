@@ -25,17 +25,7 @@ public class PurchaseServiceImplements implements PurchaseService {
     }
 
     @Override
-    public Purchase findPurchaseByEmail(String email) {
-        return purchaseRepository.findByEmail(email);
-    }
-
-    @Override
     public void savePurchase(Purchase purchase) {
         purchaseRepository.save(purchase);
-    }
-
-    @Override
-    public Boolean existsPurchaseByEmail(String email) {
-        return purchaseRepository.existsPurchaseByEmail(email);
     }
 }

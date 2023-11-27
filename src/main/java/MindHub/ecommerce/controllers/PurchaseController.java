@@ -46,7 +46,7 @@ public class PurchaseController {
         Client client = clientService.findClientByEmail(authentication.getName());
         PurchaseFragance purchaseFragance = new PurchaseFragance(purchaseFraganceDTO.getQuantity(),
                 purchaseFraganceDTO.getSubtotal());
-//        PurchaseCream purchaseCream = new PurchaseCream(purchaseCreamDTO.getQuantity(), purchaseCreamDTO.getSubtotal());
+
         Purchase purchase = new Purchase(
                 (purchaseCreamDTO.getSubtotal() + purchaseFlavoringDTO.getSubtotal() + purchaseFraganceDTO.getSubtotal()));
         client.addPurchase(purchase);
