@@ -16,19 +16,19 @@ public class ECommerceApplication {
         SpringApplication.run(ECommerceApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner initData(FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
-//                                      CreamRepository creamRepository)
-//    {
-//        return args -> {
-//            //-------------CLIENTS-------------
-//
-//
-//            //-------------FRAGANCES-------------
-//            Fragance marsella = new Fragance("Marsella", "ef", Gender.WOMEN, OlfactoryFamily.CHYPRE,
-//                    "../resources/static/web/assets/images/BAGUES-Rio-ML-X-50.jpg", 8000.00, Presentation.CLASICPACKAGE,
-//                    50,10);
-//            fraganceRepository.save(marsella);
-//        };
-//    }
+    @Bean
+    public CommandLineRunner initData(FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
+                                      CreamRepository creamRepository)
+    {
+        return args -> {
+            //-------------CLIENTS-------------
+
+
+            //-------------FRAGANCES-------------
+         //  Fragance marsella = new Fragance("Marsella", "ef", Gender.WOMEN, OlfactoryFamily.CHYPRE,
+           //        "../resources/static/web/assets/images/BAGUES-Rio-ML-X-50.jpg", 8000.00, Presentation.CLASICPACKAGE,
+             //      50,10);
+         //   fraganceRepository.save(marsella);
+        };
+    }
 }

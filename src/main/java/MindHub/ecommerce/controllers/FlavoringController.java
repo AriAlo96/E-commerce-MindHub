@@ -2,15 +2,18 @@ package MindHub.ecommerce.controllers;
 
 import MindHub.ecommerce.dtos.CreamDTO;
 import MindHub.ecommerce.dtos.FlavoringDTO;
+import MindHub.ecommerce.dtos.UpdateFlavoringDTO;
 import MindHub.ecommerce.models.Cream;
 import MindHub.ecommerce.models.Flavoring;
 import MindHub.ecommerce.models.Presentation;
 import MindHub.ecommerce.models.Type;
 import MindHub.ecommerce.repositories.FlavoringRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -86,28 +89,16 @@ public class FlavoringController {
     }
 
     @PatchMapping("/flavorings/update")
-    public ResponseEntity<Object> updateFlavoring(@RequestParam Long id, @RequestParam Double price){
+    public ResponseEntity<Object> updateFlavoring(@RequestParam Long id, @RequestParam UpdateFlavoringDTO updateFlavoringDTO){
 
+        Flavoring flavoring = flavoringRepository.findById(id).get();
+        // Copiar los valores del DTO al producto
+        BeanUtils.copyProperties (updateFlavoringDTO, flavoring);
+        // Guardar el producto actualizado en la base de datos
+        flavoringRepository.save (flavoring);
+        // Retornar el producto actualizado
+        return new ResponseEntity<>("change Update!", HttpStatus.OK);
 
-        if (price.isNaN()){
-            return new ResponseEntity<>("complete the Price", HttpStatus.FORBIDDEN);
-        }
-        if (price <= 0){
-            return new ResponseEntity<>("The price cant be 0 or less", HttpStatus.FORBIDDEN);
-        }
-        if (!flavoringRepository.existsById(id)){
-            return new ResponseEntity<>("The cream Id dosent Exist", HttpStatus.FORBIDDEN);
-        }
-        Optional<Flavoring> flavoring =  flavoringRepository.findById(id);
-
-
-        Flavoring flavoring1 = flavoring.get();
-
-        flavoring1.setPrice(price);
-
-        flavoringRepository.save(flavoring1);
-
-        return new ResponseEntity<>("Price update!", HttpStatus.FORBIDDEN);
 
     }
 
