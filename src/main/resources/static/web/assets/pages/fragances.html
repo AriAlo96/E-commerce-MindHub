@@ -160,10 +160,12 @@
             </div>
             <div class="d-flex justify-content-center">
                 <form class="d-flex search-form-overlay" role="search">
-                    <input v-model="valueSearch" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input v-model="valueSearch" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search">
                     <button
                         style="color: aliceblue; background-color: #fbb002d4; border: solid 2px #fbb002d4; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"
-                        class="btn btn-outline-success button-search" type="submit" @click="filterSearch">Search</button>
+                        class="btn btn-outline-success button-search" type="submit"
+                        @click="filterSearch">Search</button>
                 </form>
             </div>
         </header>
@@ -213,6 +215,11 @@
             <h1
                 style="font-size: 3rem !important; text-align: center; margin-top: 1rem; color: #ec225e; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);">
                 Fragances</h1>
+            <div class="d-flex justify-content-end">
+                <a class="nav-link active" aria-current="page" href="./" style="color: #ec225e; font-weight: 600;">Go to Air
+                    Fresheners</a>
+            </div>
+
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
                     <div class="d-flex flex-column">
@@ -228,13 +235,15 @@
                     <div class="d-flex flex-column">
                         <h6 class="form-label mx-2">Gender</h6>
                         <div class="form-check" v-for="gender in genders" :key="gender">
-                          <input class="form-check-input" type="radio" :id="gender.id" :value="gender.value" v-model="genderSelected">
-                          <label class="form-check-label" :for="gender.id">
-                            {{ gender.label }}
-                          </label>
+                            <input class="form-check-input" type="radio" :id="gender.id" :value="gender.value"
+                                v-model="genderSelected">
+                            <label class="form-check-label" :for="gender.id">
+                                {{ gender.label }}
+                            </label>
                         </div>
-                      </div>
-                    <a @click="filterByPriceAndGender" class="btn" style="background-color:#020305; color:#ffffff;">Search</a>
+                    </div>
+                    <a @click="filterByPriceAndGender" class="btn"
+                        style="background-color:#020305; color:#ffffff;">Search</a>
                 </div>
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" style="width: 20rem;">
