@@ -81,8 +81,7 @@ public class FlavoringController {
 
         flavoringRepository.save(flavoring);
 
-
-        // nuevo push para ari
+        //arreglado el controlador
         return new ResponseEntity<>("Flavoring created", HttpStatus.CREATED);
     }
 
