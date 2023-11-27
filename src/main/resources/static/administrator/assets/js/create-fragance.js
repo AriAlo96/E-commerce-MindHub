@@ -1,7 +1,6 @@
 const app = Vue.createApp({
     data() {
       return {
-        fragances: [],
         name:"",
         description: "",
         gender: "",
@@ -14,17 +13,7 @@ const app = Vue.createApp({
 
       };
     },
-    
-    created() {
-        axios.get("")
-            .then(response => {
-                this.fragances = response.data;
-                
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
+       
 
     methods: {
         createNewFragance() {
@@ -43,7 +32,7 @@ const app = Vue.createApp({
                   popup: '',
                   backdrop: ''
             }, preConfirm: () => {
-            axios.post(`/velvet/new/fragance`,`name=${this.name}&description=${this.description}&gender=${this.gender}&olfactoryFamily=${this.olfactoryFamily}&price=${this.price}&presentation=${this.presentation}&content=${this.content}&stock=${this.stock}&image=${this.routeImage}`)
+            axios.post("/velvet/fragances/create",`name=${this.name}&description=${this.description}&gender=${this.gender}&olfactoryFamily=${this.olfactoryFamily}&price=${this.price}&presentation=${this.presentation}&content=${this.content}&stock=${this.stock}&image=${this.routeImage}`)
                 .then(() => {
                     Swal.fire({
                         title: "Successfully created fragance",

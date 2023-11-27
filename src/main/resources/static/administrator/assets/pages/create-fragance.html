@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://unpkg.com/bootstrap-icons@1.19.0/font/bootstrap-icons.css"></script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -78,59 +78,58 @@
                         Create a new fragance here!</legend>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Name</span>
-                        <input type="text" class="form-control" aria-label="name" aria-describedby="basic-addon1">
+                        <input v-model="name" type="text" class="form-control" aria-label="name" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select v-model="olfactoryFamily" class="form-select" id="inputGroupSelect01">
                             <option selected>Select</option>
-                            <option value="">Flowery</option>
-                            <option value="">Citrus</option>
-                            <option value="">Chypre</option>
-                            <option value="">Oriental</option>
-                            <option value="">Fougére</option>
-                            <option value="">Woody</option>
+                            <option value="FLORAL">Flowery</option>
+                            <option value="CITRUSI">Citrus</option>
+                            <option value="CHYPRE">Chypre</option>
+                            <option value="ORIENTAL">Oriental</option>
+                            <option value="FOUGÉRE">Fougére</option>
+                            <option value="WOODY">Woody</option>
                         </select>
                         <label class="input-group-text" for="inputGroupSelect01">Olfactor Family</label>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputGroupSelect01">Gender</label>
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select v-model="gender" class="form-select" id="inputGroupSelect01">
                             <option selected>Select</option>
-                            <option value="">Femenine</option>
-                            <option value="">Masculine</option>
+                            <option value="WOMEN">Femenine</option>
+                            <option value="MAN">Masculine</option>
                         </select>
                     </div>
                     <div class="input-group mb-3">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select v-model="presentation" class="form-select" id="inputGroupSelect01">
                             <option selected>Select</option>
-                            <option value="">Classic packaging</option>
-                            <option value="">Tribute</option>
+                            <option value="CLASICPACKAGE">Classic packaging</option>
+                            <option value="TRIBUTE">Tribute</option>
                         </select>
                         <label class="input-group-text" for="inputGroupSelect01">Presentation</label>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Content</span>
-                        <input type="number" class="form-control" aria-label="content" aria-describedby="basic-addon1">
+                        <input v-model="content" type="number" class="form-control" aria-label="content" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">$</span>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        <span class="input-group-text">.99</span>
+                        <input v-model="price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Description</span>
-                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                        <textarea v-model="description" class="form-control" aria-label="With textarea"></textarea>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" aria-label="content" aria-describedby="basic-addon1">
+                        <input v-model="stock" type="number" class="form-control" aria-label="content" aria-describedby="basic-addon1">
                         <span class="input-group-text" id="basic-addon1">Stock</span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Image Url</span>
-                        <input type="text" class="form-control" aria-label="content" aria-describedby="basic-addon1">
+                        <input v-model="routeImage" type="text" class="form-control" aria-label="content" aria-describedby="basic-addon1">
                     </div>
                     <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
-                        <button type="button" class="btn"
+                        <button @click="createNewFragance()" type="button" class="btn"
                             style="background-color: #ec225e; color: aliceblue;">Create</button>
                     </div>
                 </div>
@@ -162,6 +161,7 @@
     </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../../administrator/assets/js/create-fragance.js"></script>
 
 </html>
