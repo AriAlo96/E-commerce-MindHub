@@ -2,8 +2,6 @@ package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.*;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.Set;
 
 public class FraganceDTO {private Long id;
@@ -17,6 +15,7 @@ public class FraganceDTO {private Long id;
     private Integer content;
     private Integer stock;
     private Set<PurchaseFragance> purchesFragances;
+    private Boolean active;
 
     public FraganceDTO(Fragance fragance)
     {
@@ -30,6 +29,7 @@ public class FraganceDTO {private Long id;
         this.content = fragance.getContent();
         this.stock = fragance.getStock();
         this.purchesFragances = fragance.getPurchesFragances();
+        this.active = fragance.getActive();
     }
 
     public String getName() {
@@ -70,5 +70,9 @@ public class FraganceDTO {private Long id;
 
     public Set<PurchaseFragance> getPurchesFragances() {
         return purchesFragances;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }
