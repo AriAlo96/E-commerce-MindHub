@@ -1,55 +1,51 @@
 package MindHub.ecommerce.controllers;
 
 import MindHub.ecommerce.dtos.CreamDTO;
-
+import MindHub.ecommerce.dtos.FlavoringDTO;
 import MindHub.ecommerce.models.Cream;
+import MindHub.ecommerce.models.Flavoring;
+import MindHub.ecommerce.models.Presentation;
 import MindHub.ecommerce.models.Type;
-import MindHub.ecommerce.repositories.CreamRepository;
+import MindHub.ecommerce.repositories.FlavoringRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.Position;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/velvet")
-public class CreamController {
+public class FlavoringController {
     @Autowired
-    private CreamRepository creamRepository;
+    private FlavoringRepository flavoringRepository;
 
-    @GetMapping("/creams")
-    public List<CreamDTO> getAllCreams(){
-        List<Cream> creams = creamRepository.findAll();
-        return  creams.stream()
-                .map(CreamDTO::new)
+    @GetMapping("/flavorings")
+    public List<FlavoringDTO> getAllFlavoring(){
+        List<Flavoring> flavorings = flavoringRepository.findAll();
+        return  flavorings.stream()
+                .map(FlavoringDTO::new)
                 .collect(Collectors.toList());
     }
+    @GetMapping("/flavorings/{id}")
+    public FlavoringDTO getFlavoringId(@PathVariable Long id){
+        Optional<Flavoring> flavoring = flavoringRepository.findById(id);
 
-
-    @GetMapping("/creams/{id}")
-    public CreamDTO getCreamId(@PathVariable Long id){
-         Optional<Cream> cream =  creamRepository.findById(id);
-
-         if (cream.isPresent()){
-             Cream cream1 = cream.get();
-             return  new CreamDTO(cream1);
-         }
-         else {
-             throw new ResourceNotFoundException("This Id Cream not exist");
-         }
+        if (flavoring.isPresent()){
+            Flavoring flavoring1 = flavoring.get();
+            return  new FlavoringDTO(flavoring1);
+        }
+        else {
+            throw new ResourceNotFoundException("This Id flavoring not exist");
+        }
     }
-
-    @PostMapping("/creams/create")
+    @PostMapping("/flavorings/create")
     public ResponseEntity<Object> createNewCream(@RequestParam String name, @RequestParam String description,
-       @RequestParam Double price, @RequestParam Integer content, @RequestParam Integer stock,
-       @RequestParam Type type, @RequestParam String image){
-
+                                                 @RequestParam Double price, @RequestParam Integer content, @RequestParam Integer stock,
+                                                 @RequestParam Presentation presentation, @RequestParam String image){
         if (name.isBlank()){
             return new ResponseEntity<>("complete the name", HttpStatus.FORBIDDEN);
         }
@@ -77,13 +73,17 @@ public class CreamController {
         if (content <= 0){
             return new ResponseEntity<>("The Stock cant be 0 or less ", HttpStatus.FORBIDDEN);
         }
+        if (presentation == null){
+            return new ResponseEntity<>("Complete the Presentation", HttpStatus.FORBIDDEN);
+        }
 
-        Cream cream = new Cream(name,description,price,content,stock,type,image);
-        return new ResponseEntity<>("cream created!", HttpStatus.CREATED);
+        Flavoring flavoring = new Flavoring(name,description,content,price,stock,presentation,image);
+
+        return new ResponseEntity<>("Flavoring created", HttpStatus.CREATED);
     }
 
-    @PatchMapping("/creams/update")
-    public ResponseEntity<Object> updateCream(@RequestParam Long id, @RequestParam Double price){
+    @PatchMapping("/flavorings/update")
+    public ResponseEntity<Object> updateFlavoring(@RequestParam Long id, @RequestParam Double price){
 
 
         if (price.isNaN()){
@@ -92,31 +92,28 @@ public class CreamController {
         if (price <= 0){
             return new ResponseEntity<>("The price cant be 0 or less", HttpStatus.FORBIDDEN);
         }
-        if (!creamRepository.existsById(id)){
+        if (!flavoringRepository.existsById(id)){
             return new ResponseEntity<>("The cream Id dosent Exist", HttpStatus.FORBIDDEN);
         }
-        Optional<Cream> cream =  creamRepository.findById(id);
+        Optional<Flavoring> flavoring =  flavoringRepository.findById(id);
 
 
-        Cream cream1 = cream.get();
+        Flavoring flavoring1 = flavoring.get();
 
-        cream1.setPrice(price);
+        flavoring1.setPrice(price);
 
-        creamRepository.save(cream1);
+        flavoringRepository.save(flavoring1);
 
         return new ResponseEntity<>("Price update!", HttpStatus.FORBIDDEN);
 
     }
 
-    @PatchMapping("/creams/delete")
-    public ResponseEntity<Object> deleteCream(@RequestParam Long id){
-        if (!creamRepository.existsById(id)){
+    @PatchMapping("/flavorings/delete")
+    public ResponseEntity<Object> deleteFlavoring(@RequestParam Long id){
+        if (!flavoringRepository.existsById(id)){
             return new ResponseEntity<>("The Id dosent exist", HttpStatus.FORBIDDEN);
         }
-        creamRepository.deleteById(id);
-        return new ResponseEntity<>("Cream removed!", HttpStatus.OK);
+        flavoringRepository.deleteById(id);
+        return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
-
-
-
 }
