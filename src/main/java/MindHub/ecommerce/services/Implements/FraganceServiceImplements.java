@@ -1,5 +1,6 @@
 package MindHub.ecommerce.services.Implements;
 
+import MindHub.ecommerce.models.Client;
 import MindHub.ecommerce.models.Fragance;
 import MindHub.ecommerce.repositories.FraganceRepository;
 import MindHub.ecommerce.services.FraganceService;
@@ -13,12 +14,16 @@ public class FraganceServiceImplements implements FraganceService {
     @Autowired
     private FraganceRepository fraganceRepository;
     @Override
-    public void saveNewFragance(Fragance fragance){
+    public void saveFragance(Fragance fragance){
         fraganceRepository.save(fragance);
     }
 
     @Override
     public List<Fragance> findAllFragances() {
         return fraganceRepository.findAll();
+    }
+    @Override
+    public Fragance findFraganceById(Long id) {
+        return fraganceRepository.findById(id).orElse(null);
     }
 }

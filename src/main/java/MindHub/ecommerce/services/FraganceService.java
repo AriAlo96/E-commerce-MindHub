@@ -5,6 +5,7 @@ import MindHub.ecommerce.models.Fragance;
 import java.util.List;
 
 public interface FraganceService {
-    void saveNewFragance(Fragance fragance);
+    void saveFragance(Fragance fragance);
     List<Fragance> findAllFragances();
+    Fragance findFraganceById (Long id);
 }
