@@ -27,11 +27,9 @@ public class PurchaseFlavoring {
     public PurchaseFlavoring() {
     }
 
-    public PurchaseFlavoring(Integer quantity, Double subtotal, Flavoring flavoring, Long flavoringId) {
+    public PurchaseFlavoring(Integer quantity, Double subtotal) {
         this.quantity = quantity;
         this.subtotal = subtotal;
-        this.flavoring = flavoring;
-
 
     }
 
