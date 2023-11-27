@@ -3,7 +3,6 @@ package MindHub.ecommerce.dtos;
 import MindHub.ecommerce.models.Client;
 import MindHub.ecommerce.models.Purchase;
 
-import java.util.List;
 import java.util.Set;
 
 public class ClientDTO {

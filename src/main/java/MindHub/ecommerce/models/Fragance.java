@@ -23,6 +23,7 @@ public class Fragance {
     private Presentation presentation;
     private Integer content;
     private Integer stock;
+    private Boolean active;
     @OneToMany(mappedBy = "fragance", fetch = FetchType.EAGER)
     private Set<PurchaseFragance> purchesFragances;
 
@@ -30,7 +31,7 @@ public class Fragance {
     }
 
     public Fragance(String name, String description, Gender gender, OlfactoryFamily olfactoryFamily,
-                    String image, Double price, Presentation presentation, Integer content, Integer stock)
+                    String image, Double price, Presentation presentation, Integer content, Integer stock, Boolean active)
     {
         this.name = name;
         this.description = description;
@@ -40,7 +41,7 @@ public class Fragance {
         this.presentation = presentation;
         this.content = content;
         this.stock = stock;
-
+        this.active = active;
     }
 
     public String getName() {
@@ -121,5 +122,13 @@ public class Fragance {
 
     public void setPurchesFragances(Set<PurchaseFragance> purchesFragances) {
         this.purchesFragances = purchesFragances;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
