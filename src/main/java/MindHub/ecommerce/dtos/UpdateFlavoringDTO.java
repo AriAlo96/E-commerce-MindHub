@@ -2,33 +2,26 @@ package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.Flavoring;
 import MindHub.ecommerce.models.Presentation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.awt.image.BufferedImage;
+public class UpdateFlavoringDTO {
 
-public class FlavoringDTO {
-    private Long id;
+
+    @JsonProperty(required = false)
     private String name;
+    @JsonProperty (required = false)
     private String description;
+    @JsonProperty (required = false)
     private Integer content;
+    @JsonProperty (required = false)
     private Double price;
+    @JsonProperty (required = false)
     private Integer stock;
+    @JsonProperty (required = false)
     private Presentation presentation;
+    @JsonProperty (required = false)
     private String image;
 
-    public FlavoringDTO(Flavoring flavoring){
-        id = flavoring.getId();
-        name = flavoring.getName();
-        description = flavoring.getDescription();
-        content = flavoring.getContent();
-        price = flavoring.getPrice();
-        stock = flavoring.getStock();
-        presentation = flavoring.getPresentation();
-        image = flavoring.getImage();
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -54,7 +47,5 @@ public class FlavoringDTO {
         return presentation;
     }
 
-    public String getImage() {
-        return image;
-    }
+    public String getImage() {return image;}
 }

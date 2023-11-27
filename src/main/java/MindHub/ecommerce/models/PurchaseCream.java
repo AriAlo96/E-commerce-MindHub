@@ -28,11 +28,10 @@ public class PurchaseCream {
     public PurchaseCream() {
     }
 
-    public PurchaseCream(Integer quantity, Double subtotal, Cream cream, Purchase purchase) {
+    public PurchaseCream(Integer quantity, Double subtotal) {
         this.quantity = quantity;
         this.subtotal = subtotal;
-        this.cream = cream;
-        this.purchase = purchase;
+
     }
 
     public Long getId() {
