@@ -79,6 +79,8 @@ public class FlavoringController {
 
         Flavoring flavoring = new Flavoring(name,description,content,price,stock,presentation,image);
 
+        flavoringRepository.save(flavoring);
+
         return new ResponseEntity<>("Flavoring created", HttpStatus.CREATED);
     }
 
