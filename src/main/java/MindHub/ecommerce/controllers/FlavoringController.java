@@ -3,11 +3,9 @@ package MindHub.ecommerce.controllers;
 import MindHub.ecommerce.dtos.CreamDTO;
 import MindHub.ecommerce.dtos.FlavoringDTO;
 import MindHub.ecommerce.dtos.UpdateFlavoringDTO;
-import MindHub.ecommerce.models.Cream;
-import MindHub.ecommerce.models.Flavoring;
-import MindHub.ecommerce.models.Presentation;
-import MindHub.ecommerce.models.Type;
+import MindHub.ecommerce.models.*;
 import MindHub.ecommerce.repositories.FlavoringRepository;
+import MindHub.ecommerce.services.FlavoringService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -24,22 +22,22 @@ import java.util.stream.Collectors;
 @RequestMapping("/velvet")
 public class FlavoringController {
     @Autowired
-    private FlavoringRepository flavoringRepository;
+    private FlavoringService flavoringService;
 
     @GetMapping("/flavorings")
     public List<FlavoringDTO> getAllFlavoring(){
-        List<Flavoring> flavorings = flavoringRepository.findAll();
+        List<Flavoring> flavorings = flavoringService.findAllFlavorings();
         return  flavorings.stream()
                 .map(FlavoringDTO::new)
                 .collect(Collectors.toList());
     }
     @GetMapping("/flavorings/{id}")
     public FlavoringDTO getFlavoringId(@PathVariable Long id){
-        Optional<Flavoring> flavoring = flavoringRepository.findById(id);
+        Flavoring flavoring = flavoringService.findFlavoringByID(id);
 
-        if (flavoring.isPresent()){
-            Flavoring flavoring1 = flavoring.get();
-            return  new FlavoringDTO(flavoring1);
+        if (flavoring != null){
+
+            return  new FlavoringDTO(flavoring);
         }
         else {
             throw new ResourceNotFoundException("This Id flavoring not exist");
@@ -80,34 +78,62 @@ public class FlavoringController {
             return new ResponseEntity<>("Complete the Presentation", HttpStatus.FORBIDDEN);
         }
 
-        Flavoring flavoring = new Flavoring(name,description,content,price,stock,presentation,image);
+        Flavoring flavoring = new Flavoring(name,description,content,price,stock,presentation,image, true);
 
-        flavoringRepository.save(flavoring);
+        flavoringService.saveFlavoring(flavoring);
 
         //arreglado el controlador
         return new ResponseEntity<>("Flavoring created", HttpStatus.CREATED);
     }
 
     @PatchMapping("/flavorings/update")
-    public ResponseEntity<Object> updateFlavoring(@RequestParam Long id, @RequestParam UpdateFlavoringDTO updateFlavoringDTO){
+    public ResponseEntity<String> updateFlavoring(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String description,
+                                                 @RequestParam(required = false) Double price,
+                                                 @RequestParam(required = false) Presentation presentation,
+                                                 @RequestParam(required = false) Integer content,
+                                                 @RequestParam(required = false) Integer stock,
+                                                 @RequestParam(required = false) String image, @RequestParam Long id)
+    {
+        Flavoring flavoring = flavoringService.findFlavoringByID(id);
 
-        Flavoring flavoring = flavoringRepository.findById(id).get();
-        // Copiar los valores del DTO al producto
-        BeanUtils.copyProperties (updateFlavoringDTO, flavoring);
-        // Guardar el producto actualizado en la base de datos
-        flavoringRepository.save (flavoring);
-        // Retornar el producto actualizado
-        return new ResponseEntity<>("change Update!", HttpStatus.OK);
-
-
+        List<String> flavoringName = flavoringService.findAllFlavorings().stream().map(
+                Flavoring::getName).collect(Collectors.toList());
+        if (flavoringName.contains(name)) {
+            return new ResponseEntity<>("The fragrance name already use", HttpStatus.BAD_REQUEST);
+        } else {
+            if(name != null){
+                flavoring.setName(name);
+            }
+            if(description != null){
+                flavoring.setDescription(description);
+            }
+            if(price != null){
+                flavoring.setPrice(price);
+            }
+            if(presentation != null){
+                flavoring.setPresentation(presentation);
+            }
+            if(content != null){
+                flavoring.setContent(content);
+            }
+            if(stock != null){
+                flavoring.setStock(stock);
+            }
+            if(image != null){
+                flavoring.setImage(image);
+            }
+            flavoringService.saveFlavoring(flavoring);
+            return new ResponseEntity<>("flavoring update successfully", HttpStatus.OK);
+        }
     }
 
     @PatchMapping("/flavorings/delete")
     public ResponseEntity<Object> deleteFlavoring(@RequestParam Long id){
-        if (!flavoringRepository.existsById(id)){
+        if (!flavoringService.existFlavoringById(id)){
             return new ResponseEntity<>("The Id dosent exist", HttpStatus.FORBIDDEN);
         }
-        flavoringRepository.deleteById(id);
+        flavoringService.deleteFlavoringById(id);
         return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
 }
