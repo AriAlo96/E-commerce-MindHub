@@ -23,19 +23,23 @@ const app = Vue.createApp({
   created() {
     axios.get("/velvet/fragances")
       .then(response => {
+      console.log(response);  
         this.fragances = response.data;
-
+        this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+        this.fragances = this.fragances.map(fragance => {
+        let aux = this.shoppingCart.find(product => product.id == fragance.id)
+        if (aux){
+          return aux
+        }
+        return fragance
+       })
+        for (let product of this.shoppingCart) {
+          this.totalPrice += product.price * product.quantity;
+        }
       })
       .catch(error => {
         console.log(error);
       });
-
-    this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
-
-    for (let product of this.shoppingCart) {
-      this.totalPrice += product.price * product.quantity;
-    }
-
   },
 
   methods: {
@@ -51,18 +55,21 @@ const app = Vue.createApp({
         return (!priceSelected || (fragance.price >= priceSelected.value[0] && fragance.price <= priceSelected.value[1])) && (!genderSelected || fragance.gender === genderSelected.value)
       });
     },
+
     addFromCart(product) {
       const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
     if (index !== -1) {
       this.shoppingCart[index].quantity += 1;
     } else {
-      this.shoppingCart.push({ ...product, quantity: 1});
+      product.quantity = 1
+      this.shoppingCart.push(product);
     }
-      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
-      this.updateTotalPrice();
+     this.updateTotalPrice();
       product.stock -= 1;
-
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      
     },
+
     removeFromCart(product) {
       let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
       this.shoppingCart.splice(index, 1)
@@ -80,18 +87,12 @@ const app = Vue.createApp({
         }
       }
     },
-
-    incrementQuantity(item) {
-      if(item.stock >=1){
-      item.quantity += 1;
-      item.stock -= 1;
-      this.updateTotalPrice();
-    }},
     decrementQuantity(item) {
       if (item.quantity > 1) {
         item.quantity -= 1;
         item.stock += 1
         this.updateTotalPrice();
+        localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
       }
     },
     updateTotalPrice() {

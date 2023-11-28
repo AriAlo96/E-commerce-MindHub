@@ -68,7 +68,7 @@
                         <path
                             d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
                     </svg></button>
-                    <a @click="logOut" style="color: #ec225e; cursor: pointer;">Log Out</a>
+                <a @click="logOut" style="color: #ec225e; cursor: pointer;">Log Out</a>
             </nav>
             <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
                 id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -91,24 +91,21 @@
                                         <small class="messages-error" style="color:#f00;"></small>
                                     </div>
                                     <div class="box-quantity">
-                                        <a  type="button"
+                                        <a v-if="item.quantity > 0" type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMin_{{ item.id }}" data-btn="restar" @click="decrementQuantity(item)">-</a>
+                                            id="cantidadMin_{{ item.id }}" data-btn="restar"
+                                            @click="decrementQuantity(item)">-</a>
                                         <div class="cart-quantity-input-container">
                                             <input :value="item.quantity" type="number"
                                                 class="js-cart-quantity-input cart-quantity-input count"
-                                                :id="'cantidad_' + item.id"pattern="" min="1" max="">
+                                                :id="'cantidad_' + item.id" pattern="" min="0" max="{{item.stock}}">
                                             <i class="fas fa-cog fa-spin cart-quantity-loading"
                                                 style="display: none;"></i>
                                         </div>
-                                        <a type="button"
+                                        <a v-if="item.stock > 0" type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            :id="'cantidadMax_' + item.id" data-btn="sumar" @click="addFromCart(item)">+</a>
-                                    </div>
-                                    <div class="item-quantity-available">
-                                        <p id="disponibles_{{ item.stock }}">
-                                            {{ item.stock }} available
-                                        </p>
+                                            :id="'cantidadMax_' + item.id" data-btn="sumar"
+                                            @click="addFromCart(item)">+</a>
                                     </div>
                                 </div>
                                 <div class="ajax-cart-item-subtotal ajax-cart-item-col cart-item-subtotal font-bold text-right"
@@ -116,8 +113,8 @@
                                     US$ {{item.price * item.quantity}}
                                 </div>
                                 <div class="ajax-cart-item-col">
-                                    <a @click="removeFromCart(item)" type="button" class="js-cart-delete-btn cart-btn-delete pull-right"
-                                        id="eliminar_1362604">
+                                    <a @click="removeFromCart(item)" type="button"
+                                        class="js-cart-delete-btn cart-btn-delete pull-right">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
                                             height="20px" viewBox="0 0 482.428 482.429"
@@ -158,7 +155,11 @@
                     <div class="cart-empty text-center" style="display:none;">
                         El carrito de compras está vacío.
                     </div>
+                    <div class="d-flex justify-content-end" style="margin: 1rem;">
+                        <a href="" class="btn" style="background-color:#ec225e; color:#ffffff;">Buy</a>
+                    </div>
                 </div>
+
             </div>
             <div class="d-flex justify-content-center">
                 <form class="d-flex search-form-overlay" role="search">
@@ -217,10 +218,11 @@
             <h1
                 style="font-size: 3rem !important; text-align: center; margin-top: 1rem; color: #ec225e; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);">
                 Fragances</h1>
-                <div class="d-flex justify-content-end" style="gap: 2rem; margin-right: 1rem;">
-                    <a href="./air-fresheners.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Air Fresheners</a>
-                    <a href="./creams.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Creams</a>
-                </div>
+            <div class="d-flex justify-content-end" style="gap: 2rem; margin-right: 1rem;">
+                <a href="./air-fresheners.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Air
+                    Fresheners</a>
+                <a href="./creams.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Creams</a>
+            </div>
 
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
@@ -249,14 +251,18 @@
                 </div>
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" v-for="fragance of fragances" style="width: 20rem;">
-                        <h5 style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;"> Stock: {{fragance.stock}}</h5>
+                        <h5
+                            style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
+                            Stock: {{fragance.stock}}</h5>
                         <img :src="fragance.image" class="card-img-top card-image-me" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{fragance.name}}</h5>
                             <p class="card-text">{{fragance.description}}</p>
                             <div class="d-flex justify-content-around">
-                                <a :href="'./detailsFragances.html?id=' + fragance.id" class="btn" style="background-color:#020305; color:#ffffff;">Details</a>
-                                <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn" style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
+                                <a :href="'./detailsFragances.html?id=' + fragance.id" class="btn"
+                                    style="background-color:#020305; color:#ffffff;">Details</a>
+                                <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn"
+                                    style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                             </div>
                         </div>
                     </div>
