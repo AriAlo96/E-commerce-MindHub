@@ -14,6 +14,7 @@ public class FlavoringDTO {
     private Integer stock;
     private Presentation presentation;
     private String image;
+    private Boolean active;
 
     public FlavoringDTO(Flavoring flavoring){
         id = flavoring.getId();
@@ -24,6 +25,7 @@ public class FlavoringDTO {
         stock = flavoring.getStock();
         presentation = flavoring.getPresentation();
         image = flavoring.getImage();
+        active = flavoring.getActive();
     }
 
     public Long getId() {
@@ -56,5 +58,9 @@ public class FlavoringDTO {
 
     public String getImage() {
         return image;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

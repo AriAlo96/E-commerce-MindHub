@@ -3,8 +3,11 @@ package MindHub.ecommerce.controllers;
 import MindHub.ecommerce.dtos.CreamDTO;
 
 import MindHub.ecommerce.models.Cream;
+import MindHub.ecommerce.models.Flavoring;
+import MindHub.ecommerce.models.Presentation;
 import MindHub.ecommerce.models.Type;
 import MindHub.ecommerce.repositories.CreamRepository;
+import MindHub.ecommerce.services.CreamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -21,11 +24,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/velvet")
 public class CreamController {
     @Autowired
-    private CreamRepository creamRepository;
+    private CreamService creamService;
 
     @GetMapping("/creams")
     public List<CreamDTO> getAllCreams(){
-        List<Cream> creams = creamRepository.findAll();
+        List<Cream> creams = creamService.findAllCReams();
         return  creams.stream()
                 .map(CreamDTO::new)
                 .collect(Collectors.toList());
@@ -34,11 +37,11 @@ public class CreamController {
 
     @GetMapping("/creams/{id}")
     public CreamDTO getCreamId(@PathVariable Long id){
-         Optional<Cream> cream =  creamRepository.findById(id);
+         Cream cream =  creamService.findCreamById(id);
 
-         if (cream.isPresent()){
-             Cream cream1 = cream.get();
-             return  new CreamDTO(cream1);
+         if (cream != null){
+
+             return  new CreamDTO(cream);
          }
          else {
              throw new ResourceNotFoundException("This Id Cream not exist");
@@ -78,42 +81,61 @@ public class CreamController {
             return new ResponseEntity<>("The Stock cant be 0 or less ", HttpStatus.FORBIDDEN);
         }
 
-        Cream cream = new Cream(name,description,price,content,stock,type,image);
+        Cream cream = new Cream(name,description,price,content,stock,type,image, true);
+
+        creamService.saveCream(cream);
         return new ResponseEntity<>("cream created!", HttpStatus.CREATED);
     }
 
     @PatchMapping("/creams/update")
-    public ResponseEntity<Object> updateCream(@RequestParam Long id, @RequestParam Double price){
+    public ResponseEntity<String> updateCream(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String description,
+                                                 @RequestParam(required = false) Double price,
+                                                 @RequestParam(required = false) Type type,
+                                                 @RequestParam(required = false) Integer content,
+                                                 @RequestParam(required = false) Integer stock,
+                                                 @RequestParam(required = false) String image, @RequestParam Long id)
+    {
+        Cream cream = creamService.findCreamById(id);
 
-
-        if (price.isNaN()){
-            return new ResponseEntity<>("complete the Price", HttpStatus.FORBIDDEN);
+        List<String> creamName = creamService.findAllCReams().stream().map(
+                Cream::getName).collect(Collectors.toList());
+        if (creamName.contains(name)) {
+            return new ResponseEntity<>("The cream name already use", HttpStatus.BAD_REQUEST);
+        } else {
+            if(name != null){
+                cream.setName(name);
+            }
+            if(description != null){
+                cream.setDescription(description);
+            }
+            if(price != null){
+                cream.setPrice(price);
+            }
+            if(type != null){
+                cream.setType(type);
+            }
+            if(content != null){
+                cream.setContent(content);
+            }
+            if(stock != null){
+                cream.setStock(stock);
+            }
+            if(image != null){
+                cream.setImage(image);
+            }
+            creamService.saveCream(cream);
+            return new ResponseEntity<>("cream update successfully", HttpStatus.OK);
         }
-        if (price <= 0){
-            return new ResponseEntity<>("The price cant be 0 or less", HttpStatus.FORBIDDEN);
-        }
-        if (!creamRepository.existsById(id)){
-            return new ResponseEntity<>("The cream Id dosent Exist", HttpStatus.FORBIDDEN);
-        }
-        Optional<Cream> cream =  creamRepository.findById(id);
-
-
-        Cream cream1 = cream.get();
-
-        cream1.setPrice(price);
-
-        creamRepository.save(cream1);
-
-        return new ResponseEntity<>("Price update!", HttpStatus.FORBIDDEN);
 
     }
 
     @PatchMapping("/creams/delete")
     public ResponseEntity<Object> deleteCream(@RequestParam Long id){
-        if (!creamRepository.existsById(id)){
+        if (!creamService.creamExistById(id)){
             return new ResponseEntity<>("The Id dosent exist", HttpStatus.FORBIDDEN);
         }
-        creamRepository.deleteById(id);
+        creamService.deleteCreamById(id);
         return new ResponseEntity<>("Cream removed!", HttpStatus.OK);
     }
 

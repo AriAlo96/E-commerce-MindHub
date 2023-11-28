@@ -19,6 +19,7 @@ public class Cream {
     private Integer stock;
     private Type type;
     private String image;
+    private Boolean active;
     @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams= new HashSet<>();
 
@@ -26,7 +27,7 @@ public class Cream {
     }
 
     public Cream(String name, String description, Double price, Integer content, Integer stock, Type type,
-                 String image)
+                 String image, Boolean active)
     {
         this.name = name;
         this.description = description;
@@ -35,10 +36,19 @@ public class Cream {
         this.stock = stock;
         this.type = type;
         this.image = image;
+        this.active = active;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public String getName() {
