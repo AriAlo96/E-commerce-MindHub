@@ -40,7 +40,7 @@ const app = Vue.createApp({
                         confirmButtonColor: "#3085d6",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                            location.pathname = `/administrator/assets/pages/crate-fragance.html`;
+                            location.pathname = `/administrator/assets/pages/create-fragance.html`;
                         }
                       });   
                     

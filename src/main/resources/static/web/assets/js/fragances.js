@@ -19,9 +19,10 @@ const app = Vue.createApp({
     },
     
     created() {
-        axios.get("")
+        axios.get("/velvet/fragances")
             .then(response => {
                 this.fragances = response.data;
+                console.log(this.fragances);
                 
             })
             .catch(error => {
