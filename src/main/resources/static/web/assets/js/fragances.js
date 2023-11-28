@@ -31,10 +31,11 @@ const app = Vue.createApp({
       });
 
     this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
-  
+
     for (let product of this.shoppingCart) {
       this.totalPrice += product.price * product.quantity;
     }
+
   },
 
   methods: {
@@ -55,22 +56,29 @@ const app = Vue.createApp({
     if (index !== -1) {
       this.shoppingCart[index].quantity += 1;
     } else {
-      this.shoppingCart.push({ ...product, quantity: 1 });
+      this.shoppingCart.push({ ...product, quantity: 1});
     }
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      this.updateTotalPrice();
       product.stock -= 1;
-      this.updateTotalPrice(); 
-      
-  
+
     },
     removeFromCart(product) {
       let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
       this.shoppingCart.splice(index, 1)
 
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      this.updateTotalPrice();
       product.stock += 1
-      this.updateTotalPrice(); 
-      
+    },
+
+    updateStockFromCart(cart) {
+      for (let product of this.fragances) {
+        const cartProduct = cart.find(cartItem => cartItem.id === product.id);
+        if (cartProduct) {
+          product.stock -= cartProduct.quantity;
+        }
+      }
     },
 
     incrementQuantity(item) {
@@ -78,8 +86,7 @@ const app = Vue.createApp({
       item.quantity += 1;
       item.stock -= 1;
       this.updateTotalPrice();
-    }
-    },
+    }},
     decrementQuantity(item) {
       if (item.quantity > 1) {
         item.quantity -= 1;

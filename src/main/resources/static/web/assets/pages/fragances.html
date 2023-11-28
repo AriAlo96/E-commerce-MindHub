@@ -91,23 +91,24 @@
                                         <small class="messages-error" style="color:#f00;"></small>
                                     </div>
                                     <div class="box-quantity">
-                                        <a type="button"
+                                        <a  type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMin_1362604" data-btn="restar" @click="decrementQuantity(item)">-</a>
+                                            id="cantidadMin_{{ item.id }}" data-btn="restar" @click="decrementQuantity(item)">-</a>
                                         <div class="cart-quantity-input-container">
-                                            <input v-model="item.quantity" type="number"
+                                            <input :value="item.quantity" type="number"
                                                 class="js-cart-quantity-input cart-quantity-input count"
-                                                id="cantidad_{{item.id}}" value="1" pattern="" min="1" max="">
+                                                :id="'cantidad_' + item.id"pattern="" min="1" max="">
                                             <i class="fas fa-cog fa-spin cart-quantity-loading"
                                                 style="display: none;"></i>
                                         </div>
                                         <a type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMax_1362604" data-btn="sumar" @click="incrementQuantity(item)">+</a>
+                                            :id="'cantidadMax_' + item.id" data-btn="sumar" @click="addFromCart(item)">+</a>
                                     </div>
                                     <div class="item-quantity-available">
-                                        <p id="disponibles_1362604">
-                                            {{item.stock}} available </p>
+                                        <p id="disponibles_{{ item.stock }}">
+                                            {{ item.stock }} available
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="ajax-cart-item-subtotal ajax-cart-item-col cart-item-subtotal font-bold text-right"
