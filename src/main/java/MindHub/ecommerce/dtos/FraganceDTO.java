@@ -4,7 +4,8 @@ import MindHub.ecommerce.models.*;
 
 import java.util.Set;
 
-public class FraganceDTO {private Long id;
+public class FraganceDTO {
+    private Long id;
     private String name;
     private String description;
     private Gender gender;
@@ -19,6 +20,7 @@ public class FraganceDTO {private Long id;
 
     public FraganceDTO(Fragance fragance)
     {
+        this.id = fragance.getId();
         this.name = fragance.getName();
         this.description = fragance.getDescription();
         this.gender = fragance.getGender();
@@ -30,6 +32,10 @@ public class FraganceDTO {private Long id;
         this.stock = fragance.getStock();
         this.purchesFragances = fragance.getPurchesFragances();
         this.active = fragance.getActive();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

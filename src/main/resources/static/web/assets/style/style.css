@@ -45,6 +45,10 @@ background-color: rgba(219, 219, 219, 0.315) !important;
     box-shadow: 2px 2px 3px 1px rgb(152, 150, 150) !important;
 }
 
+/* .card-image-me:hover{
+    transform: rotateY(180deg)
+} */
+
 .product-detail {
     width: 360px;
     padding: 24px;
