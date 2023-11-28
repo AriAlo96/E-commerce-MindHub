@@ -12,6 +12,7 @@ public class CreamDTO {
     private Integer stock;
     private Type type;
     private String image;
+    private Boolean active;
 
     public CreamDTO(Cream cream){
         id = cream.getId();
@@ -22,6 +23,7 @@ public class CreamDTO {
         stock = cream.getStock();
         type = cream.getType();
         image = cream.getImage();
+        active = cream.getActive();
     }
 
     public Long getId() {
@@ -54,5 +56,9 @@ public class CreamDTO {
 
     public String getImage() {
         return image;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }
