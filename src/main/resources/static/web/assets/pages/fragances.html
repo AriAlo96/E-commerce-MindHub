@@ -78,44 +78,44 @@
                 </div>
                 <div class="offcanvas-body">
                     <div class="ajax-cart-body">
-                        <div class="ajax-cart-list">
+                        <div class="ajax-cart-list" v-for="item of shoppingCart">
                             <div class="ajax-cart-item">
                                 <div class="ajax-cart-item-image-col ajax-cart-item-col">
-                                    <img class="img-responsive" src="../images/BAGUES-Rio-ML-X-50.jpg" title="">
+                                    <img class="img-responsive" :src="item.image">
                                 </div>
                                 <div class="ajax-cart-item-desc-col ajax-cart-item-col">
                                     <div class="ajax-cart-item-info">
-                                        <h6>Río Eau de parfum</h6>
-                                        <small>50ml</small>
-                                        <div>$6.599,00</div>
+                                        <h6>{{item.name}}</h6>
+                                        <small>{{item.content}} ml</small>
+                                        <div>US${{item.price}}</div>
                                         <small class="messages-error" style="color:#f00;"></small>
                                     </div>
                                     <div class="box-quantity">
                                         <a type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMin_1362604" data-btn="restar">-</a>
+                                            id="cantidadMin_1362604" data-btn="restar" @click="decrementQuantity(item)">-</a>
                                         <div class="cart-quantity-input-container">
-                                            <input type="number"
+                                            <input v-model="item.quantity" type="number"
                                                 class="js-cart-quantity-input cart-quantity-input count"
-                                                id="cantidad_1362604" value="1" pattern="" min="1" max="">
+                                                id="cantidad_{{item.id}}" value="1" pattern="" min="1" max="">
                                             <i class="fas fa-cog fa-spin cart-quantity-loading"
                                                 style="display: none;"></i>
                                         </div>
                                         <a type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMax_1362604" data-btn="sumar">+</a>
+                                            id="cantidadMax_1362604" data-btn="sumar" @click="incrementQuantity(item)">+</a>
                                     </div>
                                     <div class="item-quantity-available">
                                         <p id="disponibles_1362604">
-                                            15 available </p>
+                                            {{item.stock}} available </p>
                                     </div>
                                 </div>
                                 <div class="ajax-cart-item-subtotal ajax-cart-item-col cart-item-subtotal font-bold text-right"
                                     id="importeTotalProducto_1362604">
-                                    $6.599,00
+                                    US$ {{item.price * item.quantity}}
                                 </div>
                                 <div class="ajax-cart-item-col">
-                                    <a type="button" class="js-cart-delete-btn cart-btn-delete pull-right"
+                                    <a @click="removeFromCart(item)" type="button" class="js-cart-delete-btn cart-btn-delete pull-right"
                                         id="eliminar_1362604">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
@@ -147,7 +147,7 @@
                                 Total
                             </div>
                             <div class=" font-bold text-right" id="importeTotalPedido">
-                                $6.599,00
+                                US$ {{totalPrice}}
                             </div>
                         </div>
                         <div class="ajax-cart-envio-gratuito" id="envioGratuito">
@@ -255,7 +255,7 @@
                             <p class="card-text">{{fragance.description}}</p>
                             <div class="d-flex justify-content-around">
                                 <a :href="'./detailsFragances.html?id=' + fragance.id" class="btn" style="background-color:#020305; color:#ffffff;">Details</a>
-                                <a href="#" class="btn" style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
+                                <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn" style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                             </div>
                         </div>
                     </div>

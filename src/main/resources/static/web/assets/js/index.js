@@ -1,48 +1,60 @@
 const app = Vue.createApp({
-    data() {
-      return {
-        fragances: [],
-        valueSearch:"",
-        categorySelected: "",
-        shoppingCart: []
-      };
-    },
-    created(){
-      axios.get("")
+  data() {
+    return {
+      fragances: [],
+      valueSearch: "",
+      categorySelected: "",
+      shoppingCart: [],
+      totalPrice: 0
+    };
+  },
+  created() {
+    axios.get("")
       .then(response => {
-          this.fragances = response.data;
-          
+        this.fragances = response.data;
+
       })
       .catch(error => {
-          console.log(error);
+        console.log(error);
       });
 
-      this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
-      JSON.stringify(this.shoppingCart);
-    },
-    methods: {
-      filterSearch() {
-        this.fragances.filter(fragance =>
-          fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
-        );
-      },
+    this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+    JSON.stringify(this.shoppingCart);
 
-      filterByOlfactoryFamily(family) {
-        this.fragances.filter(fragance => fragance.olfactoryFamily === family);
-    },
-      addShoppingCart(product){
-        if (!this.shoppingCart.includes(product._id)) {
-          this.shoppingCart.push(product);
-          localStorage.setItem("carrit", JSON.stringify(this.carrit));
-        }
-        product.stock -= 1;
-        this.total += product.price;
-        product.stock;
+    for (product of this.shoppingCart) {
+      this.totalPrice += product.price;
     }
+  },
+  methods: {
+    filterSearch() {
+      this.fragances = this.fragances.filter(fragance =>
+        fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
+      );
+    },
+
+    filterByOlfactoryFamily(family) {
+      this.fragances = this.fragances.filter(fragance => fragance.olfactoryFamily === family);
+    },
+    addShoppingCart(product) {
+      if (!this.shoppingCart.includes(product.id)) {
+        this.shoppingCart.push(product);
+        localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      }
+      product.stock -= 1;
+      this.totalPrice += product.price;
+      product.stock;
+    },
+    removeFromCart(product) {
+      let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+      this.shoppingCart.splice(index, 1)
+
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      product.stock += 1
+      this.totalPrice -= product.price
+    },
   }
-    }
-  );
-  
-  app.mount('#app');
+}
+);
 
-  
+app.mount('#app');
+
