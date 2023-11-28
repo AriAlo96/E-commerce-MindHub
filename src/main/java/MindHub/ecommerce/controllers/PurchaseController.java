@@ -61,7 +61,6 @@ public class PurchaseController {
             for (PurchaseCream cream : purchaseDTO.getPurchaseCreams()) {
                 double creamSubtotal = cream.getSubtotal();
                 total += creamSubtotal;
-
                 int purchasedQuantity = cream.getQuantity();
                 Cream creamObj = cream.getCream();
                 int currentStock = creamObj.getStock();
@@ -75,7 +74,6 @@ public class PurchaseController {
             for (PurchaseFlavoring flavoring : purchaseDTO.getPurchaseFlavorings()) {
                 double flavoringSubtotal = flavoring.getSubtotal();
                 total += flavoringSubtotal;
-
                 int purchasedQuantity = flavoring.getQuantity();
                 Flavoring flavoringObj = flavoring.getFlavoring();
                 int currentStock = flavoringObj.getStock();
@@ -89,7 +87,6 @@ public class PurchaseController {
             for (PurchaseFragance fragance : purchaseDTO.getPurchaseFragances()) {
                 double fraganceSubtotal = fragance.getSubtotal();
                 total += fraganceSubtotal;
-
                 int purchasedQuantity = fragance.getQuantity();
                 Fragance fraganceObj = fragance.getFragance();
                 int currentStock = fraganceObj.getStock();
