@@ -71,7 +71,7 @@ public class FraganceController {
             Fragance newFragance = new Fragance(name, description, gender, olfactoryFamily, image, price, presentation,
                     content, stock, true);
             fraganceService.saveFragance(newFragance);
-            return new ResponseEntity<>("Fragance create successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Fragance create successfully", HttpStatus.CREATED);
         }
     }
 

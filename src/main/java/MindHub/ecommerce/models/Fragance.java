@@ -15,6 +15,7 @@ public class Fragance {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String name;
+    @Column(length = 500)
     private String description;
     private Gender gender;
     private OlfactoryFamily olfactoryFamily;

@@ -11,7 +11,7 @@ const app = Vue.createApp({
    
     methods: {
         login() {
-            axios.post('/api/login', `email=${this.email}&password=${this.password}`)
+            axios.post('/velvet/login', `email=${this.email}&password=${this.password}`)
                 .then(response => {
                     location.pathname = `index.html`;
                 })
