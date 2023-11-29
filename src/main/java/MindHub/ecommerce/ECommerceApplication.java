@@ -15,20 +15,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class ECommerceApplication {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner initData(ClientRepository clientRepository , FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
-                                      CreamRepository creamRepository)
-    {
-        return args -> {
-        Client client = new Client("Ariana", "Alochis", "ari@velvetAdm.com" , passwordEncoder.encode("1234"));
-        clientRepository.save(client);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner initData(ClientRepository clientRepository , FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
+//                                      CreamRepository creamRepository)
+//    {
+//        return args -> {
+//        Client client = new Client("Ariana", "Alochis", "ari@velvetAdm.com" , passwordEncoder.encode("1234"));
+//        clientRepository.save(client);
+//        };
+//    }
 }
