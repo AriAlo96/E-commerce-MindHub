@@ -22,7 +22,7 @@ const app = Vue.createApp({
       };
     },
     created() {
-      axios.get("")
+      axios.get("/velvet/creams")
           .then(response => {
               this.creams = response.data;
               

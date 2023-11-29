@@ -19,7 +19,7 @@ const app = Vue.createApp({
     };
   },
   created() {
-    axios.get("")
+    axios.get("/velvet/flavorings")
         .then(response => {
             this.airFresheners = response.data;
             
