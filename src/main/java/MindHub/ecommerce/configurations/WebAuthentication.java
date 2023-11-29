@@ -23,7 +23,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputEmail -> {
             Client client = clientRepository.findByEmail(inputEmail);
             if (client != null) {
-                if (client.getEmail().contains("velvetAdm")) {
+                if (client.getEmail().contains("velvetadm")) {
                     return new User(client.getEmail(), client.getPassword(),
                             AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN,CLIENT"));
                 } else {
