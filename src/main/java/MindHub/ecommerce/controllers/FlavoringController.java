@@ -5,7 +5,10 @@ import MindHub.ecommerce.dtos.FlavoringDTO;
 import MindHub.ecommerce.dtos.UpdateFlavoringDTO;
 import MindHub.ecommerce.models.*;
 import MindHub.ecommerce.repositories.FlavoringRepository;
+import MindHub.ecommerce.services.ClientService;
 import MindHub.ecommerce.services.FlavoringService;
+import MindHub.ecommerce.services.PurchaseService;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -14,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +29,12 @@ import java.util.stream.Collectors;
 public class FlavoringController {
     @Autowired
     private FlavoringService flavoringService;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private PurchaseService purchaseService;
 
     @GetMapping("/flavorings")
     public List<FlavoringDTO> getAllFlavoring(){
@@ -44,7 +56,7 @@ public class FlavoringController {
         }
     }
     @PostMapping("/flavorings/create")
-    public ResponseEntity<Object> createNewCream(@RequestParam String name, @RequestParam String description,
+    public ResponseEntity<Object> createNewFlavoring(@RequestParam String name, @RequestParam String description,
                                                  @RequestParam Double price, @RequestParam Integer content, @RequestParam Integer stock,
                                                  @RequestParam Presentation presentation, @RequestParam String image){
         if (name.isBlank()){
@@ -136,4 +148,30 @@ public class FlavoringController {
         flavoringService.deleteFlavoringById(id);
         return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
-}
+    @PostMapping("/create/pdf")
+    public  ResponseEntity<?> exportPDF(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException {
+
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Purchase purchase = purchaseService.findPurchaseById(purchaseId);
+
+        if (client.getTotalPurchases()
+                .stream()
+                .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
+            return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
+        }
+        response.setContentType("application/pdf");
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename= Purchase" + purchaseId + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<PurchaseCream> purchaseCreamsList = new ArrayList<>(purchase.getPurchaseCreams());
+        List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
+        List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
+
+        PurchasePDF exporter = new PurchasePDF(purchase,purchaseCreamsList,purchaseFlavoringList,purchaseFraganceList);
+        exporter.usePDFExport(response);
+
+        return new ResponseEntity<>("PDF created", HttpStatus.CREATED);
+    }
+ }
