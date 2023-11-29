@@ -140,7 +140,7 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <div v-if="shoppingCart.length > 0" class="d-flex justify-content-end">
                             <div class="font-bold text-right" style="margin-right: 1rem;" id="importeTotalPedido">
                                 Total
                             </div>
@@ -148,15 +148,15 @@
                                 US$ {{totalPrice}}
                             </div>
                         </div>
-                        <div class="ajax-cart-envio-gratuito" id="envioGratuito">
-                        </div>
                     </div>
-                    <input type="hidden" value="325116" id="idPedido">
-                    <div class="cart-empty text-center" style="display:none;">
-                        El carrito de compras está vacío.
+                    <div v-if="shoppingCart.length == 0" class="cart-empty text-center">
+                        The shopping cart is empty.
                     </div>
-                    <div class="d-flex justify-content-end" style="margin: 1rem;">
+                    <div v-if="shoppingCart.length > 0" class="d-flex justify-content-end" style="margin: 1rem;">
                         <a href="" class="btn" style="background-color:#ec225e; color:#ffffff;">Buy</a>
+                    </div>
+                    <div v-if="shoppingCart.length == 0" class="d-flex justify-content-center" style="margin: 1rem;">
+                        <a href="" class="btn" style="background-color:#ec225e; color:#ffffff;">Continue browsing</a>
                     </div>
                 </div>
 
@@ -254,10 +254,15 @@
                         <h5
                             style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
                             Stock: {{fragance.stock}}</h5>
-                        <img :src="fragance.image" class="card-img-top card-image-me" alt="...">
+                        <img :src="fragance.image" class="card-img-top card-image-me"
+                            style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
-                            <h5 class="card-title">{{fragance.name}}</h5>
-                            <p class="card-text">{{fragance.description}}</p>
+                            <h5 class="card-title" style="text-align: center;">{{fragance.name}} ({{fragance.content}}ml)</h5>
+                            <div>
+                                <h6 class="card-text" style="text-align: center;">Olfactory Family: <span style="color: #ec225e;">{{fragance.olfactoryFamily}}</span></h6>
+                                <p style="white-space: pre-line; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box;">{{fragance.description}}</p>
+                               
+                            </div>
                             <div class="d-flex justify-content-around">
                                 <a :href="'./detailsFragances.html?id=' + fragance.id" class="btn"
                                     style="background-color:#020305; color:#ffffff;">Details</a>

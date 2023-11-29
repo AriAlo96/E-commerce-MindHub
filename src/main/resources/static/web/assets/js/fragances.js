@@ -23,7 +23,6 @@ const app = Vue.createApp({
   created() {
     axios.get("/velvet/fragances")
       .then(response => {
-      console.log(response);  
         this.fragances = response.data;
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         this.fragances = this.fragances.map(fragance => {
@@ -76,7 +75,7 @@ const app = Vue.createApp({
 
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
       this.updateTotalPrice();
-      product.stock += 1
+      product.stock += product.quantity
     },
 
     updateStockFromCart(cart) {

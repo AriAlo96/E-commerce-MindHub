@@ -4,9 +4,10 @@ import MindHub.ecommerce.models.Flavoring;
 import MindHub.ecommerce.repositories.FlavoringRepository;
 import MindHub.ecommerce.services.FlavoringService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class FlavoringServiceImplement implements FlavoringService {
     @Autowired
     private FlavoringRepository flavoringRepository;

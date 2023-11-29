@@ -4,9 +4,10 @@ import MindHub.ecommerce.models.Cream;
 import MindHub.ecommerce.repositories.CreamRepository;
 import MindHub.ecommerce.services.CreamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CreamServiceImplement implements CreamService {
     @Autowired
     private CreamRepository creamRepository;

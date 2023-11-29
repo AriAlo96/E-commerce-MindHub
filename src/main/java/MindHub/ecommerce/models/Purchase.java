@@ -16,9 +16,9 @@ public class Purchase {
     private Double totalPurchases;
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     private Set<PurchaseFragance> purchaseFragances = new HashSet<>();
-    @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
-    @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     private Set<PurchaseCream> purchaseCreams = new HashSet<>();
 
     public Purchase() {

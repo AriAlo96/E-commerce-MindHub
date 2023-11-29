@@ -1,6 +1,7 @@
 package MindHub.ecommerce;
 
 import MindHub.ecommerce.models.*;
+import MindHub.ecommerce.repositories.ClientRepository;
 import MindHub.ecommerce.repositories.CreamRepository;
 import MindHub.ecommerce.repositories.FlavoringRepository;
 import MindHub.ecommerce.repositories.FraganceRepository;
@@ -17,18 +18,11 @@ public class ECommerceApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
+    public CommandLineRunner initData(ClientRepository clientRepository , FraganceRepository fraganceRepository, FlavoringRepository flavoringRepository,
                                       CreamRepository creamRepository)
     {
         return args -> {
-            //-------------CLIENTS-------------
-
-
-            //-------------FRAGANCES-------------
-         //  Fragance marsella = new Fragance("Marsella", "ef", Gender.WOMEN, OlfactoryFamily.CHYPRE,
-           //        "../resources/static/web/assets/images/BAGUES-Rio-ML-X-50.jpg", 8000.00, Presentation.CLASICPACKAGE,
-             //      50,10);
-         //   fraganceRepository.save(marsella);
+        Client client = new Client("Ariana", "Alochis", "ari@velvetAdm.com" , "1234");
         };
     }
 }
