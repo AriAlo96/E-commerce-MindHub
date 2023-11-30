@@ -7,20 +7,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchasePDF {
 
     private Purchase purchase;
-    private List<PurchaseCream> purchaseCreamList;
-    private List<PurchaseFlavoring> purchaseFlavoringsList;
-    private List<PurchaseFragance> purchaseFragancesList;
+   // private List<PurchaseCream> purchaseCreamList;
+   // private List<PurchaseFlavoring> purchaseFlavoringsList;
+  //  private List<PurchaseFragance> purchaseFragancesList;
 
-    public PurchasePDF(Purchase purchase, List<PurchaseCream> purchaseCreamList, List<PurchaseFlavoring> purchaseFlavoringsList, List<PurchaseFragance> purchaseFragancesList) {
+
+    public PurchasePDF(Purchase purchase) {
         this.purchase = purchase;
-        this.purchaseCreamList = purchaseCreamList;
-        this.purchaseFlavoringsList = purchaseFlavoringsList;
-        this.purchaseFragancesList = purchaseFragancesList;
     }
 
     private void writeTableHeader(PdfPTable table) {
@@ -44,6 +43,10 @@ public class PurchasePDF {
 
     private void writeTableData(PdfPTable table) {
 
+        List<PurchaseCream> purchaseCreamList = new ArrayList<>(purchase.getPurchaseCreams());
+        List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
+        List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
+
         if (purchaseCreamList != null) {
             for (PurchaseCream cream : purchaseCreamList) {
                 table.addCell(cream.getCream().getName());
@@ -52,15 +55,15 @@ public class PurchasePDF {
             }
 
         }
-        if (purchaseFragancesList != null) {
-            for (PurchaseFragance fragance : purchaseFragancesList) {
+        if (purchaseFraganceList != null) {
+            for (PurchaseFragance fragance : purchaseFraganceList) {
                 table.addCell(fragance.getFragance().getName());
                 table.addCell(String.valueOf(fragance.getQuantity()));
                 table.addCell((String.format(String.valueOf(fragance.getSubtotal()), "$0,0.00")));
             }
         }
-        if (purchaseFlavoringsList != null) {
-            for (PurchaseFlavoring flavoring : purchaseFlavoringsList) {
+        if (purchaseFlavoringList != null) {
+            for (PurchaseFlavoring flavoring : purchaseFlavoringList) {
                 table.addCell(flavoring.getFlavoring().getName());
                 table.addCell(String.valueOf(flavoring.getQuantity()));
                 table.addCell(String.format(String.valueOf(flavoring.getSubtotal()), "$0,0.00"));
