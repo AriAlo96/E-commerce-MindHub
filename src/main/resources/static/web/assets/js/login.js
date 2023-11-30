@@ -14,7 +14,16 @@ const app = Vue.createApp({
             
             axios.post('/velvet/login', `email=${this.email}&password=${this.password}`)
                 .then(response => {
-                    location.pathname = `index.html`;
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Logged out successfully",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      }),
+                        setTimeout(() => {
+                          location.pathname = "/index.html";
+                        }, 1600);
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 401) {

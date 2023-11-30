@@ -1,13 +1,12 @@
 const app = Vue.createApp({
   data() {
     return {
-      airFresheners:[],
-      valueSearch:"",
+      airFresheners: [],
+      valueSearch: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$2.999', value: [0, 2999] },
-        { id: 'range2', label: 'US$3.000 - US$5.999', value: [3000, 5999] },
-        { id: 'range3', label: 'US$6.000 - US$8.999', value: [6000, 8999] },
-        { id: 'range4', label: 'US$9.000 or more', value: [9000, Infinity] }
+        { id: 'range1', label: 'US$0 - US$9', value: [0, 9] },
+        { id: 'range2', label: 'US$10 - US$29', value: [10, 29] },
+        { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
       rangeSelected: null,
       presentations: [
@@ -16,32 +15,108 @@ const app = Vue.createApp({
         { id: 'diffusers', label: 'Diffusers', value: 'diffusers' }
       ],
       presentationSelected: null,
+      shoppingCart: [],
+      totalPrice: 0,
+      errorSearch: ""
     };
   },
   created() {
     axios.get("/velvet/flavorings")
-        .then(response => {
-            this.airFresheners = response.data;
-            
+      .then(response => {
+        this.airFresheners = response.data;
+        this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+        this.airFresheners = this.airFresheners.map(airFreshener => {
+          let aux = this.shoppingCart.find(product => product.id == airFreshener.id)
+          if (aux) {
+            return aux
+          }
+          return airFreshener
         })
-        .catch(error => {
-            console.log(error);
-        });
-},
+        for (let product of this.shoppingCart) {
+          this.totalPrice += product.price * product.quantity;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
   methods: {
-    
-    filterSearch() {
-      this.fragances.filter(fragance =>
-        fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
-      );
-    },
 
-    filterByPriceAndPresentation(){
+    filterSearch() {
+      if (this.valueSearch.trim() === '') {
+        return;
+      }
+   
+      const normalizedSearch = this.valueSearch.toLowerCase();
+    
+      const filteredAirFresheners = this.airFresheners.filter(product =>
+        product.name.toLowerCase().includes(normalizedSearch)
+      );
+    
+      if (filteredAirFresheners.length === 0) {
+        this.errorSearch = "The product was not found. Find another"
+        return;
+      }
+      const firstResult = filteredAirFresheners[0];
+      let detailsPage = '';
+      const normalizedProductName = firstResult.name.toLowerCase();
+      if (normalizedProductName.includes("air freshener")) {
+        detailsPage = 'detailsAirFresheners.html';
+    
+      window.location.href = `/web/assets/pages/${detailsPage}?id=${encodeURIComponent(firstResult.id)}`;
+    }
+  },
+
+    filterByPriceAndPresentation() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
       let presentationSelected = this.presentations.find(presentation => presentation.value === this.presentationSelected);
-      this.filteredByPrice = this.airFresheners.filter(airFreshener=> {
-        return (!priceSelected || (airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1])) && (!presentationSelected || airFreshener.presentation === presentationSelected.value)});
-      },
+      this.filteredByPrice = this.airFresheners.filter(airFreshener => {
+        return (!priceSelected || (airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1])) && (!presentationSelected || airFreshener.presentation === presentationSelected.value)
+      });
+    },
+
+    addFromCart(product) {
+      const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
+      if (index !== -1) {
+        this.shoppingCart[index].quantity += 1;
+      } else {
+        product.quantity = 1
+        this.shoppingCart.push(product);
+      }
+      this.updateTotalPrice();
+      product.stock -= 1;
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+
+    },
+
+    removeFromCart(product) {
+      let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+      this.shoppingCart.splice(index, 1)
+
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      this.updateTotalPrice();
+      product.stock += product.quantity
+    },
+
+    updateStockFromCart(cart) {
+      for (let product of this.airFresheners) {
+        const cartProduct = cart.find(cartItem => cartItem.id === product.id);
+        if (cartProduct) {
+          product.stock -= cartProduct.quantity;
+        }
+      }
+    },
+    decrementQuantity(item) {
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+        item.stock += 1
+        this.updateTotalPrice();
+        localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      }
+    },
+    updateTotalPrice() {
+      this.totalPrice = this.shoppingCart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    },
 
     logOut() {
       Swal.fire({
@@ -71,6 +146,13 @@ const app = Vue.createApp({
         },
       })
     },
+    
+    formatNumber(number) {
+      return number.toLocaleString("De-DE", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+      });
+  },
   }
 }
 );

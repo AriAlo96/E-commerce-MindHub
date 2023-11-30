@@ -19,7 +19,7 @@
         <header>
             <nav class="navbar navbar-expand-lg" style="background-color: #020305;">
                 <div class="container-fluid">
-                    <img src="../images/logo 2.png" alt="" style="width: 13%;">
+                    <img src="../images/logo 2.png" alt="" style="width: 13%;" href="../../../index.html">
                     <a class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +42,13 @@
                                     Products
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Fragances</a></li>
+                                    <li><a class="dropdown-item" href="./fragances.html">Fragances</a></li>
                                     <li><a class="dropdown-item" href="./air-fresheners.html">Air fresheners</a></li>
-                                    <li><a class="dropdown-item" href="#">Creams</a></li>
+                                    <li><a class="dropdown-item" href="./creams.html">Creams</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#" style="color: aliceblue;">About
+                                <a class="nav-link active" aria-current="page" href="../../../index.html#AboutUs" style="color: aliceblue;">About
                                     Us</a>
                             </li>
                             <li class="nav-item">
@@ -78,45 +78,43 @@
                 </div>
                 <div class="offcanvas-body">
                     <div class="ajax-cart-body">
-                        <div class="ajax-cart-list">
+                        <div class="ajax-cart-list" v-for="item of shoppingCart">
                             <div class="ajax-cart-item">
                                 <div class="ajax-cart-item-image-col ajax-cart-item-col">
-                                    <img class="img-responsive" src="../images/BAGUES-Rio-ML-X-50.jpg" title="">
+                                    <img class="img-responsive" :src="item.image">
                                 </div>
                                 <div class="ajax-cart-item-desc-col ajax-cart-item-col">
                                     <div class="ajax-cart-item-info">
-                                        <h6>Río Eau de parfum</h6>
-                                        <small>50ml</small>
-                                        <div>$6.599,00</div>
+                                        <h6>{{item.name}}</h6>
+                                        <small>{{item.content}} ml</small>
+                                        <div>US${{formatNumber(item.price)}}</div>
                                         <small class="messages-error" style="color:#f00;"></small>
                                     </div>
                                     <div class="box-quantity">
-                                        <a type="button"
+                                        <a v-if="item.quantity > 0" type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMin_1362604" data-btn="restar">-</a>
+                                            id="cantidadMin_{{ item.id }}" data-btn="restar"
+                                            @click="decrementQuantity(item)">-</a>
                                         <div class="cart-quantity-input-container">
-                                            <input type="number"
+                                            <input :value="item.quantity" type="number"
                                                 class="js-cart-quantity-input cart-quantity-input count"
-                                                id="cantidad_1362604" value="1" pattern="" min="1" max="">
+                                                :id="'cantidad_' + item.id" pattern="" min="0" max="{{item.stock}}">
                                             <i class="fas fa-cog fa-spin cart-quantity-loading"
                                                 style="display: none;"></i>
                                         </div>
-                                        <a type="button"
+                                        <a v-if="item.stock > 0" type="button"
                                             class="js-cart-quantity-btn cart-quantity-btn ajax-cart-quantity-btn"
-                                            id="cantidadMax_1362604" data-btn="sumar">+</a>
-                                    </div>
-                                    <div class="item-quantity-available">
-                                        <p id="disponibles_1362604">
-                                            15 available </p>
+                                            :id="'cantidadMax_' + item.id" data-btn="sumar"
+                                            @click="addFromCart(item)">+</a>
                                     </div>
                                 </div>
                                 <div class="ajax-cart-item-subtotal ajax-cart-item-col cart-item-subtotal font-bold text-right"
                                     id="importeTotalProducto_1362604">
-                                    $6.599,00
+                                    US$ {{formatNumber(item.price * item.quantity)}}
                                 </div>
                                 <div class="ajax-cart-item-col">
-                                    <a type="button" class="js-cart-delete-btn cart-btn-delete pull-right"
-                                        id="eliminar_1362604">
+                                    <a @click="removeFromCart(item)" type="button"
+                                        class="js-cart-delete-btn cart-btn-delete pull-right">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
                                             height="20px" viewBox="0 0 482.428 482.429"
@@ -142,20 +140,23 @@
                             </div>
 
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <div v-if="shoppingCart.length > 0" class="d-flex justify-content-end">
                             <div class="font-bold text-right" style="margin-right: 1rem;" id="importeTotalPedido">
                                 Total
                             </div>
                             <div class=" font-bold text-right" id="importeTotalPedido">
-                                $6.599,00
+                                US$ {{formatNumber(totalPrice)}}
                             </div>
                         </div>
-                        <div class="ajax-cart-envio-gratuito" id="envioGratuito">
-                        </div>
                     </div>
-                    <input type="hidden" value="325116" id="idPedido">
-                    <div class="cart-empty text-center" style="display:none;">
-                        El carrito de compras está vacío.
+                    <div v-if="shoppingCart.length == 0" class="cart-empty text-center">
+                        The shopping cart is empty.
+                    </div>
+                    <div v-if="shoppingCart.length > 0" class="d-flex justify-content-end" style="margin: 1rem;">
+                        <a href="" class="btn" style="background-color:#ec225e; color:#ffffff;">Buy</a>
+                    </div>
+                    <div v-if="shoppingCart.length == 0" class="d-flex justify-content-center" style="margin: 1rem;">
+                        <a href="" class="btn" style="background-color:#ec225e; color:#ffffff;">Continue browsing</a>
                     </div>
                 </div>
             </div>

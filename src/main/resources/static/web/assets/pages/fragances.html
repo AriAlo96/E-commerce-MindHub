@@ -19,7 +19,7 @@
         <header>
             <nav class="navbar navbar-expand-lg" style="background-color: #020305;">
                 <div class="container-fluid">
-                    <img src="../images/logo 2.png" alt="" style="width: 13%;">
+                    <img src="../images/logo 2.png" alt="" style="width: 13%;" href="../../../index.html">
                     <a class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -44,11 +44,11 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Fragances</a></li>
                                     <li><a class="dropdown-item" href="./air-fresheners.html">Air fresheners</a></li>
-                                    <li><a class="dropdown-item" href="#">Creams</a></li>
+                                    <li><a class="dropdown-item" href="./creams.html">Creams</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#" style="color: aliceblue;">About
+                                <a class="nav-link active" aria-current="page" href="../../../index.html#AboutUs" style="color: aliceblue;">About
                                     Us</a>
                             </li>
                             <li class="nav-item">
@@ -87,7 +87,7 @@
                                     <div class="ajax-cart-item-info">
                                         <h6>{{item.name}}</h6>
                                         <small>{{item.content}} ml</small>
-                                        <div>US${{item.price}}</div>
+                                        <div>US${{formatNumber(item.price)}}</div>
                                         <small class="messages-error" style="color:#f00;"></small>
                                     </div>
                                     <div class="box-quantity">
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="ajax-cart-item-subtotal ajax-cart-item-col cart-item-subtotal font-bold text-right"
                                     id="importeTotalProducto_1362604">
-                                    US$ {{item.price * item.quantity}}
+                                    US$ {{formatNumber(item.price * item.quantity)}}
                                 </div>
                                 <div class="ajax-cart-item-col">
                                     <a @click="removeFromCart(item)" type="button"
@@ -145,7 +145,7 @@
                                 Total
                             </div>
                             <div class=" font-bold text-right" id="importeTotalPedido">
-                                US$ {{totalPrice}}
+                                US$ {{formatNumber(totalPrice)}}
                             </div>
                         </div>
                     </div>
@@ -162,13 +162,21 @@
 
             </div>
             <div class="d-flex justify-content-center">
-                <form class="d-flex search-form-overlay" role="search">
-                    <input v-model="valueSearch" class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <button
-                        style="color: aliceblue; background-color: #fbb002d4; border: solid 2px #fbb002d4; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"
-                        class="btn btn-outline-success button-search" type="submit"
-                        @click="filterSearch">Search</button>
+                <form @submit.prevent="filterSearch" class="d-flex flex-column search-form-overlay justify-content-center align-items-center"
+                    role="search">
+                    <div class="d-flex">
+                        <input v-model="valueSearch" class="form-control me-2" type="search" placeholder="Search"
+                            aria-label="Search" @keyup.enter="filterSearch">
+                        <button
+                            style="color: aliceblue; background-color: #fbb002d4; border: solid 2px #fbb002d4; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"
+                            class="btn btn-outline-success button-search" type="button"
+                            @click="filterSearch">Search</button>
+                    </div>
+                    <div style="margin: 0.5rem;">
+                        <h6 v-if="errorSearch"
+                            style="background-color: black; color: red; border-radius: 0.5rem; padding: 0.3rem;">
+                            {{errorSearch}}</h6>
+                    </div>
                 </form>
             </div>
         </header>
@@ -258,7 +266,7 @@
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
                             <h5 class="card-title" style="text-align: center;">{{fragance.name}} ({{fragance.content}}ml)</h5>
-                            <h5 style="color: #ec225e; text-align: center;">US$ {{fragance.price}}</h5>
+                            <h5 style="color: #ec225e; text-align: center;">US$ {{formatNumber(fragance.price)}}</h5>
                             <div>
                                 <h6 class="card-text" style="text-align: center;">Olfactory Family: <span style="color: #ec225e;">{{fragance.olfactoryFamily}}</span></h6>
                                 <p style="text-align: center; white-space: pre-line; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box;">{{fragance.description}}</p>

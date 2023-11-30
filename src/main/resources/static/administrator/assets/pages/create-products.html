@@ -260,42 +260,43 @@
                                     Create a new cream here!</legend>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Name</span>
-                                    <input type="text" class="form-control" aria-label="name"
+                                    <input v-model="nameCream" type="text" class="form-control" aria-label="name"
                                         aria-describedby="basic-addon1">
                                 </div>
                                 <div class="input-group mb-3">
-                                    <select class="form-select" id="inputGroupSelect01">
+                                    <select v-model="typeCream" class="form-select" id="inputGroupSelect01">
                                         <option selected>Select</option>
-                                        <option value="">Face</option>
-                                        <option value="">Body</option>
-                                        <option value="">Hands</option>
-                                        <option value="">Foots</option>
+                                        <option value="FACIAL">Face</option>
+                                        <option value="BODY">Body</option>
+                                        <option value="HAND">Hands</option>
+                                        <option value="FOOT">Foots</option>
                                     </select>
                                     <label class="input-group-text" for="inputGroupSelect01">Type</label>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Content</span>
-                                    <input type="number" class="form-control" aria-label="content"
-                                        aria-describedby="basic-addon1">
+                                    <input v-model="contentCream" type="number" class="form-control"
+                                        aria-label="content" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                    <span class="input-group-text">.99</span>
+                                    <input v-model="priceCream" type="text" class="form-control"
+                                        aria-label="Amount (to the nearest dollar)">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">Description</span>
-                                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                                    <textarea v-model="descriptionCream" class="form-control"
+                                        aria-label="With textarea"></textarea>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" aria-label="content"
+                                    <input v-model="stockCream" type="number" class="form-control" aria-label="content"
                                         aria-describedby="basic-addon1">
                                     <span class="input-group-text" id="basic-addon1">Stock</span>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                    <input type="text" class="form-control" aria-label="content"
-                                        aria-describedby="basic-addon1">
+                                    <input v-model="routeImageCream" type="text" class="form-control"
+                                        aria-label="content" aria-describedby="basic-addon1">
                                 </div>
                                 <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
                                     <button @click="createNewCream" type="button" class="btn"
@@ -464,8 +465,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
+
                 <div class="tab-pane" :class="{ 'active': currentForm === 'form5' }">
                     <form>
                         <div class="d-flex justify-content-center align-items-center"
@@ -584,13 +587,133 @@
                                                     aria-label="content" aria-describedby="basic-addon1">
                                             </div>
                                             <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
-                                                <button @click="createNewAirFreshener" type="button" class="btn"
-                                                    style="background-color: #ec225e; color: aliceblue;">Create</button>
+                                                <button @click="updateAirFreshener" type="button" class="btn"
+                                                    style="background-color: #ec225e; color: aliceblue;">Update</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane" :class="{ 'active': currentForm === 'form6' }">
+                    <form>
+                        <div class="d-flex justify-content-center align-items-center"
+                            style="margin-top: 3rem; gap: 2rem;">
+                            <img src="../../../web/assets/images/crema-blush.png"
+                                style="width: 40%; object-fit: contain;" alt="">
+                            <div>
+                                <div class="input-group mb-3">
+                                    <select v-model="creamSelected" class="form-select" id="inputGroupSelect01"
+                                        @change="updateIdCream">
+                                        <option value="">Select the cream</option>
+                                        <option v-for="cream of creams" :value="cream">
+                                            {{cream.name}}
+                                        </option>
+                                    </select>
+                                    <label class="input-group-text" for="inputGroupSelect01">cream</label>
+                                </div>
+                                <div v-if="creamSelected && creamSelected !== '' && creamSelected !== 'Select the cream'"
+                                    class="d-flex">
+                                    <div class="d-flex" style="gap: 3rem;">
+                                        <div>
+                                            <legend
+                                                style="text-align: center; color: #ec225e; font-weight: 600;margin-bottom: 1rem;">
+                                                Your current cream!</legend>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Name</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.name" readonly>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.type" readonly>
+                                                <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Content</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.content" readonly>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.price" readonly>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">Description</span>
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.description" readonly>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.stock" readonly>
+                                                <span class="input-group-text" id="basic-addon1">Stock</span>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
+                                                <input type="text" class="form-control"
+                                                aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.image" readonly>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="d-flex flex-column align-items-center">
+                                                <legend style="text-align: center; color: #ec225e; font-weight: 600;">
+                                                    Update a cream here!</legend>
+                                                <small style="text-align: center; color: #ec225e;">Complete only the
+                                                    fields you want to modify</small>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Name</span>
+                                                <input v-model="nameCream" type="text" class="form-control"
+                                                    aria-label="name" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <select v-model="typeCream" class="form-select" id="inputGroupSelect01">
+                                                    <option selected>Select</option>
+                                                    <option value="">Face</option>
+                                                    <option value="">Body</option>
+                                                    <option value="">Hands</option>
+                                                    <option value="">Foots</option>
+                                                </select>
+                                                <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Content</span>
+                                                <input v-model="contentCream" type="number" class="form-control"
+                                                    aria-label="content" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input v-model="priceCream" type="text" class="form-control"
+                                                    aria-label="Amount (to the nearest dollar)">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">Description</span>
+                                                <textarea v-model="descriptionCream" class="form-control"
+                                                    aria-label="With textarea"></textarea>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input v-model="stockCream" type="number" class="form-control"
+                                                    aria-label="content" aria-describedby="basic-addon1">
+                                                <span class="input-group-text" id="basic-addon1">Stock</span>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
+                                                <input v-model="routeImageCream" type="text" class="form-control"
+                                                    aria-label="content" aria-describedby="basic-addon1">
+                                            </div>
+                                            <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
+                                                <button @click="updateCream" type="button" class="btn"
+                                                    style="background-color: #ec225e; color: aliceblue;">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

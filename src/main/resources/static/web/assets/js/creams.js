@@ -1,15 +1,14 @@
 const app = Vue.createApp({
-    data() {
-      return {
-        creams:[],
-        valueSearch:"",
-        filtered: [],
-        valueSearch: "",
+  data() {
+    return {
+      creams: [],
+      valueSearch: "",
+      filtered: [],
+      valueSearch: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$2.999', value: [0, 2999] },
-        { id: 'range2', label: 'US$3.000 - US$5.999', value: [3000, 5999] },
-        { id: 'range3', label: 'US$6.000 - US$8.999', value: [6000, 8999] },
-        { id: 'range4', label: 'US$9.000 or more', value: [9000, Infinity] }
+        { id: 'range1', label: 'US$0 - US$9', value: [0, 9] },
+        { id: 'range2', label: 'US$10 - US$29', value: [10, 29] },
+        { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
       rangeSelected: null,
       types: [
@@ -19,65 +18,148 @@ const app = Vue.createApp({
         { id: 'foots', label: 'Foots', value: 'foots' }
       ],
       typeSelected: null,
-      };
-    },
-    created() {
-      axios.get("/velvet/creams")
-          .then(response => {
-              this.creams = response.data;
-              
-          })
-          .catch(error => {
-              console.log(error);
-          });
+      shoppingCart: [],
+      totalPrice: 0,
+      errorSearch: ""
+    };
   },
-    methods: {
-
-      filterSearch() {
-        this.fragances.filter(fragance =>
-          fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
-        );
-      },
-
-      filterByPriceAndType(){
-        let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
-        let typeSelected = this.types.find(type => type.value === this.typeSelected);
-        this.filteredByPrice = this.airFresheners.filter(cream=> {
-          return (!priceSelected || (cream.price >= priceSelected.value[0] && cream.price <= priceSelected.value[1])) && (!typeSelected || cream.type === typeSelected.value)});
-        },
-  
-      logOut(){
-        Swal.fire({
-            title: 'Are you sure you want to log out?',
-            text: 'You will need to log in again to browse again',
-            showCancelButton: true,
-            cancelButtonText: 'Cancell',
-            confirmButtonText: 'Log Out',
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#dc3545',
-            showClass: {
-              popup: 'swal2-noanimation',
-              backdrop: 'swal2-noanimation'
-            },
-            hideClass: {
-              popup: '',
-              backdrop: ''
-        }, preConfirm: () => {
-        axios.post(`/api/logout`)
-        .then(response => {
-            console.log("SingOut");
-            location.pathname = `/index.html`;
+  created() {
+    axios.get("/velvet/creams")
+      .then(response => {
+        this.creams = response.data;
+        this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+        this.creams = this.creams.map(cream => {
+          let aux = this.shoppingCart.find(product => product.id == cream.id)
+          if (aux) {
+            return aux
+          }
+          return cream
         })
-        .catch(error => {
-            console.log(error);
-        });
-    },
-})
-},
-    }
-    }
-  );
-  
-  app.mount('#app');
+        for (let product of this.shoppingCart) {
+          this.totalPrice += product.price * product.quantity;
+        }
+      })
 
-  
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  methods: {
+
+    filterSearch() {
+      if (this.valueSearch.trim() === '') {
+        return;
+      }
+   
+      const normalizedSearch = this.valueSearch.toLowerCase();
+    
+      const filteredCreams = this.creams.filter(product =>
+        product.name.toLowerCase().includes(normalizedSearch)
+      );
+    
+      if (filteredCreams.length === 0) {
+        this.errorSearch = "The product was not found. Find another"
+        return;
+      }
+      const firstResult = filteredCreams[0];
+      let detailsPage = '';
+      const normalizedProductName = firstResult.name.toLowerCase();
+      if (normalizedProductName.includes("cream")) {
+        detailsPage = 'detailsCreams.html';
+    
+      window.location.href = `/web/assets/pages/${detailsPage}?id=${encodeURIComponent(firstResult.id)}`;
+    }
+  },
+
+    filterByPriceAndType() {
+      let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
+      let typeSelected = this.types.find(type => type.value === this.typeSelected);
+      this.filteredByPrice = this.airFresheners.filter(cream => {
+        return (!priceSelected || (cream.price >= priceSelected.value[0] && cream.price <= priceSelected.value[1])) && (!typeSelected || cream.type === typeSelected.value)
+      });
+    },
+
+    addFromCart(product) {
+      const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
+      if (index !== -1) {
+        this.shoppingCart[index].quantity += 1;
+      } else {
+        product.quantity = 1
+        this.shoppingCart.push(product);
+      }
+      this.updateTotalPrice();
+      product.stock -= 1;
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+
+    },
+
+    removeFromCart(product) {
+      let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+      this.shoppingCart.splice(index, 1)
+
+      localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      this.updateTotalPrice();
+      product.stock += product.quantity
+    },
+
+    updateStockFromCart(cart) {
+      for (let product of this.creams) {
+        const cartProduct = cart.find(cartItem => cartItem.id === product.id);
+        if (cartProduct) {
+          product.stock -= cartProduct.quantity;
+        }
+      }
+    },
+    decrementQuantity(item) {
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+        item.stock += 1
+        this.updateTotalPrice();
+        localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
+      }
+    },
+    updateTotalPrice() {
+      this.totalPrice = this.shoppingCart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    },
+
+
+    logOut() {
+      Swal.fire({
+        title: 'Are you sure you want to log out?',
+        text: 'You will need to log in again to browse again',
+        showCancelButton: true,
+        cancelButtonText: 'Cancell',
+        confirmButtonText: 'Log Out',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showClass: {
+          popup: 'swal2-noanimation',
+          backdrop: 'swal2-noanimation'
+        },
+        hideClass: {
+          popup: '',
+          backdrop: ''
+        }, preConfirm: () => {
+          axios.post(`/api/logout`)
+            .then(response => {
+              console.log("SingOut");
+              location.pathname = `/index.html`;
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        },
+      })
+    },
+    formatNumber(number) {
+      return number.toLocaleString("De-DE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    },
+  }
+}
+);
+
+app.mount('#app');
+

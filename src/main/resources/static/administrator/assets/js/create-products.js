@@ -3,7 +3,7 @@ const app = Vue.createApp({
     return {
       currentForm: 'form1',
       fragances: [],
-      fraganceSelected: undefined,
+      fraganceSelected: "",
       idFragance: undefined,
       nameFragance: undefined,
       descriptionFragance: undefined,
@@ -16,7 +16,7 @@ const app = Vue.createApp({
       routeImageFragance: undefined,
 
       airFresheners: [],
-      airFreshenerSelected: undefined,
+      airFreshenerSelected: "",
       idAirFreshener: undefined,
       nameAirFreshener: undefined,
       descriptionAirFreshener: undefined,
@@ -27,6 +27,8 @@ const app = Vue.createApp({
       routeImageAirFreshener: undefined,
 
       creams: [],
+      creamSelected: "",
+      idCream: undefined,
       nameCream: undefined,
       descriptionCream: undefined,
       priceCream: undefined,
@@ -212,12 +214,9 @@ const app = Vue.createApp({
             image: this.routeImageFragance,
             id: this.idFragance
           };
-          console.log("Before filtering:", Object.entries(requestData));
           const filteredData = Object.fromEntries(
             Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)
           );
-          console.log("After filtering:", filteredData);
-
           const queryString = new URLSearchParams(filteredData).toString();
           axios.patch(`/velvet/fragances/update?${queryString}`)
             .then(() => {
@@ -267,7 +266,22 @@ const app = Vue.createApp({
           popup: '',
           backdrop: ''
         }, preConfirm: () => {
-          axios.patch(`/velvet/flavorings/update`, `name=${this.nameAirFreshener}&description=${this.descriptionAirFreshener}&content=${this.contentAirFreshener}&price=${this.priceAirFreshener}&stock=${this.stockAirFreshener}&presentation=${this.presentationAirFreshener}&image=${this.routeImageAirFreshener}`)
+          const requestData = {
+            name: this.nameAirFreshener,
+            description: this.descriptionAirFreshener,
+            content: this.contentAirFreshener, 
+            price: this.priceAirFreshener,
+            stock: this.stockAirFreshener,
+            presentation: this.presentationAirFreshener,
+            image: this.routeImageAirFreshener,
+            id: this.idAirFreshener
+           
+          };
+          const filteredData = Object.fromEntries(
+            Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)
+          );
+          const queryString = new URLSearchParams(filteredData).toString();
+          axios.patch(`/velvet/flavorings/update?${queryString}`)
             .then(() => {
               Swal.fire({
                 title: "Successfully update air freshener",
@@ -315,7 +329,22 @@ const app = Vue.createApp({
           popup: '',
           backdrop: ''
         }, preConfirm: () => {
-          axios.patch(`/velvet/creams/update`, `name=${this.nameCream}&description=${this.descriptionCream}&price=${this.priceCream}&content=${this.contentCream}&stock=${this.stockCream}&type=${this.typeCream}&image=${this.routeImageCream}`)
+          const requestData = {
+            name: this.nameCream,
+            description: this.descriptionCream,
+            price: this.priceCream,
+            content: this.contentCream, 
+            stock: this.stockCream,
+            type: this.typeCream,
+            image: this.routeImageCream,
+            id: this.idCream
+           
+          };
+          const filteredData = Object.fromEntries(
+            Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)
+          );
+          const queryString = new URLSearchParams(filteredData).toString();
+          axios.patch(`/velvet/creams/update?${queryString}`)
             .then(() => {
               Swal.fire({
                 title: "Successfully update cream",
@@ -341,6 +370,14 @@ const app = Vue.createApp({
 
     showForm(formName) {
       this.currentForm = formName;
+    },
+
+    updateIdCream() {
+      if (this.creamSelected) {
+        this.idCream = this.creamSelected.id;
+      } else {
+        this.idCream = null;
+      }
     },
 
     logOut() {

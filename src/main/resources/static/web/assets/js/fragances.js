@@ -4,10 +4,10 @@ const app = Vue.createApp({
       fragances: [],
       valueSearch: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$2.999', value: [0, 2999] },
-        { id: 'range2', label: 'US$3.000 - US$5.999', value: [3000, 5999] },
-        { id: 'range3', label: 'US$6.000 - US$8.999', value: [6000, 8999] },
-        { id: 'range4', label: 'US$9.000 or more', value: [9000, Infinity] }
+        { id: 'range1', label: 'US$0 - US$19', value: [0, 19] },
+        { id: 'range2', label: 'US$20 - US$39', value: [20, 39] },
+        { id: 'range3', label: 'US$40 - US$59', value: [40, 59] },
+        { id: 'range4', label: 'US$60 or more', value: [60, Infinity] }
       ],
       rangeSelected: null,
       genders: [
@@ -125,6 +125,12 @@ const app = Vue.createApp({
         },
       })
     },
+    formatNumber(number) {
+      return number.toLocaleString("De-DE", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+      });
+  },
   }
 }
 );
