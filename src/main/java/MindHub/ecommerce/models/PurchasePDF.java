@@ -4,18 +4,18 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PurchasePDF {
 
     private Purchase purchase;
-   // private List<PurchaseCream> purchaseCreamList;
-   // private List<PurchaseFlavoring> purchaseFlavoringsList;
-  //  private List<PurchaseFragance> purchaseFragancesList;
+
 
 
     public PurchasePDF(Purchase purchase) {
@@ -71,10 +71,10 @@ public class PurchasePDF {
         }
     }
 
-    public void usePDFExport(HttpServletResponse response) throws DocumentException, IOException {
+    public void usePDFExport(OutputStream outputStream) throws DocumentException, IOException {
         Document doc = new Document(PageSize.A4);
-        PdfWriter.getInstance(doc, response.getOutputStream());
-        doc.open();
+        PdfWriter.getInstance(doc, outputStream);
+
 
         // Estilos de fuentes
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);

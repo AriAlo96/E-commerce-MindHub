@@ -155,40 +155,15 @@ public class FlavoringController {
         flavoringService.deleteFlavoringById(id);
         return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
-    @PostMapping("/create/pdf")
-    public  ResponseEntity<?> exportPDF(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException {
 
-        Client client = clientService.findClientByEmail(authentication.getName());
-        Purchase purchase = purchaseService.findPurchaseById(purchaseId);
-
-        if (client.getTotalPurchases()
-                .stream()
-                .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
-            return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
-        }
-        response.setContentType("application/pdf");
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename= Purchase" + purchaseId + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        List<PurchaseCream> purchaseCreamsList = new ArrayList<>(purchase.getPurchaseCreams());
-        List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
-        List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
-
-        PurchasePDF exporter = new PurchasePDF(purchase);
-        exporter.usePDFExport(response);
-
-        return new ResponseEntity<>("PDF created", HttpStatus.CREATED);
-    }
     @Autowired
     private JavaMailSender mailSender;
 
     @PostMapping("/create/mail")
-    public ResponseEntity<?> exportPDFMail(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
-
-        Client client = clientService.findClientByEmail(authentication.getName());
+    public ResponseEntity<?> exportPDFMail(Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
         Purchase purchase = purchaseService.findPurchaseById(purchaseId);
+        Client client = clientService.findClientByEmail(authentication.getName());
+
 
         if (client.getTotalPurchases()
                 .stream()
@@ -199,7 +174,7 @@ public class FlavoringController {
 
         PurchasePDF exporter = new PurchasePDF(purchase);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        exporter.usePDFExport((HttpServletResponse) outputStream);
+        exporter.usePDFExport(outputStream);
 
         // Create a new MimeMessage object
         MimeMessage message = mailSender.createMimeMessage();
@@ -216,7 +191,7 @@ public class FlavoringController {
         ByteArrayResource byteArrayResource = new ByteArrayResource(outputStream.toByteArray());
 
         // Add the PDF as an attachment
-        helper.addAttachment("Purchase" + purchaseId + ".pdf", byteArrayResource);
+        helper.addAttachment("Purchase ID:" + purchase.getId() + ".pdf", byteArrayResource);
 
         // Send the email
         mailSender.send(message);
