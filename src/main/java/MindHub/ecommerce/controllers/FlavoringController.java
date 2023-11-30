@@ -11,18 +11,25 @@ import MindHub.ecommerce.services.PurchaseService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.io.ByteArrayOutputStream;
+
 
 @RestController
 @RequestMapping("/velvet")
@@ -169,9 +176,52 @@ public class FlavoringController {
         List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
         List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
 
-        PurchasePDF exporter = new PurchasePDF(purchase,purchaseCreamsList,purchaseFlavoringList,purchaseFraganceList);
+        PurchasePDF exporter = new PurchasePDF(purchase);
         exporter.usePDFExport(response);
 
         return new ResponseEntity<>("PDF created", HttpStatus.CREATED);
     }
- }
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @PostMapping("/create/mail")
+    public ResponseEntity<?> exportPDFMail(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
+
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Purchase purchase = purchaseService.findPurchaseById(purchaseId);
+
+        if (client.getTotalPurchases()
+                .stream()
+                .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
+            return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
+        }
+
+
+        PurchasePDF exporter = new PurchasePDF(purchase);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        exporter.usePDFExport((HttpServletResponse) outputStream);
+
+        // Create a new MimeMessage object
+        MimeMessage message = mailSender.createMimeMessage();
+
+        // Create a new MimeMessageHelper object
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        // Set the email parameters
+        helper.setTo(client.getEmail());
+        helper.setSubject("Your Purchase PDF");
+        helper.setText("Here is your purchase PDF!");
+
+        // Create a ByteArrayResource from the PDF bytes
+        ByteArrayResource byteArrayResource = new ByteArrayResource(outputStream.toByteArray());
+
+        // Add the PDF as an attachment
+        helper.addAttachment("Purchase" + purchaseId + ".pdf", byteArrayResource);
+
+        // Send the email
+        mailSender.send(message);
+
+        return new ResponseEntity<>("PDF created and emailed", HttpStatus.CREATED);
+    }
+
+}
