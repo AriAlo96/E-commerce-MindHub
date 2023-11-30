@@ -19,7 +19,7 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/index.html", "/web/assets/pages/login.html", "/web/assets/style/**",
                         "/web/assets/scripts/login.js", "/web/assets/images/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login" , "/api/clients").permitAll();
+                .antMatchers(HttpMethod.POST, "/velvet/login" , "/velvet/clients").permitAll();
 //
         http.formLogin()
                 .usernameParameter("email")
