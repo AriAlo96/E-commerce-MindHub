@@ -2,10 +2,7 @@ package MindHub.ecommerce.controllers;
 
 import MindHub.ecommerce.dtos.CreamDTO;
 
-import MindHub.ecommerce.models.Cream;
-import MindHub.ecommerce.models.Flavoring;
-import MindHub.ecommerce.models.Presentation;
-import MindHub.ecommerce.models.Type;
+import MindHub.ecommerce.models.*;
 import MindHub.ecommerce.repositories.CreamRepository;
 import MindHub.ecommerce.services.CreamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,13 +129,22 @@ public class CreamController {
 
     @PatchMapping("/creams/delete")
     public ResponseEntity<Object> deleteCream(@RequestParam Long id){
-        if (!creamService.creamExistById(id)){
-            return new ResponseEntity<>("The Id dosent exist", HttpStatus.FORBIDDEN);
+        Cream cream = creamService.findCreamById(id);
+        if (cream == null) {
+            return new ResponseEntity<>("The cream doesn't exist", HttpStatus.FORBIDDEN);
         }
-        creamService.deleteCreamById(id);
-        return new ResponseEntity<>("Cream removed!", HttpStatus.OK);
-    }
+        if (cream.getStock() > 0) {
+            return new ResponseEntity<>("You can not delete an cream with a stock greater than zero",
+                    HttpStatus.FORBIDDEN);
+        }
+        if (!cream.getActive()) {
+            return new ResponseEntity<>("The cream is inactive", HttpStatus.FORBIDDEN);
+        } else {
+            cream.setActive(false);
+            creamService.saveCream(cream);
+            return new ResponseEntity<>("Cream delete successfully", HttpStatus.CREATED);
+        }
 
 
 
-}
+}}
