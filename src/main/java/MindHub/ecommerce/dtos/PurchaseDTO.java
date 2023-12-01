@@ -12,6 +12,15 @@ public class PurchaseDTO {
     private Set<PurchaseFlavoring> purchaseFlavorings;
     private Set<PurchaseCream> purchaseCreams;
 
+    public PurchaseDTO(Double totalPurchases, Set<PurchaseFragance> purchaseFragances,
+                       Set<PurchaseFlavoring> purchaseFlavorings, Set<PurchaseCream> purchaseCreams)
+    {
+        this.totalPurchases = totalPurchases;
+        this.purchaseFragances = purchaseFragances;
+        this.purchaseFlavorings = purchaseFlavorings;
+        this.purchaseCreams = purchaseCreams;
+    }
+
     public PurchaseDTO(Purchase purchase)
     {
         id = purchase.getId();
