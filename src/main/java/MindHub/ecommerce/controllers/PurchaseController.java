@@ -1,9 +1,6 @@
 package MindHub.ecommerce.controllers;
 
-import MindHub.ecommerce.dtos.PurchaseCreamDTO;
-import MindHub.ecommerce.dtos.PurchaseDTO;
-import MindHub.ecommerce.dtos.PurchaseFlavoringDTO;
-import MindHub.ecommerce.dtos.PurchaseFraganceDTO;
+import MindHub.ecommerce.dtos.*;
 import MindHub.ecommerce.models.*;
 import MindHub.ecommerce.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -98,6 +97,87 @@ public class PurchaseController {
         purchase.setClient(client);
         purchaseService.savePurchase(purchase);
         return new ResponseEntity<>("Your purchase was made successfully.", HttpStatus.OK);
+    }
+
+    @PostMapping("/create/purchase/2")
+    public ResponseEntity<Object> createPurchaseDTO (Authentication authentication, @RequestBody Set<CreamBuyDTO> creamBuyDTOS , @RequestBody Set<FlavoringBuyDTO> flavoringBuyDTOS, @RequestBody Set<FraganceBuyDTO> fraganceBuyDTOS)
+    {
+        Client client = clientService.findClientByEmail(authentication.getName());
+
+        Set<PurchaseFragance> purchaseFraganceSet = new HashSet<>();
+        Set<PurchaseFlavoring> purchaseFlavoringSet = new HashSet<>();
+        Set<PurchaseCream> purchaseCreamSet = new HashSet<>();
+
+        double total = 0;
+
+        Purchase purchase = new Purchase();
+
+        for (FraganceBuyDTO fragance : fraganceBuyDTOS){
+
+            Fragance fragance1 = fraganceService.findFraganceById(fragance.getId());
+
+            Double subtotal = fragance1.getPrice() * fragance.getQuantity();
+
+            PurchaseFragance purchaseFragance = new PurchaseFragance(fragance.getQuantity(), subtotal);
+
+            purchaseFragance.setFragance(fragance1);
+
+            purchaseFraganceSet.add(purchaseFragance);
+
+            purchase.setPurchaseFragances(purchaseFraganceSet);
+        }
+
+        for (CreamBuyDTO cream : creamBuyDTOS){
+
+            Cream cream1 =  creamService.findCreamById(cream.getId());
+
+            Double subtotal = cream1.getPrice() * cream.getQuantity();
+
+            PurchaseCream purchaseCream = new PurchaseCream(cream.getQuantity(), subtotal);
+
+            purchaseCream.setCream(cream1);
+
+            purchaseCreamSet.add(purchaseCream);
+
+            purchase.setPurchaseCreams(purchaseCreamSet);
+        }
+
+        for(FlavoringBuyDTO flav : flavoringBuyDTOS){
+            Flavoring flav1 =  flavoringService.findFlavoringByID(flav.getId());
+
+            Double subtotal = flav1.getPrice() * flav.getQuantity();
+
+            PurchaseFlavoring purchaseFlavoring = new PurchaseFlavoring(flav.getQuantity(), subtotal);
+
+            purchaseFlavoring.setFlavoring(flav1);
+
+            purchaseFlavoringSet.add(purchaseFlavoring);
+
+            purchase.setPurchaseFlavorings(purchaseFlavoringSet);
+        }
+
+
+
+        // Sumar los subtotales de PurchaseFragance
+        for (PurchaseFragance purchaseFragance : purchaseFraganceSet) {
+            total += purchaseFragance.getSubtotal();
+        }
+
+        // Sumar los subtotales de PurchaseCream
+        for (PurchaseCream purchaseCream : purchaseCreamSet) {
+            total += purchaseCream.getSubtotal();
+        }
+
+        // Sumar los subtotales de PurchaseFlavoring
+        for (PurchaseFlavoring purchaseFlavoring : purchaseFlavoringSet) {
+            total += purchaseFlavoring.getSubtotal();
+        }
+
+        purchase.setTotalPurchases(total);
+
+
+        purchase.setClient(client);
+        return new ResponseEntity<>("Purchase Created!",HttpStatus.CREATED);
     }
 
 }
