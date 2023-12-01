@@ -155,73 +155,48 @@ public class FlavoringController {
         flavoringService.deleteFlavoringById(id);
         return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
-    @PostMapping("/create/pdf")
-    public  ResponseEntity<?> exportPDF(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException {
 
-        Client client = clientService.findClientByEmail(authentication.getName());
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @PostMapping("/create/mail")
+    public ResponseEntity<?> exportPDFMail(Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
         Purchase purchase = purchaseService.findPurchaseById(purchaseId);
+        Client client = clientService.findClientByEmail(authentication.getName());
+
 
         if (client.getTotalPurchases()
                 .stream()
                 .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
             return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
         }
-        response.setContentType("application/pdf");
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename= Purchase" + purchaseId + ".pdf";
-        response.setHeader(headerKey, headerValue);
-
-        List<PurchaseCream> purchaseCreamsList = new ArrayList<>(purchase.getPurchaseCreams());
-        List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
-        List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
 
         PurchasePDF exporter = new PurchasePDF(purchase);
-        exporter.usePDFExport(response);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        exporter.usePDFExport(outputStream);
 
-        return new ResponseEntity<>("PDF created", HttpStatus.CREATED);
+        // Create a new MimeMessage object
+        MimeMessage message = mailSender.createMimeMessage();
+
+        // Create a new MimeMessageHelper object
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        // Set the email parameters
+        helper.setTo(client.getEmail());
+        helper.setSubject("Your Purchase PDF");
+        helper.setText("Here is your purchase PDF!");
+
+        // Create a ByteArrayResource from the PDF bytes
+        ByteArrayResource byteArrayResource = new ByteArrayResource(outputStream.toByteArray());
+
+        // Add the PDF as an attachment
+        helper.addAttachment("Purchase ID:" + purchase.getId() + ".pdf", byteArrayResource);
+
+        // Send the email
+        mailSender.send(message);
+
+        return new ResponseEntity<>("PDF created and emailed", HttpStatus.CREATED);
     }
-//    @Autowired
-//    private JavaMailSender mailSender;
-//
-//    @PostMapping("/create/mail")
-//    public ResponseEntity<?> exportPDFMail(HttpServletResponse response, Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
-//
-//        Client client = clientService.findClientByEmail(authentication.getName());
-//        Purchase purchase = purchaseService.findPurchaseById(purchaseId);
-//
-//        if (client.getTotalPurchases()
-//                .stream()
-//                .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
-//            return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
-//        }
-//
-//
-//        PurchasePDF exporter = new PurchasePDF(purchase);
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        exporter.usePDFExport((HttpServletResponse) outputStream);
-//
-//        // Create a new MimeMessage object
-//        MimeMessage message = mailSender.createMimeMessage();
-//
-//        // Create a new MimeMessageHelper object
-//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-//        // Set the email parameters
-//        helper.setTo(client.getEmail());
-//        helper.setSubject("Your Purchase PDF");
-//        helper.setText("Here is your purchase PDF!");
-//
-//        // Create a ByteArrayResource from the PDF bytes
-//        ByteArrayResource byteArrayResource = new ByteArrayResource(outputStream.toByteArray());
-//
-//        // Add the PDF as an attachment
-//        helper.addAttachment("Purchase" + purchaseId + ".pdf", byteArrayResource);
-//
-//        // Send the email
-//        mailSender.send(message);
-//
-//        return new ResponseEntity<>("PDF created and emailed", HttpStatus.CREATED);
-//    }
 
 }
