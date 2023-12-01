@@ -41,7 +41,7 @@
                                     Products
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Fragances</a></li>
+                                    <li><a class="dropdown-item" href="./fragances.html">Fragances</a></li>
                                     <li><a class="dropdown-item" href="./air-fresheners.html">Air fresheners</a></li>
                                     <li><a class="dropdown-item" href="./creams.html">Creams</a></li>
                                 </ul>
@@ -68,9 +68,9 @@
                 </div>
                 <div class="d-flex" style="gap: 1rem;">
                     <h5 v-if="email" style="color: #fbb002d4; font-weight: 500; width: 8rem;">Hi, {{client.firstName}} !</h5>
-                    <a v-if="!email" href="./web/assets/pages/log-in.html"
+                    <a v-if="!email" href="./log-in.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500;">LogIn</a>
-                    <a v-if="!email" href="./web/assets/pages/register.html"
+                    <a v-if="!email" href="./register.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500">Register</a>
                     <a v-if="email"  @click="logOut" style="color: #ec225e; cursor: pointer; font-weight: 500">LogOut</a>
 
@@ -318,7 +318,7 @@
                             </tr>
                         </table>
                     </div>
-                    <button class='pay-btn'>Checkout</button>
+                    <button @click="newPurchase" class='pay-btn'>Checkout</button>
                 </div>
             </div>
     </div>

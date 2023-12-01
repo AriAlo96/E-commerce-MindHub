@@ -5,6 +5,7 @@ const app = Vue.createApp({
       email: "",
       fragances: [],
       valueSearch: "",
+      errorSearch: "",
       ranges: [
         { id: 'range1', label: 'US$0 - US$19', value: [0, 19] },
         { id: 'range2', label: 'US$20 - US$39', value: [20, 39] },
@@ -53,6 +54,10 @@ const app = Vue.createApp({
       this.fragances.filter(fragance =>
         fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
       );
+      if (filteredProducts.length === 0) {
+        this.errorSearch = "The product was not found. Find another"
+        return;
+      }
     },
     filterByPriceAndGender() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
