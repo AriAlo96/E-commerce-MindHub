@@ -118,9 +118,7 @@ const app = Vue.createApp({
         maximumFractionDigits: 2,
       });
     },
-
-
-  }
+}
 }
 );
 
