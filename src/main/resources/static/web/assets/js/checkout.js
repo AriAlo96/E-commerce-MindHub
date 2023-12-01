@@ -11,9 +11,6 @@ const app = Vue.createApp({
         valueSearch: "",
         categorySelected: "",
         shoppingCart: [],
-        shoppingFragances: [],
-        shoppingAirFresheners: [],
-        shoppingCreams: [],
         totalPrice: 0,
         errorSearch: "",
       };
@@ -44,8 +41,6 @@ const app = Vue.createApp({
         .catch(error => {
           console.log(error);
         });
-
-   
     },
 
     methods: {
@@ -66,11 +61,10 @@ const app = Vue.createApp({
             popup: '',
             backdrop: ''
           }, preConfirm: () => {
-            this.shoppingFragances = this.shoppingCart.filter(item => item.name.includes("Parfum"));
-            this.shoppingAirFresheners = this.shoppingCart.filter(item => item.name.includes("Air freshener"));
-            this.shoppingCreams = this.shoppingCart.filter(item => item.name.includes("Cream"));  
-            console.log(this.shoppingFragances);
-            axios.post(`/velvet/purchases/create`, {"creamBuyDTOS": `${this.shoppingFragances}`,"flavoringBuyDTOS": `${this.shoppingAirFresheners}`,"fraganceBuyDTOS": `${this.shoppingCreams}`})
+            let shoppingFragances = this.shoppingCart.filter(item => item.name.includes("parfum"));
+            let shoppingAirFresheners = this.shoppingCart.filter(item => item.name.includes("air freshener"));
+            let shoppingCreams = this.shoppingCart.filter(item => item.name.includes("cream"));
+            axios.post(`/velvet/create/purchase/2`, {"buyPurchaseDTO": `${this.totalPrice}`, "purchaseFragances": `${shoppingFragances}`,"purchaseFlavorings": `${shoppingAirFresheners}`,"purchaseCreams": `${shoppingCreams}`})
               .then(response => {
                 Swal.fire({
                   position: "center",

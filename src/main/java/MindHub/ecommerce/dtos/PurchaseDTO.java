@@ -1,25 +1,20 @@
 package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Set;
 
 public class PurchaseDTO {
     private Long id;
+    @JsonBackReference
     private Client client;
     private Double totalPurchases;
     private Set<PurchaseFragance> purchaseFragances;
     private Set<PurchaseFlavoring> purchaseFlavorings;
     private Set<PurchaseCream> purchaseCreams;
 
-    public PurchaseDTO(Double totalPurchases, Set<PurchaseFragance> purchaseFragances,
-                       Set<PurchaseFlavoring> purchaseFlavorings, Set<PurchaseCream> purchaseCreams)
-    {
-        this.totalPurchases = totalPurchases;
-        this.purchaseFragances = purchaseFragances;
-        this.purchaseFlavorings = purchaseFlavorings;
-        this.purchaseCreams = purchaseCreams;
-    }
 
     public PurchaseDTO(Purchase purchase)
     {

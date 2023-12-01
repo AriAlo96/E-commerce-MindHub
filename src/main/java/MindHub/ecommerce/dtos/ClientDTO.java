@@ -2,8 +2,10 @@ package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.Client;
 import MindHub.ecommerce.models.Purchase;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ClientDTO {
     private Long id;
@@ -11,6 +13,7 @@ public class ClientDTO {
     private String lastName;
     private String email;
     private String address;
+    @JsonManagedReference
     private Set<Purchase> totalPurchases;
 
     public ClientDTO(Client client) {
