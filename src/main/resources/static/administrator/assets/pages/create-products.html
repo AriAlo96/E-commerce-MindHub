@@ -325,142 +325,77 @@
                                 </div>
                                 <div v-if="fraganceSelected && fraganceSelected !== '' && fraganceSelected !== 'Select the fragrance'"
                                     class="d-flex">
-                                    <div class="d-flex" style="gap: 3rem;">
-                                        <div>
-                                            <legend
-                                                style="text-align: center; color: #ec225e; font-weight: 600;margin-bottom: 1.8rem;">
-                                                Your current fragrance</legend>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1" :placeholder="fraganceSelected.name"
-                                                    readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.olfactoryFamily" readonly>
-                                                <label class="input-group-text" for="inputGroupSelect01">Olfactor
-                                                    Family</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <label class="input-group-text" for="inputGroupSelect01">Gender</label>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.gender" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.presentation" readonly>
-                                                <label class="input-group-text"
-                                                    for="inputGroupSelect01">Presentation</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.content" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.price" readonly>
-                                                <span class="input-group-text">$</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.description" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.stock" readonly>
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="fraganceSelected.image" readonly>
-                                            </div>
+                                    <div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <legend style="text-align: center; color: #ec225e; font-weight: 600;">
+                                                Update a fragance here!</legend>
                                         </div>
-                                        <div>
-                                            <div class="d-flex flex-column align-items-center">
-                                                <legend style="text-align: center; color: #ec225e; font-weight: 600;">
-                                                    Update a fragance here!</legend>
-                                                <small style="text-align: center; color: #ec225e;">Complete only the
-                                                    fields you want to modify</small>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input v-model="nameFragance" type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <select v-model="olfactoryFamilyFragance" class="form-select"
-                                                    id="inputGroupSelect01">
-                                                    <option selected>Select</option>
-                                                    <option value="FLOWERY">Flowery</option>
-                                                    <option value="CITRUS">Citrus</option>
-                                                    <option value="CHYPRE">Chypre</option>
-                                                    <option value="ORIENTAL">Oriental</option>
-                                                    <option value="FOUGÉRE">Fougére</option>
-                                                    <option value="WOODY">Woody</option>
-                                                </select>
-                                                <label class="input-group-text" for="inputGroupSelect01">Olfactor
-                                                    Family</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <label class="input-group-text" for="inputGroupSelect01">Gender</label>
-                                                <select v-model="genderFragance" class="form-select"
-                                                    id="inputGroupSelect01">
-                                                    <option selected>Select</option>
-                                                    <option value="WOMEN">Femenine</option>
-                                                    <option value="MAN">Masculine</option>
-                                                </select>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <select v-model="presentationFragance" class="form-select"
-                                                    id="inputGroupSelect01">
-                                                    <option selected>Select</option>
-                                                    <option value="CLASICPACKAGE">Classic packaging</option>
-                                                    <option value="TRIBUTE">Tribute</option>
-                                                </select>
-                                                <label class="input-group-text"
-                                                    for="inputGroupSelect01">Presentation</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input v-model="contentFragance" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input v-model="priceFragance" type="text" class="form-control"
-                                                    aria-label="Amount (to the nearest dollar)">
-                                                <span class="input-group-text">$</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <textarea v-model="descriptionFragance" class="form-control"
-                                                    aria-label="With textarea"></textarea>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input v-model="stockFragance" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input v-model="routeImageFragance" type="text" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
-                                                <button @click="updateFragance" type="button" class="btn"
-                                                    style="background-color: #ec225e; color: aliceblue;">Update</button>
-                                            </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Name</span>
+                                            <input v-model="fraganceSelected.name" type="text" class="form-control"
+                                                aria-label="name" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <select v-model="fraganceSelected.olfactoryFamily" class="form-select"
+                                                id="inputGroupSelect01">
+                                                <option selected>Select</option>
+                                                <option value="FLOWERY">Flowery</option>
+                                                <option value="CITRUS">Citrus</option>
+                                                <option value="CHYPRE">Chypre</option>
+                                                <option value="ORIENTAL">Oriental</option>
+                                                <option value="FOUGÉRE">Fougére</option>
+                                                <option value="WOODY">Woody</option>
+                                            </select>
+                                            <label class="input-group-text" for="inputGroupSelect01">Olfactor
+                                                Family</label>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                                            <select v-model="fraganceSelected.gender" class="form-select"
+                                                id="inputGroupSelect01">
+                                                <option selected>Select</option>
+                                                <option value="WOMEN">Femenine</option>
+                                                <option value="MAN">Masculine</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <select v-model="fraganceSelected.presentation" class="form-select"
+                                                id="inputGroupSelect01">
+                                                <option selected>Select</option>
+                                                <option value="CLASICPACKAGE">Classic packaging</option>
+                                                <option value="TRIBUTE">Tribute</option>
+                                            </select>
+                                            <label class="input-group-text"
+                                                for="inputGroupSelect01">Presentation</label>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Content</span>
+                                            <input v-model="fraganceSelected.content" type="number" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input v-model="fraganceSelected.price" type="text" class="form-control"
+                                                aria-label="Amount (to the nearest dollar)">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Description</span>
+                                            <textarea v-model="fraganceSelected.description" class="form-control"
+                                                aria-label="With textarea"></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input v-model="fraganceSelected.stock" type="number" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                            <span class="input-group-text" id="basic-addon1">Stock</span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Image Url</span>
+                                            <input v-model="fraganceSelected.image" type="text" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
+                                            <button @click="updateFragance" type="button" class="btn"
+                                                style="background-color: #ec225e; color: aliceblue;">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -488,108 +423,58 @@
                                 </div>
                                 <div v-if="airFreshenerSelected && airFreshenerSelected !== '' && airFreshenerSelected !== 'Select the air freshener'"
                                     class="d-flex">
-                                    <div class="d-flex" style="gap: 3rem;">
-                                        <div>
-                                            <legend
-                                                style="text-align: center; color: #ec225e; font-weight: 600;margin-bottom: 1rem;">
-                                                Your current air freshener</legend>
-
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.name" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.presentation" readonly>
-                                                <label class="input-group-text"
-                                                    for="inputGroupSelect01">Presentation</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.content" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">$</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.price" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.description" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.stock" readonly>
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input type="text" class="form-control" aria-label="name"
-                                                    aria-describedby="basic-addon1"
-                                                    :placeholder="airFreshenerSelected.image" readonly>
-                                            </div>
+                                    <div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <legend style="text-align: center; color: #ec225e; font-weight: 600;">
+                                                Update a air freshener here!</legend>
                                         </div>
-                                        <div>
-                                            <div class="d-flex flex-column align-items-center">
-                                                <legend style="text-align: center; color: #ec225e; font-weight: 600;">
-                                                    Update a air freshener here!</legend>
-                                                <small style="text-align: center; color: #ec225e;">Complete only the
-                                                    fields you want to modify</small>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input v-model="nameAirFreshener" type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <select v-model="presentationAirFreshener" class="form-select"
-                                                    id="inputGroupSelect01">
-                                                    <option value="">Select</option>
-                                                    <option value="AMBIENT">Environmental</option>
-                                                    <option value="FABRICS">Fabric</option>
-                                                    <option value="DIFFUSERS">Diffuser</option>
-                                                </select>
-                                                <label class="input-group-text"
-                                                    for="inputGroupSelect01">Presentation</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input v-model="contentAirFreshener" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">$</span>
-                                                <input v-model="priceAirFreshener" type="text" class="form-control"
-                                                    aria-label="Amount (to the nearest dollar)">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <textarea v-model="descriptionAirFreshener" class="form-control"
-                                                    aria-label="With textarea"></textarea>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input v-model="stockAirFreshener" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input v-model="routeImageAirFreshener" type="text" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
-                                                <button @click="updateAirFreshener" type="button" class="btn"
-                                                    style="background-color: #ec225e; color: aliceblue;">Update</button>
-                                            </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Name</span>
+                                            <input v-model="airFreshenerSelected.name" type="text" class="form-control"
+                                                aria-label="name" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <select v-model="this.airFreshenerSelected.presentation" class="form-select"
+                                                id="inputGroupSelect01">
+                                                <option value="">Select</option>
+                                                <option value="AMBIENT">Environmental</option>
+                                                <option value="FABRICS">Fabric</option>
+                                                <option value="DIFFUSERS">Diffuser</option>
+                                            </select>
+                                            <label class="input-group-text"
+                                                for="inputGroupSelect01">Presentation</label>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Content</span>
+                                            <input v-model="this.airFreshenerSelected.content" type="number"
+                                                class="form-control" aria-label="content"
+                                                aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">$</span>
+                                            <input v-model="this.airFreshenerSelected.price" type="text"
+                                                class="form-control" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Description</span>
+                                            <textarea v-model="this.airFreshenerSelected.description"
+                                                class="form-control" aria-label="With textarea"></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input v-model="this.airFreshenerSelected.stock" type="number"
+                                                class="form-control" aria-label="content"
+                                                aria-describedby="basic-addon1">
+                                            <span class="input-group-text" id="basic-addon1">Stock</span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Image Url</span>
+                                            <input v-model="this.airFreshenerSelected.image" type="text"
+                                                class="form-control" aria-label="content"
+                                                aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
+                                            <button @click="updateAirFreshener" type="button" class="btn"
+                                                style="background-color: #ec225e; color: aliceblue;">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -617,98 +502,54 @@
                                 </div>
                                 <div v-if="creamSelected && creamSelected !== '' && creamSelected !== 'Select the cream'"
                                     class="d-flex">
-                                    <div class="d-flex" style="gap: 3rem;">
-                                        <div>
-                                            <legend
-                                                style="text-align: center; color: #ec225e; font-weight: 600;margin-bottom: 1rem;">
-                                                Your current cream!</legend>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.name" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.type" readonly>
-                                                <label class="input-group-text" for="inputGroupSelect01">Type</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.content" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">$</span>
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.price" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.description" readonly>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.stock" readonly>
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input type="text" class="form-control"
-                                                aria-label="name" aria-describedby="basic-addon1" :placeholder="creamSelected.image" readonly>
-                                            </div>
+                                    <div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <legend style="text-align: center; color: #ec225e; font-weight: 600;">
+                                                Update a cream here!</legend>
                                         </div>
-                                        <div>
-                                            <div class="d-flex flex-column align-items-center">
-                                                <legend style="text-align: center; color: #ec225e; font-weight: 600;">
-                                                    Update a cream here!</legend>
-                                                <small style="text-align: center; color: #ec225e;">Complete only the
-                                                    fields you want to modify</small>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                                <input v-model="nameCream" type="text" class="form-control"
-                                                    aria-label="name" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <select v-model="typeCream" class="form-select" id="inputGroupSelect01">
-                                                    <option selected>Select</option>
-                                                    <option value="">Face</option>
-                                                    <option value="">Body</option>
-                                                    <option value="">Hands</option>
-                                                    <option value="">Foots</option>
-                                                </select>
-                                                <label class="input-group-text" for="inputGroupSelect01">Type</label>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Content</span>
-                                                <input v-model="contentCream" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">$</span>
-                                                <input v-model="priceCream" type="text" class="form-control"
-                                                    aria-label="Amount (to the nearest dollar)">
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">Description</span>
-                                                <textarea v-model="descriptionCream" class="form-control"
-                                                    aria-label="With textarea"></textarea>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <input v-model="stockCream" type="number" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                                <span class="input-group-text" id="basic-addon1">Stock</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Image Url</span>
-                                                <input v-model="routeImageCream" type="text" class="form-control"
-                                                    aria-label="content" aria-describedby="basic-addon1">
-                                            </div>
-                                            <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
-                                                <button @click="updateCream" type="button" class="btn"
-                                                    style="background-color: #ec225e; color: aliceblue;">Update</button>
-                                            </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Name</span>
+                                            <input v-model="creamSelected.name" type="text" class="form-control"
+                                                aria-label="name" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <select v-model="creamSelected.type" class="form-select" id="inputGroupSelect01">
+                                                <option selected>Select</option>
+                                                <option value="FACIAL">Face</option>
+                                                <option value="BODY">Body</option>
+                                                <option value="HAND">Hands</option>
+                                                <option value="FOOT">Foots</option>
+                                            </select>
+                                            <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Content</span>
+                                            <input v-model="creamSelected.content" type="number" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">$</span>
+                                            <input v-model="creamSelected.price" type="text" class="form-control"
+                                                aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Description</span>
+                                            <textarea v-model="creamSelected.description" class="form-control"
+                                                aria-label="With textarea"></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <input v-model="creamSelected.stock" type="number" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                            <span class="input-group-text" id="basic-addon1">Stock</span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">Image Url</span>
+                                            <input v-model="creamSelected.image" type="text" class="form-control"
+                                                aria-label="content" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="d-flex justify-content-center" style="margin-bottom: 1rem;">
+                                            <button @click="updateCream" type="button" class="btn"
+                                                style="background-color: #ec225e; color: aliceblue;">Update</button>
                                         </div>
                                     </div>
                                 </div>

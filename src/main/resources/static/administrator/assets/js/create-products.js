@@ -203,16 +203,16 @@ const app = Vue.createApp({
           backdrop: ''
         }, preConfirm: () => {
           const requestData = {
-            name: this.nameFragance,
-            description: this.descriptionFragance,
-            gender: this.genderFragance,
-            olfactoryFamily: this.olfactoryFamilyFragance,
-            price: this.priceFragance,
-            presentation: this.presentationFragance,
-            content: this.contentFragance,
-            stock: this.stockFragance,
-            image: this.routeImageFragance,
-            id: this.idFragance
+            name: this.fraganceSelected.name,
+            description: this.fraganceSelected.description,
+            gender: this.fraganceSelected.gender,
+            olfactoryFamily: this.fraganceSelected.olfactoryFamily,
+            price: this.fraganceSelected.price,
+            presentation: this.fraganceSelected.presentation,
+            content: this.fraganceSelected.content,
+            stock: this.fraganceSelected.stock,
+            image: this.fraganceSelected.image,
+            id: this.fraganceSelected.id
           };
           const filteredData = Object.fromEntries(
             Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)
@@ -267,14 +267,14 @@ const app = Vue.createApp({
           backdrop: ''
         }, preConfirm: () => {
           const requestData = {
-            name: this.nameAirFreshener,
-            description: this.descriptionAirFreshener,
-            content: this.contentAirFreshener, 
-            price: this.priceAirFreshener,
-            stock: this.stockAirFreshener,
-            presentation: this.presentationAirFreshener,
-            image: this.routeImageAirFreshener,
-            id: this.idAirFreshener
+            name: this.airFreshenerSelected.name,
+            description: this.airFreshenerSelected.description,
+            content: this.airFreshenerSelected.content, 
+            price: this.airFreshenerSelected.price,
+            stock: this.airFreshenerSelected.stock,
+            presentation: this.airFreshenerSelected.presentation,
+            image: this.airFreshenerSelected.image,
+            id: this.airFreshenerSelected.id
            
           };
           const filteredData = Object.fromEntries(
@@ -330,14 +330,14 @@ const app = Vue.createApp({
           backdrop: ''
         }, preConfirm: () => {
           const requestData = {
-            name: this.nameCream,
-            description: this.descriptionCream,
-            price: this.priceCream,
-            content: this.contentCream, 
-            stock: this.stockCream,
-            type: this.typeCream,
-            image: this.routeImageCream,
-            id: this.idCream
+            name: this.creamSelected.name,
+            description: this.creamSelected.description,
+            price: this.creamSelected.price,
+            content: this.creamSelected.content, 
+            stock: this.creamSelected.stock,
+            type: this.creamSelected.type,
+            image: this.creamSelected.image,
+            id: this.creamSelected.id
            
           };
           const filteredData = Object.fromEntries(
