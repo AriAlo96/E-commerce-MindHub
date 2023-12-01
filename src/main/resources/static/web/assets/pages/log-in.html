@@ -15,7 +15,7 @@
 </head>
 
 <body style="background-color: #d2d2d2;">
-    <div id="app">
+    <div id="app" v-cloak>
         <header>
             <nav class="navbar navbar-expand-lg" style="background-color:#020305;">
                 <div class="container-fluid">
@@ -179,10 +179,10 @@
                         <div class="mb-3">
                             <label for="textInput" class="form-label">Password:</label>
                             <input v-model="password" type="password" id="disabledTextInput" class="form-control"
-                                placeholder="Enter your password...">
+                                placeholder="Enter your password..." @keyup="login">
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button @click="login" type="button" class="btn" style="background-color: #ec225e; color: aliceblue;">Log
+                            <button @click="login" @keyup="login" type="button" class="btn" style="background-color: #ec225e; color: aliceblue;">Log
                                 In</button>
                         </div>
                     </fieldset>

@@ -1,6 +1,8 @@
 const app = Vue.createApp({
   data() {
     return {
+      client:{},
+      email: "",
       airFresheners: [],
       valueSearch: "",
       ranges: [
@@ -21,6 +23,11 @@ const app = Vue.createApp({
     };
   },
   created() {
+    axios.get("/velvet/clients/current")
+      .then(response => {
+        this.client = response.data;
+        this.email = this.client.email
+      })
     axios.get("/velvet/flavorings")
       .then(response => {
         this.airFresheners = response.data;
@@ -135,10 +142,18 @@ const app = Vue.createApp({
           popup: '',
           backdrop: ''
         }, preConfirm: () => {
-          axios.post(`/api/logout`)
+          axios.post(`/velvet/logout`)
             .then(response => {
-              console.log("SingOut");
-              location.pathname = `/index.html`;
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Logged out successfully",
+                showConfirmButton: false,
+                timer: 1500,
+            }),
+                setTimeout(() => {
+                    location.pathname = "/index.html";
+                }, 1600);
             })
             .catch(error => {
               console.log(error);

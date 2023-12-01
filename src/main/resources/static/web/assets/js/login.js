@@ -25,13 +25,12 @@ const app = Vue.createApp({
 
     methods: {
         login() {
-
             axios.post('/velvet/login', `email=${this.email}&password=${this.password}`)
                 .then(response => {
                     Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Logged out successfully",
+                        title: "Successful login",
                         showConfirmButton: false,
                         timer: 1500,
                     }),
@@ -42,7 +41,7 @@ const app = Vue.createApp({
                 .catch(error => {
                     if (error.response && error.response.status === 401) {
                         this.errorStatus = 401
-                        this.errorMessage = "Incorrect credentials. Please try again."
+                        this.errorMessage = error.response.data
                     } else {
                         this.errorStatus = null
                     }

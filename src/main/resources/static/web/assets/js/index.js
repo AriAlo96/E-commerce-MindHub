@@ -1,6 +1,8 @@
 const app = Vue.createApp({
   data() {
     return {
+      client:{},
+      email: "",
       allProducts:{
       fragances: [],
       airFresheners: [],
@@ -14,6 +16,11 @@ const app = Vue.createApp({
     };
   },
   created() {
+    axios.get("/velvet/clients/current")
+      .then(response => {
+        this.client = response.data;
+        this.email = this.client.email
+      })
     axios.get("/velvet/fragances")
       .then(response => {
         this.allProducts.fragances = response.data;
@@ -117,6 +124,42 @@ const app = Vue.createApp({
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
+    },
+    logOut() {
+      Swal.fire({
+        title: 'Are you sure you want to log out?',
+        text: 'You will need to log in again to browse again',
+        showCancelButton: true,
+        cancelButtonText: 'Cancell',
+        confirmButtonText: 'Log Out',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showClass: {
+          popup: 'swal2-noanimation',
+          backdrop: 'swal2-noanimation'
+        },
+        hideClass: {
+          popup: '',
+          backdrop: ''
+        }, preConfirm: () => {
+          axios.post(`/velvet/logout`)
+            .then(response => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Logged out successfully",
+                showConfirmButton: false,
+                timer: 1500,
+            }),
+                setTimeout(() => {
+                    location.pathname = "/index.html";
+                }, 1600);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        },
+      })
     },
 }
 }

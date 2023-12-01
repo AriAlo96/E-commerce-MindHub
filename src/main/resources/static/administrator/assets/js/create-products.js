@@ -1,6 +1,8 @@
 const app = Vue.createApp({
   data() {
     return {
+      client: {},
+      email: "",
       currentForm: 'form1',
       fragances: [],
       fraganceSelected: "",
@@ -40,6 +42,11 @@ const app = Vue.createApp({
   },
 
   created() {
+    axios.get("/velvet/clients/current")
+      .then(response => {
+        this.client = response.data;
+        this.email = this.client.email
+      })
     axios.get("/velvet/fragances")
       .then(response => {
         this.fragances = response.data;
@@ -269,13 +276,13 @@ const app = Vue.createApp({
           const requestData = {
             name: this.airFreshenerSelected.name,
             description: this.airFreshenerSelected.description,
-            content: this.airFreshenerSelected.content, 
+            content: this.airFreshenerSelected.content,
             price: this.airFreshenerSelected.price,
             stock: this.airFreshenerSelected.stock,
             presentation: this.airFreshenerSelected.presentation,
             image: this.airFreshenerSelected.image,
             id: this.airFreshenerSelected.id
-           
+
           };
           const filteredData = Object.fromEntries(
             Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)
@@ -333,12 +340,12 @@ const app = Vue.createApp({
             name: this.creamSelected.name,
             description: this.creamSelected.description,
             price: this.creamSelected.price,
-            content: this.creamSelected.content, 
+            content: this.creamSelected.content,
             stock: this.creamSelected.stock,
             type: this.creamSelected.type,
             image: this.creamSelected.image,
             id: this.creamSelected.id
-           
+
           };
           const filteredData = Object.fromEntries(
             Object.entries(requestData).filter(([_, value]) => value !== null && value !== undefined)

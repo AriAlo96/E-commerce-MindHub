@@ -31,22 +31,27 @@ const app = Vue.createApp({
             axios.post('/velvet/clients/register', `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}&address=${this.address}`)
                 .then(() => {
                     axios.post('/velvet/login', `email=${this.email}&password=${this.password}`)
-                        .then(() => location.pathname = `index.html`)
-                        .catch(error => {
-                            console.log(error);
-                        });
+                .then(response => {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Successful register and login",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }),
+                        setTimeout(() => {
+                            location.pathname = "/index.html";
+                        }, 1600);
                 })
                 .catch(error => {
-                    let errorMessage = error.response.data;
-                    errorMessage = errorMessage.replace(/\n/g, '<br>');
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        html: errorMessage,
-                    });
+                    if (error.response && error.response.status === 401) {
+                        this.errorStatus = 401
+                        this.errorMessage = error.response.data
+                    } else {
+                        this.errorStatus = null
+                    }
                 });
-
-        },
+            })},
         addFromCart(product) {
             const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
             if (index !== -1) {
