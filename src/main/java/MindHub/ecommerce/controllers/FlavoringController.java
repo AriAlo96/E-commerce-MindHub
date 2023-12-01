@@ -150,15 +150,23 @@ public class FlavoringController {
     }
 
     @PatchMapping("/flavorings/delete")
-    public ResponseEntity<Object> deleteFlavoring(@RequestParam Long id){
-        if (!flavoringService.existFlavoringById(id)){
-            return new ResponseEntity<>("The Id dosent exist", HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> deleteFlavoring(@RequestParam Long id) {
+        Flavoring flavoring = flavoringService.findFlavoringByID(id);
+        if (flavoring == null) {
+            return new ResponseEntity<>("The cream doesn't exist", HttpStatus.FORBIDDEN);
         }
-        flavoringService.deleteFlavoringById(id);
-        return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
+        if (flavoring.getStock() > 0) {
+            return new ResponseEntity<>("You can not delete an cream with a stock greater than zero",
+                    HttpStatus.FORBIDDEN);
+        }
+        if (!flavoring.getActive()) {
+            return new ResponseEntity<>("The cream is inactive", HttpStatus.FORBIDDEN);
+        } else {
+            flavoring.setActive(false);
+            flavoringService.saveFlavoring(flavoring);
+            return new ResponseEntity<>("Cream delete successfully", HttpStatus.CREATED);
+        }
+
+
     }
-
-
-
-
 }
