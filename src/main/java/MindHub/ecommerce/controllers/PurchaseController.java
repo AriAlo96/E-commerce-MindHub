@@ -42,7 +42,7 @@ public class PurchaseController {
         return purchase;
     }
 
-    @PostMapping("purchases/create")
+    @PostMapping("/purchases/create")
     public ResponseEntity<Object> createNewPurchase(Authentication authentication,
                                                     @RequestBody PurchaseDTO purchaseDTO)
     {
