@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 @Entity
 public class PurchaseFragance {
-    @Id
+    @Id @ManyToOne
+    private Fragance fragance;
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne
     private Purchase purchase;
-    @ManyToOne
-    private Fragance fragance;
+
     private Integer quantity;
     private Double subtotal;
 
