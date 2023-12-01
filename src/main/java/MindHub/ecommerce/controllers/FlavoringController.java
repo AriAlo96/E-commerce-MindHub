@@ -34,6 +34,8 @@ import java.io.ByteArrayOutputStream;
 @RestController
 @RequestMapping("/velvet")
 public class FlavoringController {
+    //@Autowired
+    //private JavaMailSender mailSender;
     @Autowired
     private FlavoringService flavoringService;
 
@@ -156,47 +158,7 @@ public class FlavoringController {
         return new ResponseEntity<>("flavoring removed!", HttpStatus.OK);
     }
 
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @PostMapping("/create/mail")
-    public ResponseEntity<?> exportPDFMail(Authentication authentication, @RequestParam Long purchaseId) throws DocumentException, IOException, MessagingException, MessagingException {
-        Purchase purchase = purchaseService.findPurchaseById(purchaseId);
-        Client client = clientService.findClientByEmail(authentication.getName());
 
 
-        if (client.getTotalPurchases()
-                .stream()
-                .noneMatch(purchase1 -> purchase1.getId().equals(purchase.getId()))) {
-            return new ResponseEntity<>("Its not your purchase", HttpStatus.FORBIDDEN);
-        }
-
-
-        PurchasePDF exporter = new PurchasePDF(purchase);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        exporter.usePDFExport(outputStream);
-
-        // Create a new MimeMessage object
-        MimeMessage message = mailSender.createMimeMessage();
-
-        // Create a new MimeMessageHelper object
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-        // Set the email parameters
-        helper.setTo(client.getEmail());
-        helper.setSubject("Your Purchase PDF");
-        helper.setText("Here is your purchase PDF!");
-
-        // Create a ByteArrayResource from the PDF bytes
-        ByteArrayResource byteArrayResource = new ByteArrayResource(outputStream.toByteArray());
-
-        // Add the PDF as an attachment
-        helper.addAttachment("Purchase ID:" + purchase.getId() + ".pdf", byteArrayResource);
-
-        // Send the email
-        mailSender.send(message);
-
-        return new ResponseEntity<>("PDF created and emailed", HttpStatus.CREATED);
-    }
 
 }
