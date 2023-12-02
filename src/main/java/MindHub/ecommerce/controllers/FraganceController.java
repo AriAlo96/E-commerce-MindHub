@@ -87,11 +87,7 @@ public class FraganceController {
                                                  @RequestParam(required = false) String image, @RequestParam Long id)
     {
         Fragance fragance = fraganceService.findFraganceById(id);
-        List<String> fragancesName = fraganceService.findAllFragances().stream().map(
-                fraganceName -> fraganceName.getName()).collect(Collectors.toList());
-        if (fragancesName.contains(name)) {
-            return new ResponseEntity<>("The fragrance name already use", HttpStatus.BAD_REQUEST);
-        } else {
+
             if(name != null){
                 fragance.setName(name);
             }
@@ -122,7 +118,7 @@ public class FraganceController {
             fraganceService.saveFragance(fragance);
             return new ResponseEntity<>("Fragance update successfully", HttpStatus.OK);
         }
-    }
+
 
 
     @PatchMapping("fragances/delete")

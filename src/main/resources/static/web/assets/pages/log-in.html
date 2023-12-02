@@ -172,17 +172,17 @@
                     <fieldset>
                         <legend style="text-align: center; color: #ec225e; font-weight: 500; margin-bottom: 2rem;">Log In here!</legend>
                         <div class="mb-3">
-                            <label for="textInput" class="form-label">E-mail:</label>
-                            <input v-model="email" type="text" id="disabledTextInput" class="form-control"
+                            <label for="inputEmail" class="form-label">E-mail:</label>
+                            <input v-model="email" type="text" id="inputEmail" class="form-control"
                                 placeholder="Enter your email...">
                         </div>
                         <div class="mb-3">
-                            <label for="textInput" class="form-label">Password:</label>
-                            <input v-model="password" type="password" id="disabledTextInput" class="form-control"
-                                placeholder="Enter your password..." @keyup="login">
+                            <label for="inputPassword" class="form-label">Password:</label>
+                            <input v-model="password" type="password" id="inputPassword" class="form-control"
+                                placeholder="Enter your password..." @keyup.enter="login">
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button @click="login" @keyup="login" type="button" class="btn" style="background-color: #ec225e; color: aliceblue;">Log
+                            <button @click="login" type="button" class="btn" style="background-color: #ec225e; color: aliceblue;">Log
                                 In</button>
                         </div>
                     </fieldset>

@@ -183,8 +183,10 @@
                     </div>
                     <div class="card-body">     
                         <h5 class="card-title">{{fragance.name}}</h5>
-                        <p class="card-text">{{fragance.description}}</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        <p class="card-text" style="text-align: justify;">{{fragance.description}}</p>
+                        <p class="card-text"><small class="text-body-secondary">Stock: {{fragance.stock}}</small></p>
+                        <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn"
+                            style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                     </div>
                 </div>
             </div>

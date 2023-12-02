@@ -95,11 +95,6 @@ public class CreamController {
     {
         Cream cream = creamService.findCreamById(id);
 
-        List<String> creamName = creamService.findAllCReams().stream().map(
-                Cream::getName).collect(Collectors.toList());
-        if (creamName.contains(name)) {
-            return new ResponseEntity<>("The cream name already use", HttpStatus.BAD_REQUEST);
-        } else {
             if(name != null){
                 cream.setName(name);
             }
@@ -125,7 +120,7 @@ public class CreamController {
             return new ResponseEntity<>("cream update successfully", HttpStatus.OK);
         }
 
-    }
+
 
     @PatchMapping("/creams/delete")
     public ResponseEntity<Object> deleteCream(@RequestParam Long id){

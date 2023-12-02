@@ -6,16 +6,17 @@ const app = Vue.createApp({
       fragances: [],
       valueSearch: "",
       errorSearch: "",
+      errorPriceAndGender: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$19', value: [0, 19] },
-        { id: 'range2', label: 'US$20 - US$39', value: [20, 39] },
-        { id: 'range3', label: 'US$40 - US$59', value: [40, 59] },
+        { id: 'range1', label: 'US$0 - US$19,99', value: [0, 19.99] },
+        { id: 'range2', label: 'US$20 - US$39,99', value: [20, 39.99] },
+        { id: 'range3', label: 'US$40 - US$59,99', value: [40., 59.99] },
         { id: 'range4', label: 'US$60 or more', value: [60, Infinity] }
       ],
       rangeSelected: null,
       genders: [
-        { id: 'femenine', label: 'Femenine', value: 'femenine' },
-        { id: 'masculine', label: 'Masculine', value: 'masculine' }
+        { id: 'femenine', label: 'Femenine', value: 'WOMEN' },
+        { id: 'masculine', label: 'Masculine', value: 'MAN' }
       ],
       genderSelected: null,
       shoppingCart: [],
@@ -32,14 +33,15 @@ const app = Vue.createApp({
     axios.get("/velvet/fragances")
       .then(response => {
         this.fragances = response.data;
+        this.originalFragances = [...this.fragances];
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         this.fragances = this.fragances.map(fragance => {
-        let aux = this.shoppingCart.find(product => product.id == fragance.id)
-        if (aux){
-          return aux
-        }
-        return fragance
-       })
+          let aux = this.shoppingCart.find(product => product.id == fragance.id)
+          if (aux) {
+            return aux
+          }
+          return fragance
+        })
         for (let product of this.shoppingCart) {
           this.totalPrice += product.price * product.quantity;
         }
@@ -51,34 +53,56 @@ const app = Vue.createApp({
 
   methods: {
     filterSearch() {
-      this.fragances.filter(fragance =>
+      let filteredProducts = this.originalFragances.filter(fragance =>
         fragance.name.toLowerCase().includes(this.valueSearch.toLowerCase())
       );
-      if (filteredProducts.length === 0) {
-        this.errorSearch = "The product was not found. Find another"
-        return;
+      if (filteredProducts.length > 0) {
+        this.fragances = filteredProducts;
+        this.errorSearch = "";
+      } else {
+        this.fragances = this.originalFragances.slice();
+        this.errorSearch = "The product was not found. Look for other";
       }
     },
+    
+    
     filterByPriceAndGender() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
       let genderSelected = this.genders.find(gender => gender.value === this.genderSelected);
-      this.filteredByPrice = this.fragances.filter(fragance => {
-        return (!priceSelected || (fragance.price >= priceSelected.value[0] && fragance.price <= priceSelected.value[1])) && (!genderSelected || fragance.gender === genderSelected.value)
-      });
-    },
+    
+      let filteredFragances = this.originalFragances.slice();
+    
+      if (priceSelected) {
+        filteredFragances = filteredFragances.filter(fragance =>
+          fragance.price >= priceSelected.value[0] && fragance.price <= priceSelected.value[1]
+        );
+      }
+    
+      if (genderSelected) {
+        filteredFragances = filteredFragances.filter(fragance =>
+          fragance.gender === genderSelected.value
+        );
+      }
+    
+      this.fragances = filteredFragances;
 
+      if (filteredFragances.length === 0) {
+        this.errorPriceAndGender = "No fragrances found. Look for others"
+      }
+    },
+    
     addFromCart(product) {
       const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
-    if (index !== -1) {
-      this.shoppingCart[index].quantity += 1;
-    } else {
-      product.quantity = 1
-      this.shoppingCart.push(product);
-    }
-     this.updateTotalPrice();
+      if (index !== -1) {
+        this.shoppingCart[index].quantity += 1;
+      } else {
+        product.quantity = 1
+        this.shoppingCart.push(product);
+      }
+      this.updateTotalPrice();
       product.stock -= 1;
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
-      
+
     },
 
     removeFromCart(product) {
@@ -134,9 +158,9 @@ const app = Vue.createApp({
                 title: "Logged out successfully",
                 showConfirmButton: false,
                 timer: 1500,
-            }),
+              }),
                 setTimeout(() => {
-                    location.pathname = "/index.html";
+                  location.pathname = "/index.html";
                 }, 1600);
             })
             .catch(error => {
@@ -147,10 +171,10 @@ const app = Vue.createApp({
     },
     formatNumber(number) {
       return number.toLocaleString("De-DE", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       });
-  },
+    },
   }
 }
 );

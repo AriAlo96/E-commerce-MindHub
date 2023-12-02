@@ -19,20 +19,33 @@ const app = Vue.createApp({
     axios.get("/velvet/clients/current")
       .then(response => {
         this.client = response.data;
-        this.email = this.client.email
+        this.email = this.client.email;
+        console.log(this.client);
       })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     axios.get("/velvet/fragances")
       .then(response => {
         this.allProducts.fragances = response.data;
+        console.log(this.allProducts.fragances);
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         for (let product of this.shoppingCart) {
           this.totalPrice += product.price * product.quantity;
         }
       })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
       axios.get("/velvet/flavorings")
       .then(response => {
         this.allProducts.airFresheners = response.data;
       })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
       axios.get("/velvet/creams")
       .then(response => {
         this.allProducts.creams = response.data;

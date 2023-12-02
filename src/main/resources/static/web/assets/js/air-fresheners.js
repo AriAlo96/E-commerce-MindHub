@@ -6,20 +6,21 @@ const app = Vue.createApp({
       airFresheners: [],
       valueSearch: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$9', value: [0, 9] },
-        { id: 'range2', label: 'US$10 - US$29', value: [10, 29] },
+        { id: 'range1', label: 'US$0 - US$9,99', value: [0, 9.99] },
+        { id: 'range2', label: 'US$10 - US$29,99', value: [10, 29.99] },
         { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
       rangeSelected: null,
       presentations: [
-        { id: 'ambient', label: 'Ambient', value: 'ambient' },
-        { id: 'fabrics', label: 'Fabrics', value: 'fabrics' },
-        { id: 'diffusers', label: 'Diffusers', value: 'diffusers' }
+        { id: 'ambient', label: 'Ambient', value: 'AMBIENT' },
+        { id: 'fabrics', label: 'Fabrics', value: 'FABRICS' },
+        { id: 'diffusers', label: 'Diffusers', value: 'DIFFUSERS' }
       ],
       presentationSelected: null,
       shoppingCart: [],
       totalPrice: 0,
-      errorSearch: ""
+      errorSearch: "",
+      errorPriceAndPresentation: ""
     };
   },
   created() {
@@ -31,6 +32,7 @@ const app = Vue.createApp({
     axios.get("/velvet/flavorings")
       .then(response => {
         this.airFresheners = response.data;
+        this.originalAirFresheners = [...this.airFresheners];
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         this.airFresheners = this.airFresheners.map(airFreshener => {
           let aux = this.shoppingCart.find(product => product.id == airFreshener.id)
@@ -50,36 +52,41 @@ const app = Vue.createApp({
   methods: {
 
     filterSearch() {
-      if (this.valueSearch.trim() === '') {
-        return;
-      }
-   
-      const normalizedSearch = this.valueSearch.toLowerCase();
-    
-      const filteredAirFresheners = this.airFresheners.filter(product =>
-        product.name.toLowerCase().includes(normalizedSearch)
+      let filteredProducts = this.originalAirFresheners.filter(airFreshener =>
+        airFreshener.name.toLowerCase().includes(this.valueSearch.toLowerCase())
       );
-    
-      if (filteredAirFresheners.length === 0) {
-        this.errorSearch = "The product was not found. Find another"
-        return;
+      if (filteredProducts.length > 0) {
+        this.airFresheners = filteredProducts;
+        this.errorSearch = "";
+      } else {
+        this.airFresheners = this.originalAirFresheners.slice();
+        this.errorSearch = "The product was not found. Look for other";
       }
-      const firstResult = filteredAirFresheners[0];
-      let detailsPage = '';
-      const normalizedProductName = firstResult.name.toLowerCase();
-      if (normalizedProductName.includes("air freshener")) {
-        detailsPage = 'detailsAirFresheners.html';
-    
-      window.location.href = `/web/assets/pages/${detailsPage}?id=${encodeURIComponent(firstResult.id)}`;
-    }
-  },
+    },
 
     filterByPriceAndPresentation() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
       let presentationSelected = this.presentations.find(presentation => presentation.value === this.presentationSelected);
-      this.filteredByPrice = this.airFresheners.filter(airFreshener => {
-        return (!priceSelected || (airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1])) && (!presentationSelected || airFreshener.presentation === presentationSelected.value)
-      });
+    
+      let filteredAirFresheners = this.originalAirFresheners.slice();
+    
+      if (priceSelected) {
+        filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
+          airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1]
+        );
+      }
+    
+      if (presentationSelected) {
+        filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
+          airFreshener.presentation === presentationSelected.value
+        );
+      }
+    
+      this.AirFresheners = filteredAirFresheners;
+
+      if (filteredAirFresheners.length === 0) {
+        this.errorPriceAndPresentation = "No air fresheners found. Look for others"
+      }
     },
 
     addFromCart(product) {

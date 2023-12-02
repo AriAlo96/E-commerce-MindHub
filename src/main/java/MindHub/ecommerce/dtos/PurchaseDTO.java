@@ -2,13 +2,14 @@ package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Set;
 
 public class PurchaseDTO {
     private Long id;
-    @JsonBackReference
+    @JsonManagedReference
     private Client client;
     private Double totalPurchases;
     private Set<PurchaseFragance> purchaseFragances;

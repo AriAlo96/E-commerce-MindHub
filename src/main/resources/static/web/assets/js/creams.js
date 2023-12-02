@@ -8,21 +8,22 @@ const app = Vue.createApp({
       filtered: [],
       valueSearch: "",
       ranges: [
-        { id: 'range1', label: 'US$0 - US$9', value: [0, 9] },
-        { id: 'range2', label: 'US$10 - US$29', value: [10, 29] },
+        { id: 'range1', label: 'US$0 - US$9,99', value: [0, 9.99] },
+        { id: 'range2', label: 'US$10 - US$29,99', value: [10, 29.99] },
         { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
       rangeSelected: null,
       types: [
-        { id: 'face', label: 'Face', value: 'face' },
-        { id: 'body', label: 'Body', value: 'body' },
-        { id: 'hands', label: 'Hands', value: 'hands' },
-        { id: 'foots', label: 'Foots', value: 'foots' }
+        { id: 'face', label: 'Face', value: 'FACIAL' },
+        { id: 'body', label: 'Body', value: 'BODY' },
+        { id: 'hands', label: 'Hands', value: 'HAND' },
+        { id: 'foots', label: 'Foots', value: 'FOOT' }
       ],
       typeSelected: null,
       shoppingCart: [],
       totalPrice: 0,
-      errorSearch: ""
+      errorSearch: "",
+      errorPriceAndtype: ""
     };
   },
   created() {
@@ -34,6 +35,7 @@ const app = Vue.createApp({
     axios.get("/velvet/creams")
       .then(response => {
         this.creams = response.data;
+        this.originalCreams = [...this.creams];
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         this.creams = this.creams.map(cream => {
           let aux = this.shoppingCart.find(product => product.id == cream.id)
@@ -54,36 +56,41 @@ const app = Vue.createApp({
   methods: {
 
     filterSearch() {
-      if (this.valueSearch.trim() === '') {
-        return;
-      }
-   
-      const normalizedSearch = this.valueSearch.toLowerCase();
-    
-      const filteredCreams = this.creams.filter(product =>
-        product.name.toLowerCase().includes(normalizedSearch)
+      let filteredProducts = this.originalCreams.filter(cream =>
+        cream.name.toLowerCase().includes(this.valueSearch.toLowerCase())
       );
-    
-      if (filteredCreams.length === 0) {
-        this.errorSearch = "The product was not found. Find another"
-        return;
+      if (filteredProducts.length > 0) {
+        this.creams = filteredProducts;
+        this.errorSearch = "";
+      } else {
+        this.creams = this.originalCreams.slice();
+        this.errorSearch = "The product was not found. Look for other";
       }
-      const firstResult = filteredCreams[0];
-      let detailsPage = '';
-      const normalizedProductName = firstResult.name.toLowerCase();
-      if (normalizedProductName.includes("cream")) {
-        detailsPage = 'detailsCreams.html';
-    
-      window.location.href = `/web/assets/pages/${detailsPage}?id=${encodeURIComponent(firstResult.id)}`;
-    }
-  },
+    },
 
     filterByPriceAndType() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
       let typeSelected = this.types.find(type => type.value === this.typeSelected);
-      this.filteredByPrice = this.airFresheners.filter(cream => {
-        return (!priceSelected || (cream.price >= priceSelected.value[0] && cream.price <= priceSelected.value[1])) && (!typeSelected || cream.type === typeSelected.value)
-      });
+    
+      let filteredCreams = this.originalCreams.slice();
+    
+      if (priceSelected) {
+        filteredCreams = filteredCreams.filter(cream =>
+          cream.price >= priceSelected.value[0] && cream.price <= priceSelected.value[1]
+        );
+      }
+    
+      if (typeSelected) {
+        filteredCreams = filteredCreams.filter(cream =>
+          cream.type === typeSelected.value
+        );
+      }
+    
+      this.creams = filteredCreams;
+
+      if (filteredCreams.length === 0) {
+        this.errorPriceAndtype = "No creams found. Look for others"
+      }
     },
 
     addFromCart(product) {

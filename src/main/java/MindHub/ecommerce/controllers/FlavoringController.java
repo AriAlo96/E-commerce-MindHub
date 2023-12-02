@@ -117,11 +117,7 @@ public class FlavoringController {
     {
         Flavoring flavoring = flavoringService.findFlavoringByID(id);
 
-        List<String> flavoringName = flavoringService.findAllFlavorings().stream().map(
-                Flavoring::getName).collect(Collectors.toList());
-        if (flavoringName.contains(name)) {
-            return new ResponseEntity<>("The fragrance name already use", HttpStatus.BAD_REQUEST);
-        } else {
+
             if(name != null){
                 flavoring.setName(name);
             }
@@ -146,7 +142,7 @@ public class FlavoringController {
             flavoringService.saveFlavoring(flavoring);
             return new ResponseEntity<>("flavoring update successfully", HttpStatus.OK);
         }
-    }
+
 
     @PatchMapping("/flavorings/delete")
     public ResponseEntity<Object> deleteFlavoring(@RequestParam Long id) {
