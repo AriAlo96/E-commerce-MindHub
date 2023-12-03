@@ -28,6 +28,7 @@ const app = Vue.createApp({
     axios.get("/velvet/fragances")
       .then(response => {
         this.allProducts.fragances = response.data;
+        this.originalFragances = [...this.allProducts.fragances];
         console.log(this.allProducts.fragances);
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         for (let product of this.shoppingCart) {
@@ -88,6 +89,8 @@ const app = Vue.createApp({
     
       window.location.href = `/web/assets/pages/${detailsPage}?id=${encodeURIComponent(firstResult.id)}`;
     },
+
+    
 
     addFromCart(product) {
       const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);

@@ -28,7 +28,6 @@ const app = Vue.createApp({
           for (let product of this.shoppingCart) {
             this.totalPrice += product.price * product.quantity;
           }
-          console.log(this.shoppingCart);
         })
         axios.get("/velvet/flavorings")
         .then(response => {
@@ -61,10 +60,19 @@ const app = Vue.createApp({
             popup: '',
             backdrop: ''
           }, preConfirm: () => {
-            let shoppingFragances = this.shoppingCart.filter(item => item.name.includes("parfum"));
-            let shoppingAirFresheners = this.shoppingCart.filter(item => item.name.includes("air freshener"));
-            let shoppingCreams = this.shoppingCart.filter(item => item.name.includes("cream"));
-            axios.post(`/velvet/create/purchase/2`, {"buyPurchaseDTO": `${this.totalPrice}`, "purchaseFragances": `${shoppingFragances}`,"purchaseFlavorings": `${shoppingAirFresheners}`,"purchaseCreams": `${shoppingCreams}`})
+            if (!this.shoppingCart || this.shoppingCart.length === 0) {
+              console.error("Shopping cart is null or empty");
+              return;
+            }
+
+            const buyPurchaseDTO = { productsDTO: this.shoppingCart.map(product => ({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              quantity: product.quantity
+            })) };
+            console.log("buyPurchaseDTO:", buyPurchaseDTO);
+            axios.post(`/velvet/create/purchase/2`, buyPurchaseDTO)
               .then(response => {
                 Swal.fire({
                   position: "center",

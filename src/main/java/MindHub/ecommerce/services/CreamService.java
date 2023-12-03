@@ -9,10 +9,7 @@ import java.util.List;
 public interface CreamService {
    List<Cream> findAllCReams ();
    Cream findCreamById(Long id);
-
    boolean creamExistById(Long id);
-
    void saveCream (Cream cream);
-
    void deleteCreamById(Long id);
 }

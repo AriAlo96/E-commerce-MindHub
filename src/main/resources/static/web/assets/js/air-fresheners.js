@@ -1,7 +1,7 @@
 const app = Vue.createApp({
   data() {
     return {
-      client:{},
+      client: {},
       email: "",
       airFresheners: [],
       valueSearch: "",
@@ -67,27 +67,30 @@ const app = Vue.createApp({
     filterByPriceAndPresentation() {
       let priceSelected = this.ranges.find(range => range.value === this.rangeSelected);
       let presentationSelected = this.presentations.find(presentation => presentation.value === this.presentationSelected);
-    
+
       let filteredAirFresheners = this.originalAirFresheners.slice();
-    
+
       if (priceSelected) {
         filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
           airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1]
         );
       }
-    
+
       if (presentationSelected) {
         filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
           airFreshener.presentation === presentationSelected.value
         );
       }
-    
-      this.AirFresheners = filteredAirFresheners;
+
+      this.airFresheners = filteredAirFresheners;
+
+      this.errorPriceAndPresentation = "";
 
       if (filteredAirFresheners.length === 0) {
-        this.errorPriceAndPresentation = "No air fresheners found. Look for others"
+        this.errorPriceAndPresentation = "No air fresheners found. Look for others";
       }
     },
+
 
     addFromCart(product) {
       const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
@@ -157,9 +160,9 @@ const app = Vue.createApp({
                 title: "Logged out successfully",
                 showConfirmButton: false,
                 timer: 1500,
-            }),
+              }),
                 setTimeout(() => {
-                    location.pathname = "/index.html";
+                  location.pathname = "/index.html";
                 }, 1600);
             })
             .catch(error => {
@@ -168,13 +171,13 @@ const app = Vue.createApp({
         },
       })
     },
-    
+
     formatNumber(number) {
       return number.toLocaleString("De-DE", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       });
-  },
+    },
   }
 }
 );

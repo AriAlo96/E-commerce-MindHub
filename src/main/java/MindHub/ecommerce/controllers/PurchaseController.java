@@ -2,6 +2,9 @@ package MindHub.ecommerce.controllers;
 
 import MindHub.ecommerce.dtos.*;
 import MindHub.ecommerce.models.*;
+import MindHub.ecommerce.repositories.PurchaseCreamRepository;
+import MindHub.ecommerce.repositories.PurchaseFlavoringRepository;
+import MindHub.ecommerce.repositories.PurchaseFraganceRepository;
 import MindHub.ecommerce.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,12 @@ public class PurchaseController {
     private FlavoringService flavoringService;
     @Autowired
     private CreamService creamService;
+    @Autowired
+    private PurchaseFlavoringRepository purchaseFlavoringRepository;
+    @Autowired
+    private PurchaseFraganceRepository purchaseFraganceRepository;
+    @Autowired
+    private PurchaseCreamRepository purchaseCreamRepository;
 
     @GetMapping("/purchases")
     public List<PurchaseDTO> getAllPurchases() {
@@ -100,96 +109,69 @@ public class PurchaseController {
     }
 
     @PostMapping("/create/purchase/2")
-    public ResponseEntity<Object> createPurchaseDTO (Authentication authentication, @RequestBody BuyPurchaseDTO buyPurchaseDTO)
-    {
+    public ResponseEntity<Object> createPurchaseDTO(Authentication authentication, @RequestBody BuyPurchaseDTO buyPurchaseDTO) {
         Client client = clientService.findClientByEmail(authentication.getName());
 
-        Set<CreamBuyDTO> creamBuyDTOS = buyPurchaseDTO.getCreamBuyDTOSet();
-        Set<FlavoringBuyDTO> flavoringBuyDTOS = buyPurchaseDTO.getFlavoringBuyDTOSet();
-        Set<FraganceBuyDTO> fraganceBuyDTOS = buyPurchaseDTO.getFraganceBuyDTOSet();
-
-        Set<PurchaseFragance> purchaseFraganceSet = new HashSet<>();
-        Set<PurchaseFlavoring> purchaseFlavoringSet = new HashSet<>();
-        Set<PurchaseCream> purchaseCreamSet = new HashSet<>();
-
-        double total = 0.0;
-
         Purchase purchase = new Purchase(0.0);
+        purchase.setClient(client);
 
-        if(fraganceBuyDTOS != null) {
-            for (FraganceBuyDTO fragance : fraganceBuyDTOS) {
-
-                Fragance fragance1 = fraganceService.findFraganceById(fragance.getId());
-
-                Double subtotal = fragance1.getPrice() * fragance.getQuantity();
-
-                PurchaseFragance purchaseFragance = new PurchaseFragance(fragance.getQuantity(),
-                        subtotal);
-
-                purchaseFragance.setFragance(fragance1);
-
-                purchaseFraganceSet.add(purchaseFragance);
-
-                purchase.setPurchaseFragances(purchaseFraganceSet);
-            }
-        }
-        if (creamBuyDTOS != null) {
-
-            for (CreamBuyDTO cream : creamBuyDTOS) {
-
-                Cream cream1 = creamService.findCreamById(cream.getId());
-
-                Double subtotal = cream1.getPrice() * cream.getQuantity();
-
-                PurchaseCream purchaseCream = new PurchaseCream(cream.getQuantity(),
-                        subtotal);
-
-                purchaseCream.setCream(cream1);
-
-                purchaseCreamSet.add(purchaseCream);
-
-                purchase.setPurchaseCreams(purchaseCreamSet);
-            }
-        }
-
-        if (flavoringBuyDTOS != null) {
-            for (FlavoringBuyDTO flav : flavoringBuyDTOS) {
-                Flavoring flav1 = flavoringService.findFlavoringByID(flav.getId());
-
-                Double subtotal = flav1.getPrice() * flav.getQuantity();
-
-                PurchaseFlavoring purchaseFlavoring = new PurchaseFlavoring(flav.getQuantity(),
-                        subtotal);
-
-                purchaseFlavoring.setFlavoring(flav1);
-
-                purchaseFlavoringSet.add(purchaseFlavoring);
-
-                purchase.setPurchaseFlavorings(purchaseFlavoringSet);
-            }
-        }
-
-
-
-        // Sumar los subtotales de PurchaseFragance
-        for (PurchaseFragance purchaseFragance : purchaseFraganceSet) {
-            total += purchaseFragance.getSubtotal();
-        }
-
-        // Sumar los subtotales de PurchaseCream
-        for (PurchaseCream purchaseCream : purchaseCreamSet) {
-            total += purchaseCream.getSubtotal();
-        }
-
-        // Sumar los subtotales de PurchaseFlavoring
-        for (PurchaseFlavoring purchaseFlavoring : purchaseFlavoringSet) {
-            total += purchaseFlavoring.getSubtotal();
-        }
+        double total = processProducts(buyPurchaseDTO.getProductsDTO(), purchase);
 
         purchase.setTotalPurchases(total);
-        purchase.setClient(client);
+
         purchaseService.savePurchase(purchase);
-        return new ResponseEntity<>("Purchase Created!",HttpStatus.CREATED);
+
+        return new ResponseEntity<>("Purchase Created!", HttpStatus.CREATED);
     }
+
+    private double processProducts(List<ProductsBuyDTO> productsDTO, Purchase purchase) {
+        double total = 0.0;
+
+        for (ProductsBuyDTO product : productsDTO) {
+            if (product.getName().contains("parfum")) {
+                Fragance fragance = fraganceService.findFraganceById(product.getId());
+                total += processFraganceProduct(product, fragance, purchase);
+            } else if (product.getName().contains("cream")) {
+                Cream cream = creamService.findCreamById(product.getId());
+                total += processCreamProduct(product, cream, purchase);
+            } else if (product.getName().contains("air freshener")) {
+                Flavoring flavoring = flavoringService.findFlavoringByID(product.getId());
+                total += processFlavoringProduct(product, flavoring, purchase);
+            }
+        }
+        return total;
+    }
+
+    private double processFraganceProduct(ProductsBuyDTO product, Fragance fragance, Purchase purchase) {
+        double subtotal = fragance.getPrice() * product.getQuantity();
+        fraganceService.saveFragance(fragance);
+        PurchaseFragance purchaseFragance = new PurchaseFragance(product.getQuantity(), subtotal);
+        fragance.setStock(fragance.getStock() - product.getQuantity());
+        purchase.addPurchaseFragance(purchaseFragance);
+        purchaseFraganceRepository.save(purchaseFragance);
+        return subtotal;
+    }
+
+    private double processCreamProduct(ProductsBuyDTO product, Cream cream, Purchase purchase) {
+        double subtotal = cream.getPrice() * product.getQuantity();
+        creamService.saveCream(cream);
+        PurchaseCream purchaseCream = new PurchaseCream(product.getQuantity(), subtotal);
+        cream.setStock(cream.getStock() - product.getQuantity());
+        purchase.addPurchaseCream(purchaseCream);
+        purchaseCreamRepository.save(purchaseCream);
+        return subtotal;
+    }
+
+    private double processFlavoringProduct(ProductsBuyDTO product, Flavoring flavoring, Purchase purchase) {
+        double subtotal = flavoring.getPrice() * product.getQuantity();
+        flavoringService.saveFlavoring(flavoring);
+        PurchaseFlavoring purchaseFlavoring = new PurchaseFlavoring(product.getQuantity(), subtotal);
+        flavoring.setStock(flavoring.getStock() - product.getQuantity());
+        purchase.addPurchaseFlavoring(purchaseFlavoring);
+        purchaseFlavoringRepository.save(purchaseFlavoring);
+        return subtotal;
+    }
+
+
 
 }

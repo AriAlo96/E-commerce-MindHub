@@ -9,8 +9,7 @@ import java.util.Set;
 
 public class PurchaseDTO {
     private Long id;
-    @JsonManagedReference
-    private Client client;
+    private Long client;
     private Double totalPurchases;
     private Set<PurchaseFragance> purchaseFragances;
     private Set<PurchaseFlavoring> purchaseFlavorings;
@@ -20,7 +19,7 @@ public class PurchaseDTO {
     public PurchaseDTO(Purchase purchase)
     {
         id = purchase.getId();
-        client = purchase.getClient();
+        client = purchase.getClient().getId();
         totalPurchases = purchase.getTotalPurchases();
         purchaseFragances = purchase.getPurchaseFragances();
         purchaseFlavorings = purchase.getPurchaseFlavorings();
@@ -31,7 +30,7 @@ public class PurchaseDTO {
         return id;
     }
 
-    public Client getClient() {
+    public Long getClient() {
         return client;
     }
 

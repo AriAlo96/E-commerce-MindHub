@@ -23,7 +23,7 @@ const app = Vue.createApp({
       shoppingCart: [],
       totalPrice: 0,
       errorSearch: "",
-      errorPriceAndtype: ""
+      errorPriceAndType: ""
     };
   },
   created() {
@@ -88,10 +88,13 @@ const app = Vue.createApp({
     
       this.creams = filteredCreams;
 
+      this.errorPriceAndType = "";
+    
       if (filteredCreams.length === 0) {
-        this.errorPriceAndtype = "No creams found. Look for others"
+        this.errorPriceAndType = "No creams found. Look for others";
       }
     },
+    
 
     addFromCart(product) {
       const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);

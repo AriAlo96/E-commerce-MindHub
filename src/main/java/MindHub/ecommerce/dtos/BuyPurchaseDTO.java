@@ -1,28 +1,25 @@
 package MindHub.ecommerce.dtos;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
+import java.util.List;
 import java.util.Set;
 
 public class BuyPurchaseDTO {
 
-    private Set<CreamBuyDTO> creamBuyDTOSet;
+    private List<ProductsBuyDTO> productsDTO;
 
-    private Set<FlavoringBuyDTO> flavoringBuyDTOSet;
-
-    private Set <FraganceBuyDTO> fraganceBuyDTOSet;
-
-
-
-    public Set<CreamBuyDTO> getCreamBuyDTOSet() {
-        return creamBuyDTOSet;
+    public BuyPurchaseDTO() {
     }
 
-    public Set<FlavoringBuyDTO> getFlavoringBuyDTOSet() {
-        return flavoringBuyDTOSet;
+    public BuyPurchaseDTO(List<ProductsBuyDTO> productsDTO) {
+        this.productsDTO = productsDTO;
     }
 
-    public Set<FraganceBuyDTO> getFraganceBuyDTOSet() {
-        return fraganceBuyDTOSet;
+    public List<ProductsBuyDTO> getProductsDTO() {
+        return productsDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "BuyPurchaseDTO{" + "productsDTO=" + productsDTO + '}';
     }
 }

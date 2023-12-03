@@ -86,6 +86,8 @@ const app = Vue.createApp({
     
       this.fragances = filteredFragances;
 
+      this.errorPriceAndGender = "";
+
       if (filteredFragances.length === 0) {
         this.errorPriceAndGender = "No fragrances found. Look for others"
       }

@@ -14,8 +14,7 @@ public class ClientDTO {
     private String lastName;
     private String email;
     private String address;
-    @JsonBackReference
-    private Set<Purchase> totalPurchases;
+    private Set<PurchaseDTO> totalPurchases;
 
     public ClientDTO(Client client) {
         id = client.getId();
@@ -23,7 +22,7 @@ public class ClientDTO {
         lastName = client.getLastName();
         email = client.getEmail();
         address = client.getAddress();
-        totalPurchases = client.getTotalPurchases();
+        totalPurchases = client.getTotalPurchases().stream().map(purchase -> new PurchaseDTO(purchase)).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -46,7 +45,7 @@ public class ClientDTO {
         return address;
     }
 
-    public Set<Purchase> getTotalPurchases() {
+    public Set<PurchaseDTO> getTotalPurchases() {
         return totalPurchases;
     }
 }

@@ -237,6 +237,7 @@
             <h1
                 style="font-size: 3rem !important; text-align: center; margin-top: 1rem; color: #ec225e; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);">
                 Creams</h1>
+                <h5 v-if="errorPriceAndType" style="text-align: center; position: relative; top: 15rem;">{{errorPriceAndType}}</h5>
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
                     <div class="d-flex flex-column">
@@ -260,7 +261,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="btn" style="background-color:#020305; color:#ffffff;">Search</a>
+                    <a @click="filterByPriceAndType" class="btn" style="background-color:#020305; color:#ffffff;">Search</a>
                 </div>
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" v-for="cream of creams"

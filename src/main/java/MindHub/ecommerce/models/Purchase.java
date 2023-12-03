@@ -71,4 +71,18 @@ public class Purchase {
     public void setPurchaseCreams(Set<PurchaseCream> purchaseCreams) {
         this.purchaseCreams = purchaseCreams;
     }
+
+    public void addPurchaseFragance (PurchaseFragance purchaseFragance){
+        purchaseFragance.setPurchase(this);
+        purchaseFragances.add(purchaseFragance);
+    }
+
+    public void addPurchaseFlavoring (PurchaseFlavoring purchaseFlavoring){
+        purchaseFlavoring.setPurchase(this);
+        purchaseFlavorings.add(purchaseFlavoring);
+    }
+    public void addPurchaseCream (PurchaseCream purchaseCream){
+        purchaseCream.setPurchase(this);
+        purchaseCreams.add(purchaseCream);
+    }
 }
