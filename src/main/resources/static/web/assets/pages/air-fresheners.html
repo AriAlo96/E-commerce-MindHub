@@ -243,6 +243,10 @@
                 Air fresheners</h1>
             <h5 v-if="errorPriceAndPresentation" style="text-align: center; position: relative; top: 15rem;">
                 {{errorPriceAndPresentation}}</h5>
+            <div class="d-flex justify-content-end" style="gap: 2rem; margin-right: 1rem;">
+                <a href="./fragances.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Fragances</a>
+                <a href="./creams.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Creams</a>
+            </div>
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
                     <div class="d-flex flex-column">
@@ -272,9 +276,13 @@
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" v-for="airFreshener of airFresheners" style="width: 20rem;"
                         data-aos="zoom-in">
-                        <h5
-                            style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
-                            Stock: {{airFreshener.stock}}</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5
+                                style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
+                                Stock: {{airFreshener.stock}}</h5>
+                            <p v-if="airFreshener.stock < 4" style="color: #f00; text-align: center; font-weight: 600; margin-right: 1rem;">Last
+                                units!</p>
+                        </div>
                         <img :src="airFreshener.image" class="card-img-top card-image-me"
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">

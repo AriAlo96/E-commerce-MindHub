@@ -49,7 +49,8 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../../../index.html#AboutUs" style="color: aliceblue;">About
+                                <a class="nav-link active" aria-current="page" href="../../../index.html#AboutUs"
+                                    style="color: aliceblue;">About
                                     Us</a>
                             </li>
                             <li class="nav-item">
@@ -61,19 +62,21 @@
                                     style="color: aliceblue;">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a v-if="email.includes('velvetadm')" class="nav-link active" aria-current="page" href="../../../administrator/assets/pages/create-products.html"
+                                <a v-if="email.includes('velvetadm')" class="nav-link active" aria-current="page"
+                                    href="../../../administrator/assets/pages/create-products.html"
                                     style="color: aliceblue;">Administrator</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="d-flex" style="gap: 1rem;">
-                    <h5 v-if="email" style="color: #fbb002d4; font-weight: 500; width: 8rem;">Hi, {{client.firstName}} !</h5>
+                    <h5 v-if="email" style="color: #fbb002d4; font-weight: 500; width: 8rem;">Hi, {{client.firstName}} !
+                    </h5>
                     <a v-if="!email" href="./log-in.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500;">LogIn</a>
                     <a v-if="!email" href="./register.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500">Register</a>
-                    <a v-if="email"  @click="logOut" style="color: #ec225e; cursor: pointer; font-weight: 500">LogOut</a>
+                    <a v-if="email" @click="logOut" style="color: #ec225e; cursor: pointer; font-weight: 500">LogOut</a>
 
                 </div>
                 <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
@@ -174,7 +177,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <form @submit.prevent="filterSearch" class="d-flex flex-column search-form-overlay justify-content-center align-items-center"
+                <form @submit.prevent="filterSearch"
+                    class="d-flex flex-column search-form-overlay justify-content-center align-items-center"
                     role="search">
                     <div class="d-flex">
                         <input v-model="valueSearch" class="form-control me-2" type="search" placeholder="Search"
@@ -237,7 +241,13 @@
             <h1
                 style="font-size: 3rem !important; text-align: center; margin-top: 1rem; color: #ec225e; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);">
                 Creams</h1>
-                <h5 v-if="errorPriceAndType" style="text-align: center; position: relative; top: 15rem;">{{errorPriceAndType}}</h5>
+            <h5 v-if="errorPriceAndType" style="text-align: center; position: relative; top: 15rem;">
+                {{errorPriceAndType}}</h5>
+            <div class="d-flex justify-content-end" style="gap: 2rem; margin-right: 1rem;">
+                <a href="./fragances.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Fragances</a>
+                <a href="./air-fresheners.html" style="color: #ec225e; cursor: pointer; font-weight: 700;">Buy Air
+                    Fresheners</a>
+            </div>
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
                     <div class="d-flex flex-column">
@@ -253,22 +263,28 @@
                     <div class="d-flex flex-column">
                         <h6 class="form-label mx-2">Type</h6>
                         <div class="form-check" v-for="type in types" :key="type">
-                            <input class="form-check-input" type="radio" :id="type.id"
-                                :value="type.value" v-model="typeSelected">
+                            <input class="form-check-input" type="radio" :id="type.id" :value="type.value"
+                                v-model="typeSelected">
                             <label class="form-check-label" :for="type.id">
                                 {{ type.label }}
                             </label>
                         </div>
                     </div>
 
-                    <a @click="filterByPriceAndType" class="btn" style="background-color:#020305; color:#ffffff;">Search</a>
+                    <a @click="filterByPriceAndType" class="btn"
+                        style="background-color:#020305; color:#ffffff;">Search</a>
                 </div>
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
-                    <div class="card container-img-body m-3" v-for="cream of creams"
-                        style="width: 20rem;" data-aos="zoom-in">
-                        <h5
-                            style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
-                            Stock: {{cream.stock}}</h5>
+                    <div class="card container-img-body m-3" v-for="cream of creams" style="width: 20rem;"
+                        data-aos="zoom-in">
+                        <div>
+                            <h5
+                                style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
+                                Stock: {{cream.stock}}</h5>
+                            <p v-if="cream.stock < 4" style="color: #f00; text-align: center; font-weight: 600;">
+                                Last
+                                units!</p>
+                        </div>
                         <img :src="cream.image" class="card-img-top card-image-me"
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
@@ -366,7 +382,7 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init();
-  </script>
+</script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/creams.js"></script>
 

@@ -186,6 +186,8 @@
                         <h5 class="card-title">{{airFreshener.name}}</h5>
                         <p class="card-text">{{airFreshener.description}}</p>
                         <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        <a v-if="airFreshener.stock > 0" @click="addFromCart(airFreshener)" class="btn"
+                            style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                     </div>
                 </div>
             </div>

@@ -253,7 +253,7 @@
 
             <div class="d-flex">
                 <div class="d-flex flex-column gap-5" style="width: 20%; margin-top: 2rem; padding-left: 1rem;">
-                   
+
                     <div class="d-flex flex-column">
                         <h6 class="form-label mx-2">Price:</h6>
                         <div class="form-check" v-for="range in ranges" :key="range">
@@ -280,9 +280,17 @@
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" v-for="fragance of fragances" style="width: 20rem;"
                         data-aos="zoom-in">
-                        <h5
-                            style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
-                            Stock: {{fragance.stock}}</h5>
+                        <div class="d-flex justify-content-between">
+                            <h6
+                                style="color: #000000; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
+                                {{fragance.gender}}</h6>
+                            <div>
+                                <h5
+                                    style="color: #ec225e; font-weight: 700; margin: 1rem;">
+                                    Stock: {{fragance.stock}}</h5>
+                                <p v-if="fragance.stock < 4" style="color: #f00; text-align: center; font-weight: 600;">Last units!</p> 
+                            </div>
+                        </div>
                         <img :src="fragance.image" class="card-img-top card-image-me"
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
