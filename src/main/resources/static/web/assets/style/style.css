@@ -714,3 +714,38 @@ ul li:hover {
     border-radius: 0px;
   }
 }
+@media screen and (min-width: 610px) and (max-width: 815px) {
+  .carousel-caption h1 {
+    font-size: 2.5rem;
+  } 
+}
+@media screen and (min-width: 491px) and (max-width: 609px) {
+  .carousel-caption h1 {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 490px) {
+  .carousel-caption h1 {
+    font-size: 1.5rem;
+  }
+  form {
+    width: 50% !important;
+}
+.containerSerchAndCard{
+  flex-direction: column;
+}
+.containerSearchMe{
+  flex-direction: row !important;
+width: 100% !important;
+align-items: center;
+}
+.iframe{
+  width: 8rem;
+  height: 8rem;
+}
+
+}
+
+
+
+ 

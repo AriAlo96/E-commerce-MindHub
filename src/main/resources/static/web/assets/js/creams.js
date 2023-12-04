@@ -40,7 +40,7 @@ const app = Vue.createApp({
         this.originalCreams = [...this.creams];
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
         this.creams = this.creams.map(cream => {
-          let aux = this.shoppingCart.find(product => product.id == cream.id)
+          let aux = this.shoppingCart.find(product => product.name == cream.name)
           if (aux) {
             return aux
           }
@@ -99,7 +99,7 @@ const app = Vue.createApp({
     
 
     addFromCart(product) {
-      const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
+      const index = this.shoppingCart.findIndex(productCart => productCart.name === product.name);
       if (index !== -1) {
         this.shoppingCart[index].quantity += 1;
       } else {
