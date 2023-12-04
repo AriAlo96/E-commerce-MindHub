@@ -16,10 +16,11 @@ const app = Vue.createApp({
       ],
       rangeSelected: "all",
       genders: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'femenine', label: 'Femenine', value: 'WOMEN' },
         { id: 'masculine', label: 'Masculine', value: 'MAN' }
       ],
-      genderSelected: null,
+      genderSelected: "all",
       all: null,
       shoppingCart: [],
       totalPrice: 0

@@ -273,19 +273,19 @@
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
                     <div class="card container-img-body m-3" v-for="cream of creams" style="width: 20rem;"
                         data-aos="zoom-in">
-                        <div>
+                        <div class="d-flex justify-content-between align-items-center">
                             <h5
                                 style="color: #ec225e; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
                                 Stock: {{cream.stock}}</h5>
-                            <p v-if="cream.stock < 4" style="color: #f00; text-align: center; font-weight: 600;">
+                            <p v-if="cream.stock < 4" style="color: #f00; text-align: center; font-weight: 600; margin: 1rem;">
                                 Last
                                 units!</p>
                         </div>
                         <img :src="cream.image" class="card-img-top card-image-me"
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
-                            <h5 class="card-title" style="text-align: center;">{{cream.name}}
-                                ({{cream.content}}ml)</h5>
+                            <h5 class="card-title" style="text-align: center;">{{cream.name}}</h5>
+                            <h5 class="card-title" style="text-align: center;"> ({{cream.content}}ml)</h5>
                             <h5 style="color: #ec225e; text-align: center;">US$ {{formatNumber(cream.price)}}</h5>
                             <p
                                 style="text-align: center; white-space: pre-line; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box;">
