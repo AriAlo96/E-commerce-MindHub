@@ -1,22 +1,22 @@
 package MindHub.ecommerce.dtos;
 
-import MindHub.ecommerce.models.Fragance;
+import MindHub.ecommerce.models.Fragrance;
 import MindHub.ecommerce.models.Purchase;
-import MindHub.ecommerce.models.PurchaseFragance;
+import MindHub.ecommerce.models.PurchaseFragrance;
 
 public class PurchaseFraganceDTO {
     private Long id;
     private Purchase purchase;
-    private Fragance fragance;
+    private Fragrance fragrance;
     private Integer quantity;
     private Double subtotal;
 
-    public PurchaseFraganceDTO(PurchaseFragance purchaseFragance) {
-        this.id = purchaseFragance.getId();
-        this.purchase = purchaseFragance.getPurchase();
-        this.fragance = purchaseFragance.getFragance();
-        this.quantity = purchaseFragance.getQuantity();
-        this.subtotal = purchaseFragance.getSubtotal();
+    public PurchaseFraganceDTO(PurchaseFragrance purchaseFragrance) {
+        this.id = purchaseFragrance.getId();
+        this.purchase = purchaseFragrance.getPurchase();
+        this.fragrance = purchaseFragrance.getFragance();
+        this.quantity = purchaseFragrance.getQuantity();
+        this.subtotal = purchaseFragrance.getSubtotal();
     }
 
     public Long getId() {
@@ -27,8 +27,8 @@ public class PurchaseFraganceDTO {
         return purchase;
     }
 
-    public Fragance getFragance() {
-        return fragance;
+    public Fragrance getFragance() {
+        return fragrance;
     }
 
     public Integer getQuantity() {

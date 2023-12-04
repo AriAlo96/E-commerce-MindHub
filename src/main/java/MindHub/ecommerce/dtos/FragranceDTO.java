@@ -4,7 +4,7 @@ import MindHub.ecommerce.models.*;
 
 import java.util.Set;
 
-public class FraganceDTO {
+public class FragranceDTO {
     private Long id;
     private String name;
     private String description;
@@ -15,23 +15,23 @@ public class FraganceDTO {
     private Presentation presentation;
     private Integer content;
     private Integer stock;
-    private Set<PurchaseFragance> purchesFragances;
+    private Set<PurchaseFragrance> purchesFragances;
     private Boolean active;
 
-    public FraganceDTO(Fragance fragance)
+    public FragranceDTO(Fragrance fragrance)
     {
-        this.id = fragance.getId();
-        this.name = fragance.getName();
-        this.description = fragance.getDescription();
-        this.gender = fragance.getGender();
-        this.olfactoryFamily = fragance.getOlfactoryFamily();
-        this.image = fragance.getImage();
-        this.price = fragance.getPrice();
-        this.presentation = fragance.getPresentation();
-        this.content = fragance.getContent();
-        this.stock = fragance.getStock();
-        this.purchesFragances = fragance.getPurchesFragances();
-        this.active = fragance.getActive();
+        this.id = fragrance.getId();
+        this.name = fragrance.getName();
+        this.description = fragrance.getDescription();
+        this.gender = fragrance.getGender();
+        this.olfactoryFamily = fragrance.getOlfactoryFamily();
+        this.image = fragrance.getImage();
+        this.price = fragrance.getPrice();
+        this.presentation = fragrance.getPresentation();
+        this.content = fragrance.getContent();
+        this.stock = fragrance.getStock();
+        this.purchesFragances = fragrance.getPurchesFragances();
+        this.active = fragrance.getActive();
     }
 
     public Long getId() {
@@ -74,7 +74,7 @@ public class FraganceDTO {
         return stock;
     }
 
-    public Set<PurchaseFragance> getPurchesFragances() {
+    public Set<PurchaseFragrance> getPurchesFragances() {
         return purchesFragances;
     }
 

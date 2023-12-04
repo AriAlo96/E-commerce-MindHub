@@ -17,7 +17,7 @@ public class Purchase {
     private Double totalPurchases;
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     @JsonIgnore
-    private Set<PurchaseFragance> purchaseFragances = new HashSet<>();
+    private Set<PurchaseFragrance> purchaseFragrances = new HashSet<>();
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
@@ -52,12 +52,12 @@ public class Purchase {
         this.totalPurchases = totalPurchases;
     }
 
-    public Set<PurchaseFragance> getPurchaseFragances() {
-        return purchaseFragances;
+    public Set<PurchaseFragrance> getPurchaseFragances() {
+        return purchaseFragrances;
     }
 
-    public void setPurchaseFragances(Set<PurchaseFragance> purchaseFragances) {
-        this.purchaseFragances = purchaseFragances;
+    public void setPurchaseFragances(Set<PurchaseFragrance> purchaseFragrances) {
+        this.purchaseFragrances = purchaseFragrances;
     }
 
     public Set<PurchaseFlavoring> getPurchaseFlavorings() {
@@ -76,9 +76,9 @@ public class Purchase {
         this.purchaseCreams = purchaseCreams;
     }
 
-    public void addPurchaseFragance (PurchaseFragance purchaseFragance){
-        purchaseFragance.setPurchase(this);
-        purchaseFragances.add(purchaseFragance);
+    public void addPurchaseFragance (PurchaseFragrance purchaseFragrance){
+        purchaseFragrance.setPurchase(this);
+        purchaseFragrances.add(purchaseFragrance);
     }
 
     public void addPurchaseFlavoring (PurchaseFlavoring purchaseFlavoring){

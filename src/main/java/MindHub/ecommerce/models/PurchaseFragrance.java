@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class PurchaseFragance {
+public class PurchaseFragrance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -15,15 +15,15 @@ public class PurchaseFragance {
     private Purchase purchase;
     @ManyToOne
     @JsonIgnore
-    private Fragance fragance;
+    private Fragrance fragrance;
     private Integer quantity;
     private Double subtotal;
 
 
-    public PurchaseFragance() {
+    public PurchaseFragrance() {
     }
 
-    public PurchaseFragance(Integer quantity, Double subtotal) {
+    public PurchaseFragrance(Integer quantity, Double subtotal) {
         this.quantity = quantity;
         this.subtotal = subtotal;
     }
@@ -40,12 +40,12 @@ public class PurchaseFragance {
         this.purchase = purchase;
     }
 
-    public Fragance getFragance() {
-        return fragance;
+    public Fragrance getFragance() {
+        return fragrance;
     }
 
-    public void setFragance(Fragance fragance) {
-        this.fragance = fragance;
+    public void setFragance(Fragrance fragrance) {
+        this.fragrance = fragrance;
     }
 
     public Integer getQuantity() {

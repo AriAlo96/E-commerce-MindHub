@@ -1,39 +1,36 @@
 package MindHub.ecommerce.controllers;
 
-import MindHub.ecommerce.dtos.FraganceDTO;
-import MindHub.ecommerce.models.Fragance;
+import MindHub.ecommerce.dtos.FragranceDTO;
+import MindHub.ecommerce.models.Fragrance;
 import MindHub.ecommerce.models.Gender;
 import MindHub.ecommerce.models.OlfactoryFamily;
 import MindHub.ecommerce.models.Presentation;
-import MindHub.ecommerce.services.FraganceService;
+import MindHub.ecommerce.services.FragranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/velvet")
-public class FraganceController {
+public class FragranceController {
     @Autowired
-    private FraganceService fraganceService;
+    private FragranceService fragranceService;
 
     @GetMapping("/fragances")
-    public List<FraganceDTO> getAllFragances() {
-        List<Fragance> fragancesActives = fraganceService.findAllFragances().stream().filter(fragance -> fragance.getActive()).collect(Collectors.toList());
-        List<FraganceDTO> fragancesDTO = fragancesActives.stream().map(
-                fragance -> new FraganceDTO(fragance)).collect(Collectors.toList());
+    public List<FragranceDTO> getAllFragances() {
+        List<Fragrance> fragancesActives = fragranceService.findAllFragances().stream().filter(fragance -> fragance.getActive()).collect(Collectors.toList());
+        List<FragranceDTO> fragancesDTO = fragancesActives.stream().map(
+                fragance -> new FragranceDTO(fragance)).collect(Collectors.toList());
         return fragancesDTO;
     }
 
     @GetMapping("/fragances/{id}")
-    public FraganceDTO getFragance(@PathVariable Long id) {
-        FraganceDTO fragance = new FraganceDTO(fraganceService.findFraganceById(id));
+    public FragranceDTO getFragance(@PathVariable Long id) {
+        FragranceDTO fragance = new FragranceDTO(fragranceService.findFraganceById(id));
         return fragance;
     }
 
@@ -45,7 +42,7 @@ public class FraganceController {
                                                     @RequestParam Integer content, @RequestParam Integer stock,
                                                     @RequestParam String image)
     {
-        List<String> fragancesName = fraganceService.findAllFragances().stream().map(
+        List<String> fragancesName = fragranceService.findAllFragances().stream().map(
                 fragance -> fragance.getName()).collect(Collectors.toList());
 
         if (name.isEmpty()) {
@@ -69,9 +66,9 @@ public class FraganceController {
         if (image.isEmpty()) {
             return new ResponseEntity<>("The fragrance image is required.", HttpStatus.BAD_REQUEST);
         } else {
-            Fragance newFragance = new Fragance(name, description, gender, olfactoryFamily, image, price, presentation,
+            Fragrance newFragrance = new Fragrance(name, description, gender, olfactoryFamily, image, price, presentation,
                     content, stock, true);
-            fraganceService.saveFragance(newFragance);
+            fragranceService.saveFragance(newFragrance);
             return new ResponseEntity<>("Fragance create successfully", HttpStatus.CREATED);
         }
     }
@@ -87,36 +84,36 @@ public class FraganceController {
                                                  @RequestParam(required = false) Integer stock,
                                                  @RequestParam(required = false) String image, @RequestParam Long id)
     {
-        Fragance fragance = fraganceService.findFraganceById(id);
+        Fragrance fragrance = fragranceService.findFraganceById(id);
 
             if(name != null){
-                fragance.setName(name);
+                fragrance.setName(name);
             }
             if(description != null){
-                fragance.setDescription(description);
+                fragrance.setDescription(description);
             }
             if(gender != null){
-                fragance.setGender(gender);
+                fragrance.setGender(gender);
             }
             if(olfactoryFamily != null){
-                fragance.setOlfactoryFamily(olfactoryFamily);
+                fragrance.setOlfactoryFamily(olfactoryFamily);
             }
             if(price != null){
-                fragance.setPrice(price);
+                fragrance.setPrice(price);
             }
             if(presentation != null){
-                fragance.setPresentation(presentation);
+                fragrance.setPresentation(presentation);
             }
             if(content != null){
-                fragance.setContent(content);
+                fragrance.setContent(content);
             }
             if(stock != null){
-                fragance.setStock(stock);
+                fragrance.setStock(stock);
             }
             if(image != null){
-                fragance.setImage(image);
+                fragrance.setImage(image);
             }
-            fraganceService.saveFragance(fragance);
+            fragranceService.saveFragance(fragrance);
             return new ResponseEntity<>("Fragance update successfully", HttpStatus.OK);
         }
 
@@ -124,15 +121,15 @@ public class FraganceController {
 
     @PatchMapping("/fragances/delete")
     public ResponseEntity<Object> deleteFragance(@RequestParam Long id) {
-        Fragance fragance = fraganceService.findFraganceById(id);
-        if (fragance == null) {
+        Fragrance fragrance = fragranceService.findFraganceById(id);
+        if (fragrance == null) {
             return new ResponseEntity<>("The fragance doesn't exist", HttpStatus.FORBIDDEN);
         }
-        if (!fragance.getActive()) {
+        if (!fragrance.getActive()) {
             return new ResponseEntity<>("The fragance is inactive", HttpStatus.FORBIDDEN);
         } else {
-            fragance.setActive(false);
-            fraganceService.saveFragance(fragance);
+            fragrance.setActive(false);
+            fragranceService.saveFragance(fragrance);
             return new ResponseEntity<>("Fragance delete successfully", HttpStatus.CREATED);
         }
     }

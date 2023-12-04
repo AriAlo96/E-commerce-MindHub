@@ -2,14 +2,10 @@ package MindHub.ecommerce.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.imageio.ImageIO;
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Set;
 @Entity
-public class Fragance {
+public class Fragrance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -25,14 +21,14 @@ public class Fragance {
     private Integer content;
     private Integer stock;
     private Boolean active;
-    @OneToMany(mappedBy = "fragance", fetch = FetchType.EAGER)
-    private Set<PurchaseFragance> purchesFragances;
+    @OneToMany(mappedBy = "fragrance", fetch = FetchType.EAGER)
+    private Set<PurchaseFragrance> purchesFragrances;
 
-    public Fragance() {
+    public Fragrance() {
     }
 
-    public Fragance(String name, String description, Gender gender, OlfactoryFamily olfactoryFamily,
-                    String image, Double price, Presentation presentation, Integer content, Integer stock, Boolean active)
+    public Fragrance(String name, String description, Gender gender, OlfactoryFamily olfactoryFamily,
+                     String image, Double price, Presentation presentation, Integer content, Integer stock, Boolean active)
     {
         this.name = name;
         this.description = description;
@@ -122,12 +118,12 @@ public class Fragance {
         this.stock = stock;
     }
 
-    public Set<PurchaseFragance> getPurchesFragances() {
-        return purchesFragances;
+    public Set<PurchaseFragrance> getPurchesFragances() {
+        return purchesFragrances;
     }
 
-    public void setPurchesFragances(Set<PurchaseFragance> purchesFragances) {
-        this.purchesFragances = purchesFragances;
+    public void setPurchesFragances(Set<PurchaseFragrance> purchesFragances) {
+        this.purchesFragrances = purchesFragances;
     }
 
     public Boolean getActive() {

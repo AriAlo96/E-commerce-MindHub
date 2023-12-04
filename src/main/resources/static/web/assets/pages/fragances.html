@@ -274,37 +274,37 @@
                         style="background-color:#020305; color:#ffffff;">Search</a>
                 </div>
                 <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1rem;">
-                    <div class="card container-img-body m-3" v-for="fragance of fragances" style="width: 20rem;"
+                    <div class="card container-img-body m-3" v-for="fragrance of fragances" style="width: 20rem;"
                         data-aos="zoom-in">
                         <div class="d-flex justify-content-between">
                             <h6
                                 style="color: #000000; font-weight: 700; display: flex; justify-content: end; margin: 1rem;">
-                                {{fragance.gender}}</h6>
+                                {{fragrance.gender}}</h6>
                             <div>
                                 <h5
                                     style="color: #ec225e; font-weight: 700; margin: 1rem;">
-                                    Stock: {{fragance.stock}}</h5>
-                                <p v-if="fragance.stock < 4" style="color: #f00; text-align: center; font-weight: 600;">Last units!</p> 
+                                    Stock: {{fragrance.stock}}</h5>
+                                <p v-if="fragrance.stock < 4" style="color: #f00; text-align: center; font-weight: 600;">Last units!</p>
                             </div>
                         </div>
-                        <img :src="fragance.image" class="card-img-top card-image-me"
+                        <img :src="fragrance.image" class="card-img-top card-image-me"
                             style="height: 15rem; object-fit: contain;">
                         <div class="card-body">
-                            <h5 class="card-title" style="text-align: center;">{{fragance.name}}
-                                ({{fragance.content}}ml)</h5>
-                            <h5 style="color: #ec225e; text-align: center;">US$ {{formatNumber(fragance.price)}}</h5>
+                            <h5 class="card-title" style="text-align: center;">{{fragrance.name}}
+                                ({{fragrance.content}}ml)</h5>
+                            <h5 style="color: #ec225e; text-align: center;">US$ {{formatNumber(fragrance.price)}}</h5>
                             <div>
                                 <h6 class="card-text" style="text-align: center;">Olfactory Family: <span
-                                        style="color: #ec225e;">{{fragance.olfactoryFamily}}</span></h6>
+                                        style="color: #ec225e;">{{fragrance.olfactoryFamily}}</span></h6>
                                 <p
                                     style="text-align: center; white-space: pre-line; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box;">
-                                    {{fragance.description}}</p>
+                                    {{fragrance.description}}</p>
 
                             </div>
                             <div class="d-flex justify-content-around">
-                                <a :href="'./detailsFragances.html?id=' + fragance.id" class="btn"
+                                <a :href="'./detailsFragances.html?id=' + fragrance.id" class="btn"
                                     style="background-color:#020305; color:#ffffff;">Details</a>
-                                <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn"
+                                <a v-if="fragrance.stock > 0" @click="addFromCart(fragrance)" class="btn"
                                     style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                             </div>
                         </div>

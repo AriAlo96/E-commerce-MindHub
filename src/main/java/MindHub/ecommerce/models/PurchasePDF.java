@@ -4,9 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.codec.Base64;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
@@ -55,7 +53,7 @@ public class PurchasePDF {
 
         List<PurchaseCream> purchaseCreamList = new ArrayList<>(purchase.getPurchaseCreams());
         List<PurchaseFlavoring> purchaseFlavoringList = new ArrayList<>(purchase.getPurchaseFlavorings());
-        List<PurchaseFragance> purchaseFraganceList = new ArrayList<>(purchase.getPurchaseFragances());
+        List<PurchaseFragrance> purchaseFragranceList = new ArrayList<>(purchase.getPurchaseFragances());
 
         if (purchaseCreamList != null) {
             for (PurchaseCream cream : purchaseCreamList) {
@@ -65,8 +63,8 @@ public class PurchasePDF {
             }
 
         }
-        if (purchaseFraganceList != null) {
-            for (PurchaseFragance fragance : purchaseFraganceList) {
+        if (purchaseFragranceList != null) {
+            for (PurchaseFragrance fragance : purchaseFragranceList) {
                 table.addCell(createCell(fragance.getFragance().getName()));
                 table.addCell(createCell(String.valueOf(fragance.getQuantity())));
                 table.addCell(createCell(currencyFormatter.format(fragance.getSubtotal())));

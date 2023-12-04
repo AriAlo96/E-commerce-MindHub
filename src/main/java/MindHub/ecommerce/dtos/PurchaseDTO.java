@@ -1,9 +1,6 @@
 package MindHub.ecommerce.dtos;
 
 import MindHub.ecommerce.models.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Set;
 
@@ -11,7 +8,7 @@ public class PurchaseDTO {
     private Long id;
     private Long client;
     private Double totalPurchases;
-    private Set<PurchaseFragance> purchaseFragances;
+    private Set<PurchaseFragrance> purchaseFragrances;
     private Set<PurchaseFlavoring> purchaseFlavorings;
     private Set<PurchaseCream> purchaseCreams;
 
@@ -21,7 +18,7 @@ public class PurchaseDTO {
         id = purchase.getId();
         client = purchase.getClient().getId();
         totalPurchases = purchase.getTotalPurchases();
-        purchaseFragances = purchase.getPurchaseFragances();
+        purchaseFragrances = purchase.getPurchaseFragances();
         purchaseFlavorings = purchase.getPurchaseFlavorings();
         purchaseCreams = purchase.getPurchaseCreams();
     }
@@ -38,8 +35,8 @@ public class PurchaseDTO {
         return totalPurchases;
     }
 
-    public Set<PurchaseFragance> getPurchaseFragances() {
-        return purchaseFragances;
+    public Set<PurchaseFragrance> getPurchaseFragances() {
+        return purchaseFragrances;
     }
 
     public Set<PurchaseFlavoring> getPurchaseFlavorings() {

@@ -2,10 +2,8 @@ package MindHub.ecommerce.controllers;
 
 import MindHub.ecommerce.dtos.*;
 import MindHub.ecommerce.models.*;
-import MindHub.ecommerce.repositories.FlavoringRepository;
 import MindHub.ecommerce.services.*;
 import com.itextpdf.text.DocumentException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -42,7 +39,7 @@ public class FlavoringController {
     @Autowired
     private PurchaseService purchaseService;
     @Autowired
-    private FraganceService fraganceService;
+    private FragranceService fragranceService;
 
     @GetMapping("/flavorings")
     public List<FlavoringDTO> getAllFlavoring(){

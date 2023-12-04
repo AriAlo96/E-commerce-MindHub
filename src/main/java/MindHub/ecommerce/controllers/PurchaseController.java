@@ -4,7 +4,7 @@ import MindHub.ecommerce.dtos.*;
 import MindHub.ecommerce.models.*;
 import MindHub.ecommerce.repositories.PurchaseCreamRepository;
 import MindHub.ecommerce.repositories.PurchaseFlavoringRepository;
-import MindHub.ecommerce.repositories.PurchaseFraganceRepository;
+import MindHub.ecommerce.repositories.PurchaseFragranceRepository;
 import MindHub.ecommerce.services.*;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class PurchaseController {
     @Autowired
     private ClientService clientService;
     @Autowired
-    private FraganceService fraganceService;
+    private FragranceService fragranceService;
     @Autowired
     private FlavoringService flavoringService;
     @Autowired
@@ -35,7 +35,7 @@ public class PurchaseController {
     @Autowired
     private PurchaseFlavoringRepository purchaseFlavoringRepository;
     @Autowired
-    private PurchaseFraganceRepository purchaseFraganceRepository;
+    private PurchaseFragranceRepository purchaseFragranceRepository;
     @Autowired
     private PurchaseCreamRepository purchaseCreamRepository;
 
@@ -80,8 +80,8 @@ public class PurchaseController {
 
         for (ProductsBuyDTO product : productsDTO) {
             if (product.getName().contains("parfum")) {
-                Fragance fragance = fraganceService.findFraganceById(product.getId());
-                total += processFraganceProduct(product, fragance, purchase);
+                Fragrance fragrance = fragranceService.findFraganceById(product.getId());
+                total += processFraganceProduct(product, fragrance, purchase);
             } else if (product.getName().contains("cream")) {
                 Cream cream = creamService.findCreamById(product.getId());
                 total += processCreamProduct(product, cream, purchase);
@@ -93,15 +93,15 @@ public class PurchaseController {
         return total;
     }
 
-    private double processFraganceProduct(ProductsBuyDTO product, Fragance fragance, Purchase purchase) {
-            double subtotal = fragance.getPrice() * product.getQuantity();
-            PurchaseFragance purchaseFragance = new PurchaseFragance(product.getQuantity(),
+    private double processFraganceProduct(ProductsBuyDTO product, Fragrance fragrance, Purchase purchase) {
+            double subtotal = fragrance.getPrice() * product.getQuantity();
+            PurchaseFragrance purchaseFragrance = new PurchaseFragrance(product.getQuantity(),
                     subtotal);
-            purchase.addPurchaseFragance(purchaseFragance);
-            purchaseFragance.setFragance(fragance);
-            fragance.setStock(fragance.getStock() - product.getQuantity());
-            fraganceService.saveFragance(fragance);
-            purchaseFraganceRepository.save(purchaseFragance);
+            purchase.addPurchaseFragance(purchaseFragrance);
+            purchaseFragrance.setFragance(fragrance);
+            fragrance.setStock(fragrance.getStock() - product.getQuantity());
+            fragranceService.saveFragance(fragrance);
+            purchaseFragranceRepository.save(purchaseFragrance);
             return subtotal;
     }
 

@@ -175,13 +175,13 @@
             <div class="d-flex justify-content-center">
                 <div style="display: flex !important; background-color: white; margin-top: 2rem; width: 80%; justify-content: center; align-items: center;">
                     <div>
-                        <img :src="fragance.image" class="card-img-top" alt="..." style="width: 100%;">
+                        <img :src="fragrance.image" class="card-img-top" alt="..." style="width: 100%;">
                     </div>
                     <div class="card-body">     
-                        <h5 class="card-title">{{fragance.name}}</h5>
-                        <p class="card-text" style="text-align: justify;">{{fragance.description}}</p>
-                        <p class="card-text"><small class="text-body-secondary">Stock: {{fragance.stock}}</small></p>
-                        <a v-if="fragance.stock > 0" @click="addFromCart(fragance)" class="btn"
+                        <h5 class="card-title">{{fragrance.name}}</h5>
+                        <p class="card-text" style="text-align: justify;">{{fragrance.description}}</p>
+                        <p class="card-text"><small class="text-body-secondary">Stock: {{fragrance.stock}}</small></p>
+                        <a v-if="fragrance.stock > 0" @click="addFromCart(fragrance)" class="btn"
                             style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                     </div>
                 </div>
