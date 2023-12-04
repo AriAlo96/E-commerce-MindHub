@@ -13,9 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static MindHub.ecommerce.models.Presentation.AMBIENT;
-import static MindHub.ecommerce.models.Presentation.FABRICS;
-
 @SpringBootApplication
 public class ECommerceApplication {
 
