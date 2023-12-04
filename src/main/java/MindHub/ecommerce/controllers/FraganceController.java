@@ -25,9 +25,10 @@ public class FraganceController {
 
     @GetMapping("/fragances")
     public List<FraganceDTO> getAllFragances() {
-        List<FraganceDTO> fragances = fraganceService.findAllFragances().stream().map(
+        List<Fragance> fragancesActives = fraganceService.findAllFragances().stream().filter(fragance -> fragance.getActive()).collect(Collectors.toList());
+        List<FraganceDTO> fragancesDTO = fragancesActives.stream().map(
                 fragance -> new FraganceDTO(fragance)).collect(Collectors.toList());
-        return fragances;
+        return fragancesDTO;
     }
 
     @GetMapping("/fragances/{id}")
@@ -121,15 +122,11 @@ public class FraganceController {
 
 
 
-    @PatchMapping("fragances/delete")
-    public ResponseEntity<Object> deleteFragance(Authentication authentication, @RequestParam Long id) {
+    @PatchMapping("/fragances/delete")
+    public ResponseEntity<Object> deleteFragance(@RequestParam Long id) {
         Fragance fragance = fraganceService.findFraganceById(id);
         if (fragance == null) {
             return new ResponseEntity<>("The fragance doesn't exist", HttpStatus.FORBIDDEN);
-        }
-        if (fragance.getStock() != 0) {
-            return new ResponseEntity<>("You can not delete an fragance with a stock greater than zero",
-                    HttpStatus.FORBIDDEN);
         }
         if (!fragance.getActive()) {
             return new ResponseEntity<>("The fragance is inactive", HttpStatus.FORBIDDEN);

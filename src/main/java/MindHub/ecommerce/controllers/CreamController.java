@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.Position;
@@ -25,10 +26,9 @@ public class CreamController {
 
     @GetMapping("/creams")
     public List<CreamDTO> getAllCreams(){
-        List<Cream> creams = creamService.findAllCReams();
-        return  creams.stream()
-                .map(CreamDTO::new)
-                .collect(Collectors.toList());
+        List<Cream> creamsActives = creamService.findAllCreams().stream().filter(creamDTO -> creamDTO.getActive()).collect(Collectors.toList());
+        List<CreamDTO> creamsDTO = creamsActives.stream().map(creamActive -> new CreamDTO(creamActive)).collect(Collectors.toList());
+        return  creamsDTO;
     }
 
 
@@ -127,10 +127,6 @@ public class CreamController {
         Cream cream = creamService.findCreamById(id);
         if (cream == null) {
             return new ResponseEntity<>("The cream doesn't exist", HttpStatus.FORBIDDEN);
-        }
-        if (cream.getStock() > 0) {
-            return new ResponseEntity<>("You can not delete an cream with a stock greater than zero",
-                    HttpStatus.FORBIDDEN);
         }
         if (!cream.getActive()) {
             return new ResponseEntity<>("The cream is inactive", HttpStatus.FORBIDDEN);

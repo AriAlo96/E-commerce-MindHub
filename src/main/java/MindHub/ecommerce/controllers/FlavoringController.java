@@ -46,10 +46,12 @@ public class FlavoringController {
 
     @GetMapping("/flavorings")
     public List<FlavoringDTO> getAllFlavoring(){
-        List<Flavoring> flavorings = flavoringService.findAllFlavorings();
-        return  flavorings.stream()
-                .map(FlavoringDTO::new)
-                .collect(Collectors.toList());
+        List<Flavoring> flavoringsActives = flavoringService.findAllFlavorings().stream().filter(flavoringDTO -> flavoringDTO.getActive()).collect(Collectors.toList());
+        List<FlavoringDTO> flavoringsDTO = flavoringsActives.stream().map(FlavoringDTO::new)
+                .collect(Collectors.toList());;
+        return flavoringsDTO;
+
+
     }
     @GetMapping("/flavorings/{id}")
     public FlavoringDTO getFlavoringId(@PathVariable Long id){
@@ -149,10 +151,6 @@ public class FlavoringController {
         Flavoring flavoring = flavoringService.findFlavoringByID(id);
         if (flavoring == null) {
             return new ResponseEntity<>("The cream doesn't exist", HttpStatus.FORBIDDEN);
-        }
-        if (flavoring.getStock() > 0) {
-            return new ResponseEntity<>("You can not delete an cream with a stock greater than zero",
-                    HttpStatus.FORBIDDEN);
         }
         if (!flavoring.getActive()) {
             return new ResponseEntity<>("The cream is inactive", HttpStatus.FORBIDDEN);

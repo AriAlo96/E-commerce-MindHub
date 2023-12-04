@@ -12,7 +12,7 @@ public class CreamServiceImplement implements CreamService {
     @Autowired
     private CreamRepository creamRepository;
     @Override
-    public List<Cream> findAllCReams() {
+    public List<Cream> findAllCreams() {
         return creamRepository.findAll();
     }
 

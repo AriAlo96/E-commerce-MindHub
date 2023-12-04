@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public interface CreamService {
-   List<Cream> findAllCReams ();
+   List<Cream> findAllCreams ();
    Cream findCreamById(Long id);
    boolean creamExistById(Long id);
    void saveCream (Cream cream);

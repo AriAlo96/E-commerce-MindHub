@@ -375,6 +375,126 @@ const app = Vue.createApp({
       })
     },
 
+    deleteFragance() {
+      Swal.fire({
+        title: 'Do you want to delete this fragance?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancell',
+        confirmButtonText: 'Yes, delete',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showClass: {
+          popup: 'swal2-noanimation',
+          backdrop: 'swal2-noanimation'
+        },
+        hideClass: {
+          popup: '',
+          backdrop: ''
+        }, preConfirm: () => {
+          axios.patch("/velvet/fragances/delete", `id=${this.fraganceSelected.id}`)
+            .then(() => {
+              Swal.fire({
+                title: "Successfully delete fragance",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.pathname = `/administrator/assets/pages/create-products.html`;
+                }
+              });
+
+            })
+            .catch(error => {
+              Swal.fire({
+                icon: 'error',
+                text: error.response.data,
+                confirmButtonColor: "#7c601893",
+              });
+            });
+        },
+      })
+    },
+
+    deleteAirFreshener() {
+      Swal.fire({
+        title: 'Do you want to delete this air freshener?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancell',
+        confirmButtonText: 'Yes, delete',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showClass: {
+          popup: 'swal2-noanimation',
+          backdrop: 'swal2-noanimation'
+        },
+        hideClass: {
+          popup: '',
+          backdrop: ''
+        }, preConfirm: () => {
+          axios.patch("/velvet/flavorings/delete", `id=${this.airFreshenerSelected.id}`)
+            .then(() => {
+              Swal.fire({
+                title: "Successfully delete air freshener",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.pathname = `/administrator/assets/pages/create-products.html`;
+                }
+              });
+
+            })
+            .catch(error => {
+              Swal.fire({
+                icon: 'error',
+                text: error.response.data,
+                confirmButtonColor: "#7c601893",
+              });
+            });
+        },
+      })
+    },
+
+    deleteCream() {
+      Swal.fire({
+        title: 'Do you want to delete this cream?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancell',
+        confirmButtonText: 'Yes, delete',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#dc3545',
+        showClass: {
+          popup: 'swal2-noanimation',
+          backdrop: 'swal2-noanimation'
+        },
+        hideClass: {
+          popup: '',
+          backdrop: ''
+        }, preConfirm: () => {
+          axios.patch("/velvet/creams/delete", `id=${this.creamSelected.id}`)
+            .then(() => {
+              Swal.fire({
+                title: "Successfully delete cream",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.pathname = `/administrator/assets/pages/create-products.html`;
+                }
+              });
+
+            })
+            .catch(error => {
+              Swal.fire({
+                icon: 'error',
+                text: error.response.data,
+                confirmButtonColor: "#7c601893",
+              });
+            });
+        },
+      })
+    },
+
     showForm(formName) {
       this.currentForm = formName;
     },
