@@ -5,18 +5,21 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.Base64;
+import org.hibernate.mapping.Value;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class PurchasePDF {
-
+    private LocalDateTime localDateTime;
     private Purchase purchase;
     private static final String LOGO_PATH = "C:/Users/harme/OneDrive/Escritorio/MindHub/e-commerce/src/main/resources/static/web/assets/images/logo.png";
 
@@ -135,6 +138,15 @@ public class PurchasePDF {
         doc.add(title);
 
         doc.add(new Paragraph("Purchase Id: " + purchase.getId(), detailsFont));
+        // Formatear la fecha y la hora
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String date = now.format(dateFormatter);
+        String time = now.format(timeFormatter);
+
+        doc.add(new Paragraph("Purchase date and time: " + date + " - " + time, detailsFont));
+
 
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100f);
