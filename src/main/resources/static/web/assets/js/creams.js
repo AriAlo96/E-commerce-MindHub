@@ -15,12 +15,13 @@ const app = Vue.createApp({
       ],
       rangeSelected: "all",
       types: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'face', label: 'Face', value: 'FACIAL' },
         { id: 'body', label: 'Body', value: 'BODY' },
         { id: 'hands', label: 'Hands', value: 'HAND' },
         { id: 'foots', label: 'Foots', value: 'FOOT' }
       ],
-      typeSelected: null,
+      typeSelected: "all",
       shoppingCart: [],
       totalPrice: 0,
       errorSearch: "",

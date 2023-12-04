@@ -13,11 +13,12 @@ const app = Vue.createApp({
       ],
       rangeSelected: "all",
       presentations: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'ambient', label: 'Ambient', value: 'AMBIENT' },
         { id: 'fabrics', label: 'Fabrics', value: 'FABRICS' },
         { id: 'diffusers', label: 'Diffusers', value: 'DIFFUSERS' }
       ],
-      presentationSelected: null,
+      presentationSelected: "all",
       shoppingCart: [],
       totalPrice: 0,
       errorSearch: "",
