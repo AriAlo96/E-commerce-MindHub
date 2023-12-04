@@ -60,19 +60,21 @@
                                     style="color: aliceblue;">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a v-if="email.includes('velvetadm')" class="nav-link active" aria-current="page" href="../../../administrator/assets/pages/create-products.html"
+                                <a v-if="email.includes('velvetadm')" class="nav-link active" aria-current="page"
+                                    href="../../../administrator/assets/pages/create-products.html"
                                     style="color: aliceblue;">Administrator</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="d-flex" style="gap: 1rem;">
-                    <h5 v-if="email" style="color: #fbb002d4; font-weight: 500; width: 8rem;">Hi, {{client.firstName}} !</h5>
+                    <h5 v-if="email" style="color: #fbb002d4; font-weight: 500; width: 8rem;">Hi, {{client.firstName}} !
+                    </h5>
                     <a v-if="!email" href="./log-in.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500;">LogIn</a>
                     <a v-if="!email" href="./register.html"
                         style="color: #ec225e; cursor: pointer; font-weight: 500">Register</a>
-                    <a v-if="email"  @click="logOut" style="color: #ec225e; cursor: pointer; font-weight: 500">LogOut</a>
+                    <a v-if="email" @click="logOut" style="color: #ec225e; cursor: pointer; font-weight: 500">LogOut</a>
 
                 </div>
                 <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
@@ -189,7 +191,9 @@
                                         <td><img :src='item.image' class='full-width'></img>
                                         </td>
                                         <td>
-                                            <span><a style="color: #ec225e; font-weight: 600;" :href="getProductDetailURL(item)" class="text-decoration-none">{{item.name}}</a></span>
+                                            <span><a style="color: #ec225e; font-weight: 600;"
+                                                    :href="getProductDetailURL(item)"
+                                                    class="text-decoration-none">{{item.name}}</a></span>
                                             <br> - {{item.content}} ml -<br>
                                             <div class="d-flex justify-content-start" style="gap: 1rem;">
                                                 <a v-if="item.quantity > 0" type="button"
@@ -256,7 +260,8 @@
                                 <div style="color: #ec225e; font-weight: 600;">TOTAL</div>
                             </span>
                             <span style='float:right; text-align:right;'>
-                                <div style="margin-bottom: 1rem;" class='thin dense'>US$ {{formatNumber(totalPrice)}}</div>
+                                <div style="margin-bottom: 1rem;" class='thin dense'>US$ {{formatNumber(totalPrice)}}
+                                </div>
                                 <div style="margin-bottom: 1rem;" class='thin dense'>US$4,95</div>
                                 <div style="color: #ec225e; font-weight: 600;">US$ {{formatNumber(totalPrice + 4.95)}}
                                 </div>
@@ -303,17 +308,29 @@
 
                         <hr class='separator'>
                         <h5 style="margin-bottom: 1rem;">Pay information</h5>
-                        <label for="">Card Number</label>
-                        <input type="number" class='input-field'></input>
-                        <label for="">Card Holder</label>
-                        <input type="text" class='input-field'></input>
+                        <div class="d-flex gap-2">
+                            <div>
+                                <label for="number">Card Type</label>
+                                <select v-model="typeCard" class='input-field' name="cardType" id="cardType">
+                                    <option value="" style="color: #020305;">SELECT</option>
+                                    <option value="DEBIT" style="color: #020305;">DEBIT</option>
+                                    <option value="CREDIT" style="color: #020305;">CREDIT</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="cardnumber">Card Number</label>
+                                <input type="text" id="number" class='input-field' v-model="numberCard" @input="formatCardNumber" name="cardNumber" maxlength="19"></input>
+                            </div>                            
+                        </div>
+                        <label for="cardHolder">Card Holder</label>
+                        <input type="text" id="cardHolder" class='input-field'></input>
                         <table class='half-input-table'>
                             <tr>
                                 <td> Expires
                                     <input type="date" class='input-field'></input>
                                 </td>
                                 <td>CVV
-                                    <input type="password" class='input-field'></input>
+                                    <input type="password" class='input-field' v-model="cvv"></input>
                                 </td>
                             </tr>
                         </table>

@@ -6,11 +6,12 @@ const app = Vue.createApp({
       airFresheners: [],
       valueSearch: "",
       ranges: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'range1', label: 'US$0 - US$9,99', value: [0, 9.99] },
         { id: 'range2', label: 'US$10 - US$29,99', value: [10, 29.99] },
         { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
-      rangeSelected: null,
+      rangeSelected: "all",
       presentations: [
         { id: 'ambient', label: 'Ambient', value: 'AMBIENT' },
         { id: 'fabrics', label: 'Fabrics', value: 'FABRICS' },
@@ -70,13 +71,13 @@ const app = Vue.createApp({
 
       let filteredAirFresheners = this.originalAirFresheners.slice();
 
-      if (priceSelected) {
+      if (priceSelected && priceSelected.value !== 'all') {
         filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
           airFreshener.price >= priceSelected.value[0] && airFreshener.price <= priceSelected.value[1]
         );
       }
 
-      if (presentationSelected) {
+      if (presentationSelected && presentationSelected.value !== 'all') {
         filteredAirFresheners = filteredAirFresheners.filter(airFreshener =>
           airFreshener.presentation === presentationSelected.value
         );

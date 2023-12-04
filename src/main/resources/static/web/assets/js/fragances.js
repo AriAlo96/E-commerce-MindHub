@@ -8,17 +8,19 @@ const app = Vue.createApp({
       errorSearch: "",
       errorPriceAndGender: "",
       ranges: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'range1', label: 'US$0 - US$19,99', value: [0, 19.99] },
         { id: 'range2', label: 'US$20 - US$39,99', value: [20, 39.99] },
         { id: 'range3', label: 'US$40 - US$59,99', value: [40., 59.99] },
         { id: 'range4', label: 'US$60 or more', value: [60, Infinity] }
       ],
-      rangeSelected: null,
+      rangeSelected: "all",
       genders: [
         { id: 'femenine', label: 'Femenine', value: 'WOMEN' },
         { id: 'masculine', label: 'Masculine', value: 'MAN' }
       ],
       genderSelected: null,
+      all: null,
       shoppingCart: [],
       totalPrice: 0
     };
@@ -72,13 +74,13 @@ const app = Vue.createApp({
     
       let filteredFragances = this.originalFragances.slice();
     
-      if (priceSelected) {
+      if (priceSelected && priceSelected.value !== 'all') {
         filteredFragances = filteredFragances.filter(fragance =>
           fragance.price >= priceSelected.value[0] && fragance.price <= priceSelected.value[1]
         );
       }
     
-      if (genderSelected) {
+      if (genderSelected && genderSelected.value !== 'all') {
         filteredFragances = filteredFragances.filter(fragance =>
           fragance.gender === genderSelected.value
         );

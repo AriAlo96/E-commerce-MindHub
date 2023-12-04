@@ -1,5 +1,6 @@
 package MindHub.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class PurchaseFragance {
     @ManyToOne
     private Purchase purchase;
     @ManyToOne
+    @JsonIgnore
     private Fragance fragance;
     private Integer quantity;
     private Double subtotal;

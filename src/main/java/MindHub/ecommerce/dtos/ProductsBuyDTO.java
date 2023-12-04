@@ -9,14 +9,17 @@ public class ProductsBuyDTO {
     private Double price;
     private Integer quantity;
 
+    private Integer stock;
+
     public ProductsBuyDTO() {
     }
 
-    public ProductsBuyDTO(Long id, String name, Double price, Integer quantity) {
+    public ProductsBuyDTO(Long id, String name, Double price, Integer quantity , Integer stock) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.stock = stock;
     }
 
     public Long getId() {
@@ -35,8 +38,8 @@ public class ProductsBuyDTO {
         return quantity;
     }
 
-    @Override
-    public String toString() {
-        return "ProductsBuyDTO{" + "id=" + id + ", name='" + name + '\'' + ", price=" + price + ", quantity=" + quantity + '}';
+    public Integer getStock() {
+        return stock;
     }
+
 }

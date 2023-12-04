@@ -1,10 +1,10 @@
 package MindHub.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +19,7 @@ public class Client {
     private String password;
     private String address;
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Purchase> totalPurchases = new HashSet<>();
 
     public Client() {

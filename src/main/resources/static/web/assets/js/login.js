@@ -32,8 +32,7 @@ const app = Vue.createApp({
                         icon: "success",
                         title: "Successful login",
                         showConfirmButton: false,
-                        timer: 1500,
-                    }),
+                        }),
                         setTimeout(() => {
                             location.pathname = "/index.html";
                         }, 1600);

@@ -8,11 +8,12 @@ const app = Vue.createApp({
       filtered: [],
       valueSearch: "",
       ranges: [
+        { id: 'showAll', label: 'Show all', value: 'all' },
         { id: 'range1', label: 'US$0 - US$9,99', value: [0, 9.99] },
         { id: 'range2', label: 'US$10 - US$29,99', value: [10, 29.99] },
         { id: 'range3', label: 'US$30 or more', value: [30, Infinity] }
       ],
-      rangeSelected: null,
+      rangeSelected: "all",
       types: [
         { id: 'face', label: 'Face', value: 'FACIAL' },
         { id: 'body', label: 'Body', value: 'BODY' },
@@ -74,13 +75,13 @@ const app = Vue.createApp({
     
       let filteredCreams = this.originalCreams.slice();
     
-      if (priceSelected) {
+      if (priceSelected && priceSelected.value !== 'all') {
         filteredCreams = filteredCreams.filter(cream =>
           cream.price >= priceSelected.value[0] && cream.price <= priceSelected.value[1]
         );
       }
     
-      if (typeSelected) {
+      if (typeSelected && typeSelected.value !== 'all') {
         filteredCreams = filteredCreams.filter(cream =>
           cream.type === typeSelected.value
         );

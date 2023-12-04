@@ -1,6 +1,7 @@
 package MindHub.ecommerce.models;
 
 import MindHub.ecommerce.models.Cream;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class PurchaseCream {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cream_id")
+    @JsonIgnore
     private Cream cream;
 
     @ManyToOne(fetch = FetchType.EAGER)

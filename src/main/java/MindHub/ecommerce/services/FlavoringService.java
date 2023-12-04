@@ -15,5 +15,5 @@ public interface FlavoringService {
     void saveFlavoring(Flavoring flavoring);
     void deleteFlavoringById(Long id);
     boolean existFlavoringById(Long id);
-    void createAndSendPDFMail(Authentication authentication, Purchase purchase) throws DocumentException, IOException, MessagingException;
+
 }
