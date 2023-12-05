@@ -12,6 +12,7 @@ public class PurchaseFragrance {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne
+    @JsonIgnore
     private Purchase purchase;
     @ManyToOne
     @JsonIgnore

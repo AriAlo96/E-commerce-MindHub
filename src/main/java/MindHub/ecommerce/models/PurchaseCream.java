@@ -24,6 +24,7 @@ public class PurchaseCream {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id")
+    @JsonIgnore
     private Purchase purchase;
 
 

@@ -13,6 +13,7 @@ public class Purchase {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne
+    @JsonIgnore
     private Client client;
     private Double totalPurchases;
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)

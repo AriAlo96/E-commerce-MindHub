@@ -27,6 +27,13 @@ const app = Vue.createApp({
       .then(response => {
         this.cream = response.data;
         this.shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+        this.creams = this.creams.map(cream => {
+          let aux = this.shoppingCart.find(product => product.name == cream.name)
+          if (aux) {
+            return aux
+          }
+          return cream
+        })
         for (let product of this.shoppingCart) {
           this.totalPrice += product.price * product.quantity;
         }
@@ -38,7 +45,7 @@ const app = Vue.createApp({
 
   methods: {
     addFromCart(product) {
-      const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
+      const index = this.shoppingCart.findIndex(productCart => productCart.name === product.name);
       if (index !== -1) {
         this.shoppingCart[index].quantity += 1;
       } else {
@@ -52,7 +59,7 @@ const app = Vue.createApp({
     },
 
     removeFromCart(product) {
-      let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+      let index = this.shoppingCart.findIndex(productCart => productCart.name == product.name)
       this.shoppingCart.splice(index, 1)
 
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
@@ -88,8 +95,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Log Out',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -106,9 +113,9 @@ const app = Vue.createApp({
                 title: "Logged out successfully",
                 showConfirmButton: false,
                 timer: 1500,
-            }),
+              }),
                 setTimeout(() => {
-                    location.pathname = "/index.html";
+                  location.pathname = "/index.html";
                 }, 1600);
             })
             .catch(error => {

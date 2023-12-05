@@ -1,5 +1,6 @@
 package MindHub.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Flavoring {
 
     private Boolean active;
     @OneToMany(mappedBy = "flavoring", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<PurchaseFlavoring> purchaseFlavorings = new HashSet<>();
 
 

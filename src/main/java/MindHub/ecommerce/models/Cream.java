@@ -1,5 +1,6 @@
 package MindHub.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Cream {
     private String image;
     private Boolean active;
     @OneToMany(mappedBy = "cream", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<PurchaseCream> purchaseCreams= new HashSet<>();
 
     public Cream() {

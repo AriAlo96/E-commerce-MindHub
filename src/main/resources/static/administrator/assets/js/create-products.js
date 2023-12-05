@@ -79,8 +79,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -119,8 +119,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -159,8 +159,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -199,8 +199,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -263,8 +263,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -326,8 +326,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Confirm',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -356,7 +356,7 @@ const app = Vue.createApp({
               Swal.fire({
                 title: "Successfully update cream",
                 icon: "success",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#ec225e",
               }).then((result) => {
                 if (result.isConfirmed) {
                   location.pathname = `/administrator/assets/pages/create-products.html`;
@@ -368,7 +368,7 @@ const app = Vue.createApp({
               Swal.fire({
                 icon: 'error',
                 text: error.response.data,
-                confirmButtonColor: "#7c601893",
+                confirmButtonColor: "#ec225e",
               });
             });
         },
@@ -381,8 +381,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Yes, delete',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -396,7 +396,7 @@ const app = Vue.createApp({
               Swal.fire({
                 title: "Successfully delete fragance",
                 icon: "success",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#ec225e",
               }).then((result) => {
                 if (result.isConfirmed) {
                   location.pathname = `/administrator/assets/pages/create-products.html`;
@@ -408,7 +408,7 @@ const app = Vue.createApp({
               Swal.fire({
                 icon: 'error',
                 text: error.response.data,
-                confirmButtonColor: "#7c601893",
+                confirmButtonColor: "#ec225e",
               });
             });
         },
@@ -421,8 +421,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Yes, delete',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -461,8 +461,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Yes, delete',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -476,7 +476,7 @@ const app = Vue.createApp({
               Swal.fire({
                 title: "Successfully delete cream",
                 icon: "success",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#ec225e",
               }).then((result) => {
                 if (result.isConfirmed) {
                   location.pathname = `/administrator/assets/pages/create-products.html`;
@@ -488,7 +488,7 @@ const app = Vue.createApp({
               Swal.fire({
                 icon: 'error',
                 text: error.response.data,
-                confirmButtonColor: "#7c601893",
+                confirmButtonColor: "#ec225e",
               });
             });
         },
@@ -514,8 +514,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Log Out',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -524,10 +524,18 @@ const app = Vue.createApp({
           popup: '',
           backdrop: ''
         }, preConfirm: () => {
-          axios.post(`/api/logout`)
+          axios.post(`/velvet/logout`)
             .then(response => {
-              console.log("SingOut");
-              location.pathname = `/index.html`;
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Logged out successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              }),
+                setTimeout(() => {
+                  location.pathname = "/index.html";
+                }, 1600);
             })
             .catch(error => {
               console.log(error);

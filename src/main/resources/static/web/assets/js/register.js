@@ -53,7 +53,7 @@ const app = Vue.createApp({
                 });
             })},
         addFromCart(product) {
-            const index = this.shoppingCart.findIndex(productCart => productCart.id === product.id);
+            const index = this.shoppingCart.findIndex(productCart => productCart.name === product.name);
             if (index !== -1) {
                 this.shoppingCart[index].quantity += 1;
             } else {
@@ -67,7 +67,7 @@ const app = Vue.createApp({
         },
 
         removeFromCart(product) {
-            let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+            let index = this.shoppingCart.findIndex(productCart => productCart.name == product.name)
             this.shoppingCart.splice(index, 1)
 
             localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
@@ -77,7 +77,7 @@ const app = Vue.createApp({
 
         updateStockFromCart(cart) {
             for (let product of this.creams) {
-                const cartProduct = cart.find(cartItem => cartItem.id === product.id);
+                const cartProduct = cart.find(cartItem => cartItem.name === product.name);
                 if (cartProduct) {
                     product.stock -= cartProduct.quantity;
                 }

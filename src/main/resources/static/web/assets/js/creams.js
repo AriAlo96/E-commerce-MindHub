@@ -113,7 +113,7 @@ const app = Vue.createApp({
     },
 
     removeFromCart(product) {
-      let index = this.shoppingCart.findIndex(productCart => productCart.id == product.id)
+      let index = this.shoppingCart.findIndex(productCart => productCart.name == product.name)
       this.shoppingCart.splice(index, 1)
 
       localStorage.setItem("shoppingCart", JSON.stringify(this.shoppingCart));
@@ -123,7 +123,7 @@ const app = Vue.createApp({
 
     updateStockFromCart(cart) {
       for (let product of this.creams) {
-        const cartProduct = cart.find(cartItem => cartItem.id === product.id);
+        const cartProduct = cart.find(cartItem => cartItem.name === product.name);
         if (cartProduct) {
           product.stock -= cartProduct.quantity;
         }
@@ -149,8 +149,8 @@ const app = Vue.createApp({
         showCancelButton: true,
         cancelButtonText: 'Cancell',
         confirmButtonText: 'Log Out',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#dc3545',
+        confirmButtonColor: '#ec225e',
+        cancelButtonColor: '#020305',
         showClass: {
           popup: 'swal2-noanimation',
           backdrop: 'swal2-noanimation'
@@ -167,9 +167,9 @@ const app = Vue.createApp({
                 title: "Logged out successfully",
                 showConfirmButton: false,
                 timer: 1500,
-            }),
+              }),
                 setTimeout(() => {
-                    location.pathname = "/index.html";
+                  location.pathname = "/index.html";
                 }, 1600);
             })
             .catch(error => {

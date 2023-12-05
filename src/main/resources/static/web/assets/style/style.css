@@ -714,6 +714,7 @@ ul li:hover {
     border-radius: 0px;
   }
 }
+
 @media screen and (min-width: 610px) and (max-width: 815px) {
   .carousel-caption h1 {
     font-size: 2.5rem;

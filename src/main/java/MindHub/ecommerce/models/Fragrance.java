@@ -1,5 +1,6 @@
 package MindHub.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Fragrance {
     private Integer stock;
     private Boolean active;
     @OneToMany(mappedBy = "fragrance", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<PurchaseFragrance> purchesFragrances;
 
     public Fragrance() {
@@ -117,7 +119,7 @@ public class Fragrance {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-
+    @JsonIgnore
     public Set<PurchaseFragrance> getPurchesFragances() {
         return purchesFragrances;
     }

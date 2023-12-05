@@ -181,7 +181,7 @@
                     <div class="card-body">     
                         <h5 class="card-title">{{airFreshener.name}}</h5>
                         <p class="card-text">{{airFreshener.description}}</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        <p class="card-text"><small class="text-body-secondary">Stock: {{airFreshener.stock}}</small></p>
                         <a v-if="airFreshener.stock > 0" @click="addFromCart(airFreshener)" class="btn"
                             style="background-color:#ec225e; color:#ffffff;">Add to cart</a>
                     </div>
@@ -214,19 +214,18 @@
                                 href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between" style="gap: 1rem;">
+                    <div class="d-flex justify-content-around flex-wrap">
                         <div class="col-lg-3 col-md-6 mb-5">
                             <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Pages</h5>
                             <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white-50 mb-2" href="#"><i
-                                        class="fa fa-angle-right mr-2"></i>Products</a>
-                                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About
+                                <a class="text-white-50 mb-2" href="./fragances.html"><i
+                                        class="fa fa-angle-right mr-2"></i>Fragances</a>
+                                        <a class="text-white-50 mb-2" href="./air-fresheners.html"><i
+                                            class="fa fa-angle-right mr-2"></i>Air Fresheners</a>
+                                            <a class="text-white-50 mb-2" href="./creams.html"><i
+                                                class="fa fa-angle-right mr-2"></i>Creams</a>
+                                <a class="text-white-50 mb-2" href="../../../index.html#AboutUs"><i class="fa fa-angle-right mr-2"></i>About
                                     Us</a>
-                                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>
-                                <a class="text-white-50 mb-2" href="#"><i
-                                        class="fa fa-angle-right mr-2"></i>Testimonial</a>
-                                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Gif
-                                    Cards</a>
                             </div>
                         </div>
                         <div id="Contact" class="col-lg-6 col-md-6 mb-6">
@@ -235,10 +234,10 @@
                             <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
                             <p><i class="fa fa-envelope mr-2"></i>velvetfragances@gmail.com</p>
                         </div>
-                        <iframe
+                        <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.543028422734!2d-111.61325043503413!3d35.212922840097946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872d8ed73ade55ed%3A0x69dde6ff2b6b92df!2sThe%20UPS%20Store!5e0!3m2!1ses!2sar!4v1700769820848!5m2!1ses!2sar"
-                            width="200" height="200" style="border:0; border-radius: 1rem;" allowfullscreen=""
-                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            width="100%" height="100%" style="border:0; border-radius: 1rem;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="iframe"></iframe>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 2rem;">
